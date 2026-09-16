@@ -126,6 +126,7 @@ input{
 
 @media(max-width:600px){
     h1{font-size:30px}
+
     #coinButton{
         width:170px;
         height:170px;
@@ -218,8 +219,12 @@ input{
 <button onclick="buyMultiplier()">
 ✖️ Множник
 <br>
-💰 <span id="multPrice">500</span>
+💰 <span id="multPrice">50000</span>
 </button>
+
+<p class="small">
+Максимальний магазинний множник: ×128
+</p>
 
 </div>
 
@@ -376,6 +381,11 @@ input{
 <b id="rebirths">0</b>
 </p>
 
+<p>
+Постійний бонус:
+<b id="rebirthMultiplier">×1</b>
+</p>
+
 </div>
 
 
@@ -394,6 +404,11 @@ input{
 <p>
 Ультра:
 <b id="ultras">0</b>
+</p>
+
+<p>
+Бонус ультра:
+<b id="ultraMultiplier">×1</b>
 </p>
 
 </div>
@@ -426,8 +441,18 @@ input{
 </p>
 
 <p>
-✖️ Множник:
+✖️ Магазинний множник:
 <b id="multiplier">1</b>
+</p>
+
+<p>
+♻️ Бонус ребіртів:
+<b id="rebirthMultiplierStat">×1</b>
+</p>
+
+<p>
+🌟 Бонус ультра:
+<b id="ultraMultiplierStat">×1</b>
 </p>
 
 </div>
@@ -457,30 +482,27 @@ JSON.parse(localStorage.getItem("coinClicker3"))
 || {
 
     coins:0,
-
     total:0,
-
     clicks:0,
 
     clickPower:1,
-
     auto:0,
 
     multiplier:1,
 
     rebirths:0,
+    rebirthMultiplier:1,
 
     ultras:0,
+    ultraMultiplier:1,
 
     petBonus:1,
-
     petName:"немає",
 
     clickPrice:25,
-
     autoPrice:100,
 
-    multPrice:500,
+    multPrice:50000,
 
     lastDaily:0,
 
@@ -491,10 +513,33 @@ JSON.parse(localStorage.getItem("coinClicker3"))
     nickname:"Гість",
 
     offlineLevel:1,
-
     offlinePrice:100
-
 };
+
+
+/* =========================
+   ЗАХИСТ СТАРИХ ЗБЕРЕЖЕНЬ
+========================= */
+
+if(!game.rebirthMultiplier){
+    game.rebirthMultiplier=1;
+}
+
+if(!game.ultraMultiplier){
+    game.ultraMultiplier=1;
+}
+
+if(game.multiplier > 128){
+    game.multiplier=128;
+}
+
+if(game.multiplier < 1){
+    game.multiplier=1;
+}
+
+if(!game.multPrice || game.multPrice < 50000){
+    game.multPrice=50000;
+}
 
 
 /* =========================
@@ -533,12 +578,14 @@ function showMessage(text){
 
 
 /* =========================
-   МНОЖНИК
+   ЗАГАЛЬНИЙ МНОЖНИК
 ========================= */
 
 function totalMultiplier(){
 
     return game.multiplier *
+           game.rebirthMultiplier *
+           game.ultraMultiplier *
            game.petBonus;
 
 }
@@ -646,27 +693,55 @@ function buyAuto(){
 
 function buyMultiplier(){
 
-    if(game.coins < game.multPrice){
+    if(game.multiplier >= 128){
 
         showMessage(
-            "❌ Недостатньо монет!"
+            "🛑 Максимальний множник ×128!"
         );
 
         return;
     }
 
+
+    if(game.coins < game.multPrice){
+
+        showMessage(
+            "❌ Потрібно "+
+            game.multPrice+
+            " 🪙"
+        );
+
+        return;
+    }
+
+
     game.coins -= game.multPrice;
 
     game.multiplier *= 2;
+
+
+    if(game.multiplier > 128){
+        game.multiplier=128;
+    }
+
+
+    /* Наступна ціна ×3 */
 
     game.multPrice =
         Math.floor(
             game.multPrice * 3
         );
 
+
     save();
 
     update();
+
+    showMessage(
+        "✖️ Множник тепер ×"+
+        game.multiplier+
+        "!"
+    );
 
 }
 
@@ -915,6 +990,7 @@ function rebirth(){
     let price =
         rebirthPrice();
 
+
     if(game.coins < price){
 
         showMessage(
@@ -925,6 +1001,11 @@ function rebirth(){
 
         return;
     }
+
+
+    /*
+       СКИДАЄМО ПРОКАЧКИ
+    */
 
     game.coins=0;
 
@@ -940,18 +1021,33 @@ function rebirth(){
 
     game.autoPrice=100;
 
-    game.multPrice=500;
+    game.multiplier=1;
 
-    game.multiplier*=2;
+    game.multPrice=50000;
+
+    game.offlineLevel=1;
+
+    game.offlinePrice=100;
+
+
+    /*
+       ДАЄМО ПОСТІЙНИЙ ×2
+    */
 
     game.rebirths++;
+
+    game.rebirthMultiplier *= 2;
+
 
     save();
 
     update();
 
+
     showMessage(
-        "♻️ РЕБІРТ!"
+        "♻️ РЕБІРТ! Постійний бонус ×"+
+        game.rebirthMultiplier+
+        "!"
     );
 
 }
@@ -966,6 +1062,7 @@ function ultraRebirth(){
     let price =
         ultraPrice();
 
+
     if(game.coins < price){
 
         showMessage(
@@ -976,6 +1073,11 @@ function ultraRebirth(){
 
         return;
     }
+
+
+    /*
+       СКИДАЄМО ПРОКАЧКИ
+    */
 
     game.coins=0;
 
@@ -991,18 +1093,33 @@ function ultraRebirth(){
 
     game.autoPrice=100;
 
-    game.multPrice=500;
+    game.multiplier=1;
 
-    game.multiplier*=10;
+    game.multPrice=50000;
+
+    game.offlineLevel=1;
+
+    game.offlinePrice=100;
+
+
+    /*
+       УЛЬТРА ДАЄ ×10
+    */
 
     game.ultras++;
+
+    game.ultraMultiplier *= 10;
+
 
     save();
 
     update();
 
+
     showMessage(
-        "🌟 УЛЬТРА РЕБІРТ!"
+        "🌟 УЛЬТРА! Бонус ×"+
+        game.ultraMultiplier+
+        "!"
     );
 
 }
@@ -1028,19 +1145,24 @@ function upgradeOffline(){
         return;
     }
 
+
     game.coins -=
         game.offlinePrice;
 
+
     game.offlineLevel++;
+
 
     game.offlinePrice =
         Math.floor(
             game.offlinePrice * 2
         );
 
+
     save();
 
     update();
+
 
     showMessage(
         "💤 Офлайн прокачано!"
@@ -1060,8 +1182,10 @@ function saveNickname(){
             "nicknameInput"
         );
 
+
     let name =
         input.value.trim();
+
 
     if(name===""){
 
@@ -1072,6 +1196,7 @@ function saveNickname(){
         return;
     }
 
+
     game.nickname=name;
 
     save();
@@ -1079,6 +1204,7 @@ function saveNickname(){
     updateLeaderboard();
 
     update();
+
 
     showMessage(
         "👤 Нік збережено!"
@@ -1101,10 +1227,6 @@ function updateLeaderboard(){
         ) || [];
 
 
-    /*
-       Знаходимо гравця
-    */
-
     let player =
         records.find(
             r =>
@@ -1112,11 +1234,6 @@ function updateLeaderboard(){
             game.nickname
         );
 
-
-    /*
-       Якщо гравця немає —
-       створюємо
-    */
 
     if(!player){
 
@@ -1132,10 +1249,6 @@ function updateLeaderboard(){
 
     }else{
 
-        /*
-           Рекорд не зменшується
-        */
-
         if(
             game.total >
             player.total
@@ -1149,19 +1262,11 @@ function updateLeaderboard(){
     }
 
 
-    /*
-       Сортування
-    */
-
     records.sort(
         (a,b)=>
         b.total-a.total
     );
 
-
-    /*
-       Топ 10
-    */
 
     records=
         records.slice(0,10);
@@ -1173,14 +1278,11 @@ function updateLeaderboard(){
     );
 
 
-    /*
-       Вивід
-    */
-
     let leaderboard =
         document.getElementById(
             "leaderboard"
         );
+
 
     leaderboard.innerHTML="";
 
@@ -1200,6 +1302,7 @@ function updateLeaderboard(){
 
             let medal;
 
+
             if(index===0)
                 medal="🥇";
 
@@ -1217,6 +1320,7 @@ function updateLeaderboard(){
                 document.createElement(
                     "div"
                 );
+
 
             div.className="rank";
 
@@ -1255,7 +1359,9 @@ function escapeHTML(text){
             "div"
         );
 
+
     div.textContent=text;
+
 
     return div.innerHTML;
 
@@ -1270,26 +1376,34 @@ function updateAchievements(){
 
     let list=[];
 
+
     if(game.clicks>=10)
         list.push("👆 10 кліків");
+
 
     if(game.clicks>=100)
         list.push("🔥 100 кліків");
 
+
     if(game.total>=1000)
         list.push("🪙 1000 зароблено");
+
 
     if(game.total>=10000)
         list.push("💰 10 000 зароблено");
 
+
     if(game.rebirths>=1)
         list.push("♻️ Перший ребірт");
+
 
     if(game.ultras>=1)
         list.push("🌟 Перший ультра");
 
+
     if(list.length===0)
         list.push("🔒 Поки що немає");
+
 
     document.getElementById(
         "achievements"
@@ -1332,7 +1446,9 @@ function update(){
     document.getElementById(
         "multPrice"
     ).textContent=
-        game.multPrice;
+        game.multiplier >= 128
+        ? "МАКСИМУМ"
+        : game.multPrice;
 
 
     document.getElementById(
@@ -1390,6 +1506,20 @@ function update(){
 
 
     document.getElementById(
+        "rebirthMultiplier"
+    ).textContent=
+        "×"+
+        game.rebirthMultiplier;
+
+
+    document.getElementById(
+        "ultraMultiplier"
+    ).textContent=
+        "×"+
+        game.ultraMultiplier;
+
+
+    document.getElementById(
         "total"
     ).textContent=
         Math.floor(
@@ -1419,7 +1549,21 @@ function update(){
     document.getElementById(
         "multiplier"
     ).textContent=
-        totalMultiplier();
+        game.multiplier;
+
+
+    document.getElementById(
+        "rebirthMultiplierStat"
+    ).textContent=
+        "×"+
+        game.rebirthMultiplier;
+
+
+    document.getElementById(
+        "ultraMultiplierStat"
+    ).textContent=
+        "×"+
+        game.ultraMultiplier;
 
 
     updateAchievements();
@@ -1439,17 +1583,15 @@ setInterval(()=>{
             game.auto *
             totalMultiplier();
 
+
         addCoins(amount);
+
 
         save();
 
+
         update();
 
-        /*
-           Оновлюємо рекорди
-           не кожен мілісекунд,
-           а раз на секунду
-        */
 
         updateLeaderboard();
 
@@ -1464,6 +1606,7 @@ setInterval(()=>{
 
 let currentTime =
     Date.now();
+
 
 let secondsAway =
     Math.floor(
@@ -1550,13 +1693,16 @@ function resetGame(){
 
     }
 
+
     localStorage.removeItem(
         "coinClicker3"
     );
 
+
     localStorage.removeItem(
         "coinClickerRecords"
     );
+
 
     location.reload();
 
