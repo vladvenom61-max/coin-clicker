@@ -6,6 +6,8 @@
 <title>Coin Clicker</title>
 
 <style>
+*{box-sizing:border-box}
+
 body{
     margin:0;
     font-family:Arial,sans-serif;
@@ -17,85 +19,118 @@ body{
 .container{
     max-width:750px;
     margin:auto;
-    padding:20px;
+    padding:15px;
 }
 
 h1{
     font-size:38px;
-}
-
-.coins{
-    font-size:42px;
-    font-weight:bold;
-    margin:20px;
-}
-
-#coinButton{
-    width:220px;
-    height:220px;
-    border-radius:50%;
-    border:none;
-    font-size:80px;
-    cursor:pointer;
-    background:#ffd700;
-    box-shadow:0 0 30px #ffcc00;
-}
-
-#coinButton:active{
-    transform:scale(.92);
+    margin:15px 0;
 }
 
 .panel{
-    background:#202020;
-    padding:15px;
+    background:rgba(255,255,255,.08);
+    border-radius:18px;
+    padding:18px;
     margin:15px 0;
-    border-radius:15px;
+}
+
+.coins{
+    font-size:40px;
+    font-weight:bold;
+    margin:20px;
+    color:#ffd21c;
+}
+
+#coinButton{
+    width:210px;
+    height:210px;
+    border-radius:50%;
+    border:8px solid #d99d00;
+    background:radial-gradient(circle,#fff06b,#f2ad00);
+    font-size:80px;
+    cursor:pointer;
+    box-shadow:0 0 35px #f5c400;
+    transition:.1s;
+}
+
+#coinButton:active{
+    transform:scale(.88);
 }
 
 button{
-    padding:10px 15px;
+    border:0;
+    border-radius:12px;
+    padding:12px 17px;
     margin:5px;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
     font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    background:#ffd21c;
+}
+
+button:hover{
+    transform:scale(1.04);
 }
 
 input{
-    padding:10px;
-    border-radius:8px;
-    border:none;
+    padding:12px;
+    border-radius:10px;
+    border:0;
     font-size:16px;
+    width:80%;
+    max-width:300px;
 }
 
-.shop button{
-    background:#333;
-    color:white;
+.rank{
+    background:rgba(0,0,0,.25);
+    padding:12px;
+    margin:7px 0;
+    border-radius:12px;
+    font-size:18px;
+}
+
+.small{
+    color:#aaa;
+    font-size:14px;
 }
 
 .stats{
     text-align:left;
-    background:#181818;
+    background:rgba(0,0,0,.2);
     padding:15px;
-    border-radius:10px;
-}
-
-.skin1{
-    background:#ffd700 !important;
-}
-
-.skin2{
-    background:#00bfff !important;
-}
-
-.skin3{
-    background:#ff4dff !important;
+    border-radius:12px;
 }
 
 #message{
     min-height:25px;
+    color:#ffd21c;
     font-size:18px;
-    color:#ffd700;
+    margin:10px;
+}
+
+.skin1{
+    background:radial-gradient(circle,#fff06b,#f2ad00)!important;
+}
+
+.skin2{
+    background:radial-gradient(circle,#77ddff,#0066cc)!important;
+}
+
+.skin3{
+    background:radial-gradient(circle,#dd88ff,#7620aa)!important;
+}
+
+.skin4{
+    background:radial-gradient(circle,#88ff88,#159c36)!important;
+}
+
+@media(max-width:600px){
+    h1{font-size:30px}
+    #coinButton{
+        width:170px;
+        height:170px;
+        font-size:65px;
+    }
 }
 </style>
 </head>
@@ -104,69 +139,121 @@ input{
 
 <div class="container">
 
-<h1>🪙 COIN CLICKER 3.2.1</h1>
+<h1>🪙 COIN CLICKER</h1>
+
+<!-- ПРОФІЛЬ -->
 
 <div class="panel">
-    👤 Твій нік:
-    <b id="nickname">Гість</b>
-    <br><br>
 
-    <input
-        id="nicknameInput"
-        type="text"
-        maxlength="20"
-        placeholder="Введи свій нік"
-    >
+<h2>👤 Профіль</h2>
 
-    <button onclick="saveNickname()">💾 Зберегти нік</button>
+<p>Твій нік:</p>
+
+<input
+    id="nicknameInput"
+    maxlength="20"
+    placeholder="Введи свій нік"
+>
+
+<br>
+
+<button onclick="saveNickname()">
+    💾 Зберегти нік
+</button>
+
+<p>
+Гравець:
+<b id="nickname">Гість</b>
+</p>
+
 </div>
+
+
+<!-- ГЛОБАЛЬНІ РЕКОРДИ -->
+
+<div class="panel">
+
+<h2>🌍 ГЛОБАЛЬНІ РЕКОРДИ</h2>
+
+<p class="small">
+🏆 Найбільше всього зароблених монет
+</p>
+
+<div id="leaderboard"></div>
+
+</div>
+
+
+<!-- МОНЕТИ -->
 
 <div class="coins">
-    🪙 <span id="coins">0</span>
+🪙 <span id="coins">0</span>
 </div>
 
-<button id="coinButton" onclick="clickCoin()">🪙</button>
+<button id="coinButton" onclick="clickCoin()">
+🪙
+</button>
 
 <div id="message"></div>
 
-<div class="panel shop">
+
+<!-- МАГАЗИН -->
+
+<div class="panel">
 
 <h2>🛒 Магазин</h2>
 
 <button onclick="buyClickPower()">
-    ⚡ +1 за клік
-    <br>
-    💰 <span id="clickPrice">25</span>
+⚡ +1 за клік
+<br>
+💰 <span id="clickPrice">25</span>
 </button>
 
 <button onclick="buyAuto()">
-    🤖 Автоклікер
-    <br>
-    💰 <span id="autoPrice">100</span>
+🤖 Автоклікер
+<br>
+💰 <span id="autoPrice">100</span>
 </button>
 
 <button onclick="buyMultiplier()">
-    ✖️ Множник
-    <br>
-    💰 <span id="multPrice">500</span>
+✖️ Множник
+<br>
+💰 <span id="multPrice">500</span>
 </button>
 
 </div>
 
+
+<!-- ПЕТИ -->
+
 <div class="panel">
 
-<h2>🐶 ПЕТИ</h2>
+<h2>🐾 ПЕТИ</h2>
 
-<button onclick="buyPet('dog')">🐶 Пес ×2</button>
-<button onclick="buyPet('cat')">🐱 Кіт ×4</button>
-<button onclick="buyPet('dragon')">🐲 Дракон ×10</button>
+<button onclick="buyPet('dog')">
+🐶 Пес ×2
+<br>💰 1000
+</button>
 
-<br>
+<button onclick="buyPet('cat')">
+🐱 Кіт ×4
+<br>💰 5000
+</button>
 
+<button onclick="buyPet('dragon')">
+🐲 Дракон ×10
+<br>💰 25000
+</button>
+
+<p>
 Поточний пет:
 <b id="petName">немає</b>
+</p>
 
 </div>
+
+
+<!-- СКІНИ -->
 
 <div class="panel">
 
@@ -175,8 +262,12 @@ input{
 <button onclick="skin(1)">🟡 Золотий</button>
 <button onclick="skin(2)">🔵 Синій</button>
 <button onclick="skin(3)">🟣 Фіолетовий</button>
+<button onclick="skin(4)">🟢 Зелений</button>
 
 </div>
+
+
+<!-- ОФЛАЙН -->
 
 <div class="panel">
 
@@ -191,37 +282,61 @@ input{
 🪙 <b id="offlineRate">1</b> монета/сек
 </p>
 
+<p>
+Наступний рівень:
+💰 <b id="offlinePrice">100</b>
+</p>
+
 <button onclick="upgradeOffline()">
-    ⬆️ Покращити
-    <br>
-    💰 <span id="offlinePrice">100</span>
+⬆️ ПРОКАЧАТИ ОФЛАЙН
 </button>
 
 </div>
+
+
+<!-- ДЕННИЙ БОНУС -->
 
 <div class="panel">
 
 <h2>🎁 Щоденний бонус</h2>
 
-<button onclick="dailyBonus()">🎁 Забрати 1000 🪙</button>
+<button onclick="dailyBonus()">
+🎁 Забрати бонус
+</button>
 
 </div>
+
+
+<!-- КОЛЕСО -->
 
 <div class="panel">
 
 <h2>🎡 Колесо удачі</h2>
 
-<button onclick="wheel()">🎡 Крутити — 500 🪙</button>
+<button onclick="wheel()">
+🎡 Крутити — 500 🪙
+</button>
 
 </div>
+
+
+<!-- СВІТИ -->
 
 <div class="panel">
 
 <h2>🌍 Світи</h2>
 
-<button onclick="world('Земля')">🌍 Земля</button>
-<button onclick="world('Місяць')">🌙 Місяць</button>
-<button onclick="world('Марс')">🔴 Марс</button>
+<button onclick="world('Земля')">
+🌍 Земля
+</button>
+
+<button onclick="world('Місяць')">
+🌙 Місяць
+</button>
+
+<button onclick="world('Марс')">
+🔴 Марс
+</button>
 
 <p>
 Поточний світ:
@@ -230,24 +345,30 @@ input{
 
 </div>
 
+
+<!-- ДОСЯГНЕННЯ -->
+
 <div class="panel">
 
 <h2>🏆 Досягнення</h2>
 
 <div id="achievements">
-    Поки що немає
+Поки що немає
 </div>
 
 </div>
+
+
+<!-- РЕБІРТ -->
 
 <div class="panel">
 
 <h2>♻️ Ребірт</h2>
 
 <button onclick="rebirth()">
-    ♻️ Ребірт
-    <br>
-    💰 <span id="rebirthPrice">10000</span>
+♻️ РЕБІРТ
+<br>
+💰 <span id="rebirthPrice">10000</span>
 </button>
 
 <p>
@@ -257,14 +378,17 @@ input{
 
 </div>
 
+
+<!-- УЛЬТРА -->
+
 <div class="panel">
 
 <h2>🌟 Ультра-ребірт</h2>
 
 <button onclick="ultraRebirth()">
-    🌟 Ультра
-    <br>
-    💰 <span id="ultraPrice">1000000</span>
+🌟 УЛЬТРА
+<br>
+💰 <span id="ultraPrice">1000000</span>
 </button>
 
 <p>
@@ -274,48 +398,88 @@ input{
 
 </div>
 
+
+<!-- СТАТИСТИКА -->
+
 <div class="panel stats">
 
 <h2>📊 Статистика</h2>
 
-<p>🪙 Всього зароблено: <b id="total">0</b></p>
-<p>👆 Кліків: <b id="clicks">0</b></p>
-<p>⚡ За клік: <b id="perClick">1</b></p>
-<p>🤖 Автоклікер: <b id="auto">0</b></p>
-<p>✖️ Множник: <b id="multiplier">1</b></p>
+<p>
+🪙 Всього зароблено:
+<b id="total">0</b>
+</p>
+
+<p>
+👆 Кліків:
+<b id="clicks">0</b>
+</p>
+
+<p>
+⚡ За клік:
+<b id="perClick">1</b>
+</p>
+
+<p>
+🤖 Автоклікер:
+<b id="auto">0</b>
+</p>
+
+<p>
+✖️ Множник:
+<b id="multiplier">1</b>
+</p>
 
 </div>
+
+
+<!-- СКИДАННЯ -->
 
 <div class="panel">
 
 <button onclick="resetGame()">
-    🗑️ Скинути гру
+🗑️ СКИНУТИ ГРУ
 </button>
 
 </div>
 
 </div>
 
+
 <script>
 
-let game = JSON.parse(localStorage.getItem("coinClicker3")) || {
+/* =========================
+   ГРА
+========================= */
+
+let game =
+JSON.parse(localStorage.getItem("coinClicker3"))
+|| {
 
     coins:0,
+
     total:0,
+
     clicks:0,
 
     clickPower:1,
+
     auto:0,
+
     multiplier:1,
 
     rebirths:0,
+
     ultras:0,
 
     petBonus:1,
+
     petName:"немає",
 
     clickPrice:25,
+
     autoPrice:100,
+
     multPrice:500,
 
     lastDaily:0,
@@ -327,9 +491,15 @@ let game = JSON.parse(localStorage.getItem("coinClicker3")) || {
     nickname:"Гість",
 
     offlineLevel:1,
+
     offlinePrice:100
 
 };
+
+
+/* =========================
+   ЗБЕРЕЖЕННЯ
+========================= */
 
 function save(){
 
@@ -340,30 +510,56 @@ function save(){
 
 }
 
+
+/* =========================
+   ПОВІДОМЛЕННЯ
+========================= */
+
 function showMessage(text){
 
-    document.getElementById("message").textContent=text;
+    document.getElementById(
+        "message"
+    ).textContent=text;
 
     setTimeout(()=>{
 
-        document.getElementById("message").textContent="";
+        document.getElementById(
+            "message"
+        ).textContent="";
 
-    },2000);
+    },2500);
 
 }
+
+
+/* =========================
+   МНОЖНИК
+========================= */
 
 function totalMultiplier(){
 
-    return game.multiplier * game.petBonus;
+    return game.multiplier *
+           game.petBonus;
 
 }
+
+
+/* =========================
+   ДОДАТИ МОНЕТИ
+========================= */
 
 function addCoins(amount){
 
     game.coins += amount;
+
     game.total += amount;
 
 }
+
+
+/* =========================
+   КЛІК
+========================= */
 
 function clickCoin(){
 
@@ -376,17 +572,25 @@ function clickCoin(){
     game.clicks++;
 
     save();
+
     update();
 
 }
+
+
+/* =========================
+   ПОКРАЩЕННЯ КЛІКУ
+========================= */
 
 function buyClickPower(){
 
     if(game.coins < game.clickPrice){
 
-        showMessage("❌ Недостатньо монет!");
-        return;
+        showMessage(
+            "❌ Недостатньо монет!"
+        );
 
+        return;
     }
 
     game.coins -= game.clickPrice;
@@ -394,20 +598,30 @@ function buyClickPower(){
     game.clickPower++;
 
     game.clickPrice =
-        Math.floor(game.clickPrice * 1.5);
+        Math.floor(
+            game.clickPrice * 1.7
+        );
 
     save();
+
     update();
 
 }
+
+
+/* =========================
+   АВТОКЛІКЕР
+========================= */
 
 function buyAuto(){
 
     if(game.coins < game.autoPrice){
 
-        showMessage("❌ Недостатньо монет!");
-        return;
+        showMessage(
+            "❌ Недостатньо монет!"
+        );
 
+        return;
     }
 
     game.coins -= game.autoPrice;
@@ -415,20 +629,30 @@ function buyAuto(){
     game.auto++;
 
     game.autoPrice =
-        Math.floor(game.autoPrice * 1.6);
+        Math.floor(
+            game.autoPrice * 1.8
+        );
 
     save();
+
     update();
 
 }
+
+
+/* =========================
+   МНОЖНИК
+========================= */
 
 function buyMultiplier(){
 
     if(game.coins < game.multPrice){
 
-        showMessage("❌ Недостатньо монет!");
-        return;
+        showMessage(
+            "❌ Недостатньо монет!"
+        );
 
+        return;
     }
 
     game.coins -= game.multPrice;
@@ -436,12 +660,20 @@ function buyMultiplier(){
     game.multiplier *= 2;
 
     game.multPrice =
-        Math.floor(game.multPrice * 2);
+        Math.floor(
+            game.multPrice * 3
+        );
 
     save();
+
     update();
 
 }
+
+
+/* =========================
+   ПЕТИ
+========================= */
 
 function buyPet(type){
 
@@ -449,109 +681,155 @@ function buyPet(type){
 
         if(game.coins < 1000){
 
-            showMessage("❌ Потрібно 1000 монет!");
-            return;
+            showMessage(
+                "❌ Потрібно 1000 🪙"
+            );
 
+            return;
         }
 
-        game.coins -= 1000;
+        game.coins-=1000;
 
         game.petBonus=2;
+
         game.petName="🐶 Пес";
 
     }
+
 
     if(type==="cat"){
 
         if(game.coins < 5000){
 
-            showMessage("❌ Потрібно 5000 монет!");
-            return;
+            showMessage(
+                "❌ Потрібно 5000 🪙"
+            );
 
+            return;
         }
 
-        game.coins -= 5000;
+        game.coins-=5000;
 
         game.petBonus=4;
+
         game.petName="🐱 Кіт";
 
     }
+
 
     if(type==="dragon"){
 
         if(game.coins < 25000){
 
-            showMessage("❌ Потрібно 25000 монет!");
-            return;
+            showMessage(
+                "❌ Потрібно 25000 🪙"
+            );
 
+            return;
         }
 
-        game.coins -= 25000;
+        game.coins-=25000;
 
         game.petBonus=10;
+
         game.petName="🐲 Дракон";
 
     }
 
     save();
+
     update();
 
 }
 
+
+/* =========================
+   СКІНИ
+========================= */
+
 function skin(number){
 
-    let button =
-        document.getElementById("coinButton");
+    let coin =
+        document.getElementById(
+            "coinButton"
+        );
 
-    button.classList.remove(
+    coin.classList.remove(
         "skin1",
         "skin2",
-        "skin3"
+        "skin3",
+        "skin4"
     );
 
-    button.classList.add(
+    coin.classList.add(
         "skin"+number
     );
 
 }
 
+
+/* =========================
+   ЩОДЕННИЙ БОНУС
+========================= */
+
 function dailyBonus(){
 
     let now=Date.now();
 
-    if(now-game.lastDaily < 86400000){
+    if(
+        now-game.lastDaily <
+        86400000
+    ){
 
-        showMessage("⏳ Щоденний бонус ще недоступний!");
+        showMessage(
+            "⏳ Бонус вже отримано!"
+        );
+
         return;
-
     }
 
-    addCoins(
-        1000 * totalMultiplier()
-    );
+    let reward =
+        1000 *
+        totalMultiplier();
+
+    addCoins(reward);
 
     game.lastDaily=now;
 
     save();
+
     update();
 
+    showMessage(
+        "🎁 +"+reward+" 🪙"
+    );
+
 }
+
+
+/* =========================
+   КОЛЕСО
+========================= */
 
 function wheel(){
 
     if(game.coins < 500){
 
-        showMessage("❌ Потрібно 500 монет!");
-        return;
+        showMessage(
+            "❌ Потрібно 500 🪙"
+        );
 
+        return;
     }
 
     game.coins-=500;
 
     let rewards=[
         100,
+        250,
         500,
         1000,
+        2500,
         5000,
         10000
     ];
@@ -559,7 +837,8 @@ function wheel(){
     let reward =
         rewards[
             Math.floor(
-                Math.random()*rewards.length
+                Math.random()*
+                rewards.length
             )
         ];
 
@@ -567,123 +846,190 @@ function wheel(){
 
     addCoins(reward);
 
-    showMessage(
-        "🎉 Ти виграв "+reward+" монет!"
-    );
-
     save();
+
     update();
 
+    showMessage(
+        "🎉 Ти виграв "+reward+" 🪙!"
+    );
+
 }
+
+
+/* =========================
+   СВІТ
+========================= */
 
 function world(name){
 
     game.world=name;
 
     save();
+
     update();
 
     showMessage(
-        "🌍 Світ змінено на "+name
+        "🌍 Світ: "+name
     );
 
 }
 
+
+/* =========================
+   ЦІНА РЕБІРТУ
+========================= */
+
 function rebirthPrice(){
 
     return 10000 *
-        Math.pow(2,game.rebirths);
+        Math.pow(
+            2,
+            game.rebirths
+        );
 
 }
+
+
+/* =========================
+   ЦІНА УЛЬТРА
+========================= */
 
 function ultraPrice(){
 
     return 1000000 *
-        Math.pow(5,game.ultras);
+        Math.pow(
+            5,
+            game.ultras
+        );
 
 }
 
+
+/* =========================
+   РЕБІРТ
+========================= */
+
 function rebirth(){
 
-    let price=rebirthPrice();
+    let price =
+        rebirthPrice();
 
     if(game.coins < price){
 
         showMessage(
-            "❌ Потрібно "+price+" монет!"
+            "❌ Потрібно "+
+            price+
+            " 🪙"
         );
 
         return;
-
     }
 
     game.coins=0;
 
     game.clickPower=1;
+
     game.auto=0;
 
     game.petBonus=1;
+
     game.petName="немає";
 
     game.clickPrice=25;
+
     game.autoPrice=100;
+
+    game.multPrice=500;
 
     game.multiplier*=2;
 
     game.rebirths++;
 
     save();
+
     update();
+
+    showMessage(
+        "♻️ РЕБІРТ!"
+    );
 
 }
 
+
+/* =========================
+   УЛЬТРА РЕБІРТ
+========================= */
+
 function ultraRebirth(){
 
-    let price=ultraPrice();
+    let price =
+        ultraPrice();
 
     if(game.coins < price){
 
         showMessage(
-            "❌ Потрібно "+price+" монет!"
+            "❌ Потрібно "+
+            price+
+            " 🪙"
         );
 
         return;
-
     }
 
     game.coins=0;
 
     game.clickPower=1;
+
     game.auto=0;
 
     game.petBonus=1;
+
     game.petName="немає";
 
     game.clickPrice=25;
+
     game.autoPrice=100;
+
+    game.multPrice=500;
 
     game.multiplier*=10;
 
     game.ultras++;
 
     save();
+
     update();
+
+    showMessage(
+        "🌟 УЛЬТРА РЕБІРТ!"
+    );
 
 }
 
+
+/* =========================
+   ОФЛАЙН ЗАРОБІТОК
+========================= */
+
 function upgradeOffline(){
 
-    if(game.coins < game.offlinePrice){
+    if(
+        game.coins <
+        game.offlinePrice
+    ){
 
         showMessage(
-            "❌ Потрібно "+game.offlinePrice+" монет!"
+            "❌ Потрібно "+
+            game.offlinePrice+
+            " 🪙"
         );
 
         return;
-
     }
 
-    game.coins -= game.offlinePrice;
+    game.coins -=
+        game.offlinePrice;
 
     game.offlineLevel++;
 
@@ -693,13 +1039,19 @@ function upgradeOffline(){
         );
 
     save();
+
     update();
 
     showMessage(
-        "💤 Офлайн-заробіток покращено!"
+        "💤 Офлайн прокачано!"
     );
 
 }
+
+
+/* =========================
+   НІК
+========================= */
 
 function saveNickname(){
 
@@ -713,104 +1065,206 @@ function saveNickname(){
 
     if(name===""){
 
-        showMessage("❌ Введи нік!");
-        return;
+        showMessage(
+            "❌ Введи нік!"
+        );
 
+        return;
     }
 
     game.nickname=name;
 
     save();
+
+    updateLeaderboard();
+
     update();
 
     showMessage(
-        "✅ Нік збережено!"
+        "👤 Нік збережено!"
     );
 
 }
 
-function update(){
 
-    document.getElementById("coins")
-        .textContent=
-        Math.floor(game.coins);
+/* =========================
+   🌍 РЕКОРДИ
+========================= */
 
-    document.getElementById("nickname")
-        .textContent=
-        game.nickname;
+function updateLeaderboard(){
 
-    document.getElementById("clickPrice")
-        .textContent=
-        game.clickPrice;
+    let records =
+        JSON.parse(
+            localStorage.getItem(
+                "coinClickerRecords"
+            )
+        ) || [];
 
-    document.getElementById("autoPrice")
-        .textContent=
-        game.autoPrice;
 
-    document.getElementById("multPrice")
-        .textContent=
-        game.multPrice;
+    /*
+       Знаходимо гравця
+    */
 
-    document.getElementById("petName")
-        .textContent=
-        game.petName;
+    let player =
+        records.find(
+            r =>
+            r.nickname ===
+            game.nickname
+        );
 
-    document.getElementById("offlineLevel")
-        .textContent=
-        game.offlineLevel;
 
-    document.getElementById("offlineRate")
-        .textContent=
-        game.offlineLevel;
+    /*
+       Якщо гравця немає —
+       створюємо
+    */
 
-    document.getElementById("offlinePrice")
-        .textContent=
-        game.offlinePrice;
+    if(!player){
 
-    document.getElementById("world")
-        .textContent=
-        game.world;
+        records.push({
 
-    document.getElementById("rebirthPrice")
-        .textContent=
-        rebirthPrice();
+            nickname:
+                game.nickname,
 
-    document.getElementById("ultraPrice")
-        .textContent=
-        ultraPrice();
+            total:
+                game.total
 
-    document.getElementById("rebirths")
-        .textContent=
-        game.rebirths;
+        });
 
-    document.getElementById("ultras")
-        .textContent=
-        game.ultras;
+    }else{
 
-    document.getElementById("total")
-        .textContent=
-        Math.floor(game.total);
+        /*
+           Рекорд не зменшується
+        */
 
-    document.getElementById("clicks")
-        .textContent=
-        game.clicks;
+        if(
+            game.total >
+            player.total
+        ){
 
-    document.getElementById("perClick")
-        .textContent=
-        game.clickPower *
-        totalMultiplier();
+            player.total=
+                game.total;
 
-    document.getElementById("auto")
-        .textContent=
-        game.auto;
+        }
 
-    document.getElementById("multiplier")
-        .textContent=
-        totalMultiplier();
+    }
 
-    updateAchievements();
+
+    /*
+       Сортування
+    */
+
+    records.sort(
+        (a,b)=>
+        b.total-a.total
+    );
+
+
+    /*
+       Топ 10
+    */
+
+    records=
+        records.slice(0,10);
+
+
+    localStorage.setItem(
+        "coinClickerRecords",
+        JSON.stringify(records)
+    );
+
+
+    /*
+       Вивід
+    */
+
+    let leaderboard =
+        document.getElementById(
+            "leaderboard"
+        );
+
+    leaderboard.innerHTML="";
+
+
+    if(records.length===0){
+
+        leaderboard.innerHTML=
+            "<p>Поки що немає рекордів 😢</p>";
+
+        return;
+
+    }
+
+
+    records.forEach(
+        (record,index)=>{
+
+            let medal;
+
+            if(index===0)
+                medal="🥇";
+
+            else if(index===1)
+                medal="🥈";
+
+            else if(index===2)
+                medal="🥉";
+
+            else
+                medal="🏅";
+
+
+            let div =
+                document.createElement(
+                    "div"
+                );
+
+            div.className="rank";
+
+
+            div.innerHTML =
+                medal+
+                " <b>"+
+                escapeHTML(
+                    record.nickname
+                )+
+                "</b> — "+
+                Math.floor(
+                    record.total
+                )+
+                " 🪙";
+
+
+            leaderboard.appendChild(
+                div
+            );
+
+        }
+    );
 
 }
+
+
+/* =========================
+   ЗАХИСТ НІКА
+========================= */
+
+function escapeHTML(text){
+
+    let div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent=text;
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================
+   ДОСЯГНЕННЯ
+========================= */
 
 function updateAchievements(){
 
@@ -826,7 +1280,7 @@ function updateAchievements(){
         list.push("🪙 1000 зароблено");
 
     if(game.total>=10000)
-        list.push("💰 10000 зароблено");
+        list.push("💰 10 000 зароблено");
 
     if(game.rebirths>=1)
         list.push("♻️ Перший ребірт");
@@ -835,7 +1289,7 @@ function updateAchievements(){
         list.push("🌟 Перший ультра");
 
     if(list.length===0)
-        list.push("Поки що немає");
+        list.push("🔒 Поки що немає");
 
     document.getElementById(
         "achievements"
@@ -844,7 +1298,138 @@ function updateAchievements(){
 
 }
 
-/* АВТОКЛІКЕР */
+
+/* =========================
+   UPDATE
+========================= */
+
+function update(){
+
+    document.getElementById(
+        "coins"
+    ).textContent=
+        Math.floor(game.coins);
+
+
+    document.getElementById(
+        "nickname"
+    ).textContent=
+        game.nickname;
+
+
+    document.getElementById(
+        "clickPrice"
+    ).textContent=
+        game.clickPrice;
+
+
+    document.getElementById(
+        "autoPrice"
+    ).textContent=
+        game.autoPrice;
+
+
+    document.getElementById(
+        "multPrice"
+    ).textContent=
+        game.multPrice;
+
+
+    document.getElementById(
+        "petName"
+    ).textContent=
+        game.petName;
+
+
+    document.getElementById(
+        "offlineLevel"
+    ).textContent=
+        game.offlineLevel;
+
+
+    document.getElementById(
+        "offlineRate"
+    ).textContent=
+        game.offlineLevel;
+
+
+    document.getElementById(
+        "offlinePrice"
+    ).textContent=
+        game.offlinePrice;
+
+
+    document.getElementById(
+        "world"
+    ).textContent=
+        game.world;
+
+
+    document.getElementById(
+        "rebirthPrice"
+    ).textContent=
+        rebirthPrice();
+
+
+    document.getElementById(
+        "ultraPrice"
+    ).textContent=
+        ultraPrice();
+
+
+    document.getElementById(
+        "rebirths"
+    ).textContent=
+        game.rebirths;
+
+
+    document.getElementById(
+        "ultras"
+    ).textContent=
+        game.ultras;
+
+
+    document.getElementById(
+        "total"
+    ).textContent=
+        Math.floor(
+            game.total
+        );
+
+
+    document.getElementById(
+        "clicks"
+    ).textContent=
+        game.clicks;
+
+
+    document.getElementById(
+        "perClick"
+    ).textContent=
+        game.clickPower *
+        totalMultiplier();
+
+
+    document.getElementById(
+        "auto"
+    ).textContent=
+        game.auto;
+
+
+    document.getElementById(
+        "multiplier"
+    ).textContent=
+        totalMultiplier();
+
+
+    updateAchievements();
+
+}
+
+
+/* =========================
+   АВТОКЛІКЕР
+========================= */
 
 setInterval(()=>{
 
@@ -857,33 +1442,58 @@ setInterval(()=>{
         addCoins(amount);
 
         save();
+
         update();
+
+        /*
+           Оновлюємо рекорди
+           не кожен мілісекунд,
+           а раз на секунду
+        */
+
+        updateLeaderboard();
 
     }
 
 },1000);
 
-/* ОФЛАЙН ЗАРОБІТОК */
 
-let now=Date.now();
+/* =========================
+   ОФЛАЙН ПРИ ВХОДІ
+========================= */
+
+let currentTime =
+    Date.now();
 
 let secondsAway =
     Math.floor(
-        (now-game.lastOnline)/1000
+        (
+            currentTime -
+            game.lastOnline
+        ) / 1000
     );
+
 
 if(secondsAway>0){
 
     secondsAway =
-        Math.min(secondsAway,86400);
+        Math.min(
+            secondsAway,
+            86400
+        );
+
 
     let offlineCoins =
         secondsAway *
         game.offlineLevel;
 
+
     if(offlineCoins>0){
 
-        addCoins(offlineCoins);
+        addCoins(
+            offlineCoins
+        );
+
 
         setTimeout(()=>{
 
@@ -899,31 +1509,40 @@ if(secondsAway>0){
 
 }
 
-game.lastOnline=Date.now();
+
+game.lastOnline =
+    Date.now();
+
 
 save();
-update();
 
-/* ЗБЕРІГАЄМО ЧАС ВИХОДУ */
+
+/* =========================
+   ПЕРЕД ЗАКРИТТЯМ
+========================= */
 
 window.addEventListener(
     "beforeunload",
     ()=>{
 
-        game.lastOnline=Date.now();
+        game.lastOnline =
+            Date.now();
 
         save();
 
     }
 );
 
-/* СКИДАННЯ */
+
+/* =========================
+   СКИДАННЯ
+========================= */
 
 function resetGame(){
 
     if(
         !confirm(
-            "Точно скинути всю гру?"
+            "⚠️ Точно скинути всю гру?"
         )
     ){
 
@@ -935,9 +1554,22 @@ function resetGame(){
         "coinClicker3"
     );
 
+    localStorage.removeItem(
+        "coinClickerRecords"
+    );
+
     location.reload();
 
 }
+
+
+/* =========================
+   СТАРТ
+========================= */
+
+update();
+
+updateLeaderboard();
 
 </script>
 
