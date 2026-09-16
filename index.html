@@ -142,6 +142,11 @@ input{
 
 <h1>🪙 COIN CLICKER</h1>
 
+
+<!-- =========================
+     ПРОФІЛЬ
+========================= -->
+
 <div class="panel">
 
 <h2>👤 Профіль</h2>
@@ -168,6 +173,61 @@ input{
 </div>
 
 
+<!-- =========================
+     МОЇ ДРУЗІ
+========================= -->
+
+<div class="panel">
+
+<h2>👥 МОЇ ДРУЗІ</h2>
+
+<button onclick="openFriends()">
+    👥 МОЇ ДРУЗІ
+</button>
+
+<div id="friendsPanel" style="display:none;">
+
+<hr>
+
+<h3>🆔 Мій ID</h3>
+
+<p
+    id="myID"
+    style="word-break:break-all;"
+>
+Завантаження...
+</p>
+
+<button onclick="copyMyID()">
+    📋 Скопіювати ID
+</button>
+
+<hr>
+
+<h3>➕ Додати друга</h3>
+
+<input
+    id="friendID"
+    placeholder="Введи ID друга"
+>
+
+<br>
+
+<button onclick="addFriend()">
+    ➕ Додати друга
+</button>
+
+<div id="friendsList"></div>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     ГЛОБАЛЬНІ РЕКОРДИ
+========================= -->
+
 <div class="panel">
 
 <h2>🌍 ГЛОБАЛЬНІ РЕКОРДИ</h2>
@@ -183,6 +243,10 @@ input{
 </div>
 
 
+<!-- =========================
+     МОНЕТИ
+========================= -->
+
 <div class="coins">
 🪙 <span id="coins">0</span>
 </div>
@@ -193,6 +257,10 @@ input{
 
 <div id="message"></div>
 
+
+<!-- =========================
+     МАГАЗИН
+========================= -->
 
 <div class="panel">
 
@@ -223,6 +291,10 @@ input{
 </div>
 
 
+<!-- =========================
+     ПЕТИ
+========================= -->
+
 <div class="panel">
 
 <h2>🐾 ПЕТИ</h2>
@@ -250,6 +322,10 @@ input{
 </div>
 
 
+<!-- =========================
+     СКІНИ
+========================= -->
+
 <div class="panel">
 
 <h2>🎨 Скіни</h2>
@@ -261,6 +337,10 @@ input{
 
 </div>
 
+
+<!-- =========================
+     ОФЛАЙН
+========================= -->
 
 <div class="panel">
 
@@ -287,6 +367,10 @@ input{
 </div>
 
 
+<!-- =========================
+     ЩОДЕННИЙ БОНУС
+========================= -->
+
 <div class="panel">
 
 <h2>🎁 Щоденний бонус</h2>
@@ -298,6 +382,10 @@ input{
 </div>
 
 
+<!-- =========================
+     КОЛЕСО
+========================= -->
+
 <div class="panel">
 
 <h2>🎡 Колесо удачі</h2>
@@ -308,6 +396,10 @@ input{
 
 </div>
 
+
+<!-- =========================
+     СВІТИ
+========================= -->
 
 <div class="panel">
 
@@ -333,6 +425,10 @@ input{
 </div>
 
 
+<!-- =========================
+     ДОСЯГНЕННЯ
+========================= -->
+
 <div class="panel">
 
 <h2>🏆 Досягнення</h2>
@@ -343,6 +439,10 @@ input{
 
 </div>
 
+
+<!-- =========================
+     РЕБІРТ
+========================= -->
 
 <div class="panel">
 
@@ -367,6 +467,10 @@ input{
 </div>
 
 
+<!-- =========================
+     УЛЬТРА
+========================= -->
+
 <div class="panel">
 
 <h2>🌟 Ультра-ребірт</h2>
@@ -389,6 +493,10 @@ input{
 
 </div>
 
+
+<!-- =========================
+     СТАТИСТИКА
+========================= -->
 
 <div class="panel stats">
 
@@ -431,6 +539,10 @@ input{
 
 </div>
 
+
+<!-- =========================
+     СКИДАННЯ
+========================= -->
 
 <div class="panel">
 
@@ -490,7 +602,7 @@ JSON.parse(localStorage.getItem("coinClicker3"))
 
 
 /* =========================
-   ЗАХИСТ СТАРИХ ЗБЕРЕЖЕНЬ
+   ЗАХИСТ
 ========================= */
 
 if(!game.rebirthMultiplier){
@@ -550,6 +662,266 @@ function showMessage(text){
 
 
 /* =========================
+   ID ГРАВЦЯ
+========================= */
+
+function getPlayerID(){
+
+    let playerId =
+        localStorage.getItem(
+            "coinClickerPlayerId"
+        );
+
+    if(!playerId){
+
+        playerId =
+            crypto.randomUUID();
+
+        localStorage.setItem(
+            "coinClickerPlayerId",
+            playerId
+        );
+
+    }
+
+    return playerId;
+
+}
+
+
+/* =========================
+   МОЇ ДРУЗІ
+========================= */
+
+let friends =
+    JSON.parse(
+        localStorage.getItem(
+            "coinClickerFriends"
+        )
+    ) || [];
+
+
+function openFriends(){
+
+    let panel =
+        document.getElementById(
+            "friendsPanel"
+        );
+
+    if(
+        panel.style.display ===
+        "none"
+    ){
+
+        panel.style.display="block";
+
+        showMyID();
+
+        showFriends();
+
+    }else{
+
+        panel.style.display="none";
+
+    }
+
+}
+
+
+function showMyID(){
+
+    let playerId =
+        getPlayerID();
+
+    document.getElementById(
+        "myID"
+    ).textContent =
+        playerId;
+
+}
+
+
+function copyMyID(){
+
+    let playerId =
+        getPlayerID();
+
+    navigator.clipboard.writeText(
+        playerId
+    );
+
+    showMessage(
+        "📋 ID скопійовано!"
+    );
+
+}
+
+
+function addFriend(){
+
+    let input =
+        document.getElementById(
+            "friendID"
+        );
+
+    let id =
+        input.value.trim();
+
+
+    if(id===""){
+
+        showMessage(
+            "❌ Введи ID друга!"
+        );
+
+        return;
+
+    }
+
+
+    let myID =
+        getPlayerID();
+
+
+    if(id===myID){
+
+        showMessage(
+            "😅 Не можна додати самого себе!"
+        );
+
+        return;
+
+    }
+
+
+    if(friends.includes(id)){
+
+        showMessage(
+            "⚠️ Цей друг уже доданий!"
+        );
+
+        return;
+
+    }
+
+
+    friends.push(id);
+
+
+    localStorage.setItem(
+        "coinClickerFriends",
+        JSON.stringify(friends)
+    );
+
+
+    input.value="";
+
+
+    showFriends();
+
+
+    showMessage(
+        "✅ Друг доданий!"
+    );
+
+}
+
+
+function showFriends(){
+
+    let list =
+        document.getElementById(
+            "friendsList"
+        );
+
+
+    list.innerHTML =
+        "<h3>👤 Твої друзі</h3>";
+
+
+    if(friends.length===0){
+
+        list.innerHTML +=
+            "<p>Поки що друзів немає 😢</p>";
+
+        return;
+
+    }
+
+
+    friends.forEach(
+        (id,index)=>{
+
+            let div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className="rank";
+
+
+            div.innerHTML =
+                "👤 Друг "+
+                (index+1)+
+                "<br>"+
+                "<span class='small'>"+
+                escapeHTML(id)+
+                "</span>"+
+                "<br>"+
+                "<button onclick=\"removeFriend("+
+                index+
+                ")\">"+
+                "❌ Видалити"+
+                "</button>";
+
+
+            list.appendChild(
+                div
+            );
+
+        }
+    );
+
+}
+
+
+function removeFriend(index){
+
+    if(
+        !confirm(
+            "Видалити цього друга?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    friends.splice(
+        index,
+        1
+    );
+
+
+    localStorage.setItem(
+        "coinClickerFriends",
+        JSON.stringify(friends)
+    );
+
+
+    showFriends();
+
+
+    showMessage(
+        "❌ Друг видалений"
+    );
+
+}
+
+
+/* =========================
    ЗАГАЛЬНИЙ МНОЖНИК
 ========================= */
 
@@ -600,7 +972,7 @@ function clickCoin(){
 
 
 /* =========================
-   ПОКРАЩЕННЯ КЛІКУ
+   +1 ЗА КЛІК
 ========================= */
 
 function buyClickPower(){
@@ -667,7 +1039,7 @@ function buyAuto(){
 
 function buyMultiplier(){
 
-    if(game.multiplier >= 128){
+    if(game.multiplier>=128){
 
         showMessage(
             "🛑 Максимальний множник ×128!"
@@ -677,7 +1049,7 @@ function buyMultiplier(){
     }
 
 
-    if(game.coins < game.multPrice){
+    if(game.coins<game.multPrice){
 
         showMessage(
             "❌ Потрібно "+
@@ -694,14 +1066,14 @@ function buyMultiplier(){
     game.multiplier *= 2;
 
 
-    if(game.multiplier > 128){
+    if(game.multiplier>128){
         game.multiplier=128;
     }
 
 
     game.multPrice =
         Math.floor(
-            game.multPrice * 3
+            game.multPrice*3
         );
 
 
@@ -726,7 +1098,7 @@ function buyPet(type){
 
     if(type==="dog"){
 
-        if(game.coins < 1000){
+        if(game.coins<1000){
 
             showMessage(
                 "❌ Потрібно 1000 🪙"
@@ -746,7 +1118,7 @@ function buyPet(type){
 
     if(type==="cat"){
 
-        if(game.coins < 5000){
+        if(game.coins<5000){
 
             showMessage(
                 "❌ Потрібно 5000 🪙"
@@ -766,7 +1138,7 @@ function buyPet(type){
 
     if(type==="dragon"){
 
-        if(game.coins < 25000){
+        if(game.coins<25000){
 
             showMessage(
                 "❌ Потрібно 25000 🪙"
@@ -823,8 +1195,9 @@ function dailyBonus(){
 
     let now=Date.now();
 
+
     if(
-        now-game.lastDaily <
+        now-game.lastDaily<
         86400000
     ){
 
@@ -833,21 +1206,27 @@ function dailyBonus(){
         );
 
         return;
+
     }
 
+
     let reward =
-        1000 *
+        1000*
         totalMultiplier();
+
 
     addCoins(reward);
 
+
     game.lastDaily=now;
+
 
     save();
 
     update();
 
     scheduleLeaderboardUpdate();
+
 
     showMessage(
         "🎁 +"+reward+" 🪙"
@@ -862,16 +1241,19 @@ function dailyBonus(){
 
 function wheel(){
 
-    if(game.coins < 500){
+    if(game.coins<500){
 
         showMessage(
             "❌ Потрібно 500 🪙"
         );
 
         return;
+
     }
 
+
     game.coins-=500;
+
 
     let rewards=[
         100,
@@ -883,6 +1265,7 @@ function wheel(){
         10000
     ];
 
+
     let reward =
         rewards[
             Math.floor(
@@ -891,9 +1274,13 @@ function wheel(){
             )
         ];
 
-    reward *= totalMultiplier();
+
+    reward *=
+        totalMultiplier();
+
 
     addCoins(reward);
+
 
     save();
 
@@ -901,15 +1288,18 @@ function wheel(){
 
     scheduleLeaderboardUpdate();
 
+
     showMessage(
-        "🎉 Ти виграв "+reward+" 🪙!"
+        "🎉 Ти виграв "+
+        reward+
+        " 🪙!"
     );
 
 }
 
 
 /* =========================
-   СВІТ
+   СВІТИ
 ========================= */
 
 function world(name){
@@ -933,7 +1323,7 @@ function world(name){
 
 function rebirthPrice(){
 
-    return 10000 *
+    return 10000*
         Math.pow(
             2,
             game.rebirths
@@ -948,7 +1338,7 @@ function rebirthPrice(){
 
 function ultraPrice(){
 
-    return 1000000 *
+    return 1000000*
         Math.pow(
             5,
             game.ultras
@@ -967,7 +1357,7 @@ function rebirth(){
         rebirthPrice();
 
 
-    if(game.coins < price){
+    if(game.coins<price){
 
         showMessage(
             "❌ Потрібно "+
@@ -976,6 +1366,7 @@ function rebirth(){
         );
 
         return;
+
     }
 
 
@@ -1004,7 +1395,7 @@ function rebirth(){
 
     game.rebirths++;
 
-    game.rebirthMultiplier *= 2;
+    game.rebirthMultiplier*=2;
 
 
     save();
@@ -1033,7 +1424,7 @@ function ultraRebirth(){
         ultraPrice();
 
 
-    if(game.coins < price){
+    if(game.coins<price){
 
         showMessage(
             "❌ Потрібно "+
@@ -1042,6 +1433,7 @@ function ultraRebirth(){
         );
 
         return;
+
     }
 
 
@@ -1070,7 +1462,7 @@ function ultraRebirth(){
 
     game.ultras++;
 
-    game.ultraMultiplier *= 10;
+    game.ultraMultiplier*=10;
 
 
     save();
@@ -1090,13 +1482,13 @@ function ultraRebirth(){
 
 
 /* =========================
-   ОФЛАЙН ЗАРОБІТОК
+   ОФЛАЙН
 ========================= */
 
 function upgradeOffline(){
 
     if(
-        game.coins <
+        game.coins<
         game.offlinePrice
     ){
 
@@ -1107,6 +1499,7 @@ function upgradeOffline(){
         );
 
         return;
+
     }
 
 
@@ -1119,7 +1512,7 @@ function upgradeOffline(){
 
     game.offlinePrice =
         Math.floor(
-            game.offlinePrice * 2
+            game.offlinePrice*2
         );
 
 
@@ -1158,10 +1551,12 @@ function saveNickname(){
         );
 
         return;
+
     }
 
 
     game.nickname=name;
+
 
     save();
 
@@ -1178,7 +1573,7 @@ function saveNickname(){
 
 
 /* =========================
-   ГЛОБАЛЬНІ РЕКОРДИ FIREBASE
+   FIREBASE LEADERBOARD
 ========================= */
 
 async function updateLeaderboard(){
@@ -1187,25 +1582,11 @@ async function updateLeaderboard(){
         return;
     }
 
+
     try{
 
         let playerId =
-            localStorage.getItem(
-                "coinClickerPlayerId"
-            );
-
-
-        if(!playerId){
-
-            playerId =
-                crypto.randomUUID();
-
-            localStorage.setItem(
-                "coinClickerPlayerId",
-                playerId
-            );
-
-        }
+            getPlayerID();
 
 
         await window.firebaseSetDoc(
@@ -1217,16 +1598,19 @@ async function updateLeaderboard(){
             ),
 
             {
+
                 nickname:
-                    game.nickname || "Гість",
+                    game.nickname ||
+                    "Гість",
 
                 total:
                     Math.floor(
-                        game.total || 0
+                        game.total||0
                     ),
 
                 updatedAt:
                     Date.now()
+
             },
 
             {
@@ -1321,7 +1705,7 @@ async function updateLeaderboard(){
                     )+
                     "</b> — "+
                     Number(
-                        record.total || 0
+                        record.total||0
                     ).toLocaleString()+
                     " 🪙";
 
@@ -1356,7 +1740,7 @@ async function updateLeaderboard(){
 
 
 /* =========================
-   ВІДКЛАДЕНЕ ОНОВЛЕННЯ ТАБЛИЦІ
+   ВІДКЛАДЕНЕ ОНОВЛЕННЯ
 ========================= */
 
 let leaderboardTimer=null;
@@ -1385,7 +1769,7 @@ function scheduleLeaderboardUpdate(){
 
 
 /* =========================
-   ЗАХИСТ НІКА
+   ЗАХИСТ HTML
 ========================= */
 
 function escapeHTML(text){
@@ -1482,7 +1866,7 @@ function update(){
     document.getElementById(
         "multPrice"
     ).textContent=
-        game.multiplier >= 128
+        game.multiplier>=128
         ? "МАКСИМУМ"
         : game.multPrice;
 
@@ -1572,7 +1956,7 @@ function update(){
     document.getElementById(
         "perClick"
     ).textContent=
-        game.clickPower *
+        game.clickPower*
         totalMultiplier();
 
 
@@ -1616,7 +2000,7 @@ setInterval(()=>{
     if(game.auto>0){
 
         let amount =
-            game.auto *
+            game.auto*
             totalMultiplier();
 
 
@@ -1647,9 +2031,9 @@ let currentTime =
 let secondsAway =
     Math.floor(
         (
-            currentTime -
+            currentTime-
             game.lastOnline
-        ) / 1000
+        )/1000
     );
 
 
@@ -1663,7 +2047,7 @@ if(secondsAway>0){
 
 
     let offlineCoins =
-        secondsAway *
+        secondsAway*
         game.offlineLevel;
 
 
@@ -1689,7 +2073,7 @@ if(secondsAway>0){
 }
 
 
-game.lastOnline =
+game.lastOnline=
     Date.now();
 
 
@@ -1704,7 +2088,7 @@ window.addEventListener(
     "beforeunload",
     ()=>{
 
-        game.lastOnline =
+        game.lastOnline=
             Date.now();
 
         save();
@@ -1714,7 +2098,7 @@ window.addEventListener(
 
 
 /* =========================
-   СКИДАННЯ
+   СКИДАННЯ ГРИ
 ========================= */
 
 function resetGame(){
@@ -1742,6 +2126,11 @@ function resetGame(){
 
     localStorage.removeItem(
         "coinClickerPlayerId"
+    );
+
+
+    localStorage.removeItem(
+        "coinClickerFriends"
     );
 
 
@@ -1787,7 +2176,7 @@ from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 const firebaseConfig = {
 
     apiKey:
-        "AIzaSyBLxtt9IlDLDZjzcZwDutrzWTIQd8xmMRk",
+        "AIzaSyBLxtt9IlDLDZjzcZwDutrzWTIQd8xmMRk),
 
     authDomain:
         "coin-clicker-6791d.firebaseapp.com",
@@ -1820,43 +2209,37 @@ const db =
     getFirestore(app);
 
 
-/* Передаємо Firebase у гру */
-
-window.firebaseDB =
+window.firebaseDB=
     db;
 
-window.firebaseCollection =
+window.firebaseCollection=
     collection;
 
-window.firebaseDoc =
+window.firebaseDoc=
     doc;
 
-window.firebaseSetDoc =
+window.firebaseSetDoc=
     setDoc;
 
-window.firebaseGetDocs =
+window.firebaseGetDocs=
     getDocs;
 
-window.firebaseQuery =
+window.firebaseQuery=
     query;
 
-window.firebaseOrderBy =
+window.firebaseOrderBy=
     orderBy;
 
-window.firebaseLimit =
+window.firebaseLimit=
     limit;
 
 
-/* Firebase готовий */
-
-window.firebaseReady =
+window.firebaseReady=
     true;
 
 
-/* Завантажуємо глобальну таблицю */
-
 if(
-    typeof updateLeaderboard ===
+    typeof updateLeaderboard===
     "function"
 ){
 
