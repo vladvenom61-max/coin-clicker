@@ -1,1 +1,237 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Coin Clicker — Адмінка</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#111,#292929);
+    color:white;
+    text-align:center;
+}
+
+.container{
+    max-width:600px;
+    margin:auto;
+    padding:20px;
+}
+
+.panel{
+    background:rgba(255,255,255,.08);
+    border-radius:18px;
+    padding:25px;
+    margin-top:30px;
+}
+
+h1{
+    color:#ffd21c;
+}
+
+input{
+    padding:13px;
+    width:90%;
+    max-width:400px;
+    border:0;
+    border-radius:10px;
+    font-size:16px;
+    margin:10px;
+}
+
+button{
+    padding:14px 20px;
+    border:0;
+    border-radius:12px;
+    background:#ffd21c;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    margin:10px;
+}
+
+button:hover{
+    transform:scale(1.04);
+}
+
+.danger{
+    background:#ff4545;
+    color:white;
+}
+
+#message{
+    margin-top:20px;
+    font-size:18px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🛠️ COIN CLICKER — АДМІНКА</h1>
+
+<div class="panel">
+
+<h2>👤 Гравець</h2>
+
+<p>
+Введи ID гравця, якого потрібно скинути:
+</p>
+
+<input
+    id="playerId"
+    placeholder="ID гравця"
+>
+
+<br>
+
+<button
+    class="danger"
+    onclick="resetFriend()"
+>
+🗑️ Скинути прогрес друга
+</button>
+
+<div id="message"></div>
+
+</div>
+
+</div>
+
+
+<script type="module">
+
+import {
+    initializeApp
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+import {
+    getFirestore,
+    doc,
+    setDoc
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyBLxtt9IlDLDZjzcZwDutrzWTIQd8xmMRk",
+
+    authDomain:
+        "coin-clicker-6791d.firebaseapp.com",
+
+    projectId:
+        "coin-clicker-6791d",
+
+    storageBucket:
+        "coin-clicker-6791d.firebasestorage.app",
+
+    messagingSenderId:
+        "848884626098",
+
+    appId:
+        "1:848884626098:web:efd560559a3648cf068fab",
+
+    measurementId:
+        "G-E0514QXLK7"
+
+};
+
+
+const app =
+    initializeApp(
+        firebaseConfig
+    );
+
+
+const db =
+    getFirestore(app);
+
+
+window.resetFriend =
+async function(){
+
+    const playerId =
+        document
+        .getElementById("playerId")
+        .value
+        .trim();
+
+
+    if(playerId === ""){
+
+        document
+        .getElementById("message")
+        .textContent =
+        "❌ Введи ID гравця!";
+
+        return;
+
+    }
+
+
+    const ok =
+        confirm(
+            "⚠️ Точно скинути прогрес цього гравця?"
+        );
+
+
+    if(!ok){
+        return;
+    }
+
+
+    try{
+
+        await setDoc(
+
+            doc(
+                db,
+                "leaderboard",
+                playerId
+            ),
+
+            {
+                total:0
+            },
+
+            {
+                merge:true
+            }
+
+        );
+
+
+        document
+        .getElementById("message")
+        .textContent =
+        "✅ Рекорд гравця скинуто!";
+
+
+    }catch(error){
+
+        console.error(error);
+
+        document
+        .getElementById("message")
+        .textContent =
+        "❌ Помилка Firebase!";
+
+    }
+
+};
+
+</script>
+
+</body>
+</html>
