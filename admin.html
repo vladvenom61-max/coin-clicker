@@ -79,10 +79,10 @@ button:hover{
 
 <div class="panel">
 
-<h2>👤 Гравець</h2>
+<h2>👤 Скидання гравця</h2>
 
 <p>
-Введи ID гравця, якого потрібно скинути:
+Введи ID гравця:
 </p>
 
 <input
@@ -96,7 +96,7 @@ button:hover{
     class="danger"
     onclick="resetFriend()"
 >
-🗑️ Скинути прогрес друга
+🗑️ СКИНУТИ ВСЮ ГРУ
 </button>
 
 <div id="message"></div>
@@ -113,7 +113,6 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-
 import {
     getFirestore,
     doc,
@@ -125,7 +124,7 @@ from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 const firebaseConfig = {
 
     apiKey:
-        "AIzaSyBLxtt9IlDLDZjzcZwDutrzWTIQd8xmMRk",
+        "AIzaSyBLxt9IlDLDZjzcZwDutrzWTIQd8xmMRk",
 
     authDomain:
         "coin-clicker-6791d.firebaseapp.com",
@@ -168,7 +167,7 @@ async function(){
         .trim();
 
 
-    if(playerId === ""){
+    if(playerId===""){
 
         document
         .getElementById("message")
@@ -182,7 +181,7 @@ async function(){
 
     const ok =
         confirm(
-            "⚠️ Точно скинути прогрес цього гравця?"
+            "⚠️ Точно ПОВНІСТЮ скинути гру цього гравця?"
         );
 
 
@@ -192,6 +191,39 @@ async function(){
 
 
     try{
+
+        const now =
+            Date.now();
+
+
+        /*
+        Створюємо команду
+        на повне скидання
+        */
+
+        await setDoc(
+
+            doc(
+                db,
+                "players",
+                playerId
+            ),
+
+            {
+                resetAt:now
+            },
+
+            {
+                merge:true
+            }
+
+        );
+
+
+        /*
+        Також обнуляємо
+        його рекорд
+        */
 
         await setDoc(
 
@@ -215,12 +247,17 @@ async function(){
         document
         .getElementById("message")
         .textContent =
-        "✅ Рекорд гравця скинуто!";
+        "✅ Гру гравця скинуто!";
+
+        document
+        .getElementById("playerId")
+        .value="";
 
 
     }catch(error){
 
         console.error(error);
+
 
         document
         .getElementById("message")
