@@ -142,8 +142,6 @@ input{
 
 <h1>🪙 COIN CLICKER</h1>
 
-<!-- ПРОФІЛЬ -->
-
 <div class="panel">
 
 <h2>👤 Профіль</h2>
@@ -170,8 +168,6 @@ input{
 </div>
 
 
-<!-- ГЛОБАЛЬНІ РЕКОРДИ -->
-
 <div class="panel">
 
 <h2>🌍 ГЛОБАЛЬНІ РЕКОРДИ</h2>
@@ -180,12 +176,12 @@ input{
 🏆 Найбільше всього зароблених монет
 </p>
 
-<div id="leaderboard"></div>
+<div id="leaderboard">
+    <p>⏳ Завантаження таблиці...</p>
+</div>
 
 </div>
 
-
-<!-- МОНЕТИ -->
 
 <div class="coins">
 🪙 <span id="coins">0</span>
@@ -197,8 +193,6 @@ input{
 
 <div id="message"></div>
 
-
-<!-- МАГАЗИН -->
 
 <div class="panel">
 
@@ -229,8 +223,6 @@ input{
 </div>
 
 
-<!-- ПЕТИ -->
-
 <div class="panel">
 
 <h2>🐾 ПЕТИ</h2>
@@ -258,8 +250,6 @@ input{
 </div>
 
 
-<!-- СКІНИ -->
-
 <div class="panel">
 
 <h2>🎨 Скіни</h2>
@@ -271,8 +261,6 @@ input{
 
 </div>
 
-
-<!-- ОФЛАЙН -->
 
 <div class="panel">
 
@@ -299,8 +287,6 @@ input{
 </div>
 
 
-<!-- ДЕННИЙ БОНУС -->
-
 <div class="panel">
 
 <h2>🎁 Щоденний бонус</h2>
@@ -312,8 +298,6 @@ input{
 </div>
 
 
-<!-- КОЛЕСО -->
-
 <div class="panel">
 
 <h2>🎡 Колесо удачі</h2>
@@ -324,8 +308,6 @@ input{
 
 </div>
 
-
-<!-- СВІТИ -->
 
 <div class="panel">
 
@@ -351,8 +333,6 @@ input{
 </div>
 
 
-<!-- ДОСЯГНЕННЯ -->
-
 <div class="panel">
 
 <h2>🏆 Досягнення</h2>
@@ -363,8 +343,6 @@ input{
 
 </div>
 
-
-<!-- РЕБІРТ -->
 
 <div class="panel">
 
@@ -389,8 +367,6 @@ input{
 </div>
 
 
-<!-- УЛЬТРА -->
-
 <div class="panel">
 
 <h2>🌟 Ультра-ребірт</h2>
@@ -413,8 +389,6 @@ input{
 
 </div>
 
-
-<!-- СТАТИСТИКА -->
 
 <div class="panel stats">
 
@@ -457,8 +431,6 @@ input{
 
 </div>
 
-
-<!-- СКИДАННЯ -->
 
 <div class="panel">
 
@@ -622,6 +594,8 @@ function clickCoin(){
 
     update();
 
+    scheduleLeaderboardUpdate();
+
 }
 
 
@@ -724,8 +698,6 @@ function buyMultiplier(){
         game.multiplier=128;
     }
 
-
-    /* Наступна ціна ×3 */
 
     game.multPrice =
         Math.floor(
@@ -875,6 +847,8 @@ function dailyBonus(){
 
     update();
 
+    scheduleLeaderboardUpdate();
+
     showMessage(
         "🎁 +"+reward+" 🪙"
     );
@@ -924,6 +898,8 @@ function wheel(){
     save();
 
     update();
+
+    scheduleLeaderboardUpdate();
 
     showMessage(
         "🎉 Ти виграв "+reward+" 🪙!"
@@ -1003,10 +979,6 @@ function rebirth(){
     }
 
 
-    /*
-       СКИДАЄМО ПРОКАЧКИ
-    */
-
     game.coins=0;
 
     game.clickPower=1;
@@ -1030,10 +1002,6 @@ function rebirth(){
     game.offlinePrice=100;
 
 
-    /*
-       ДАЄМО ПОСТІЙНИЙ ×2
-    */
-
     game.rebirths++;
 
     game.rebirthMultiplier *= 2;
@@ -1042,6 +1010,8 @@ function rebirth(){
     save();
 
     update();
+
+    scheduleLeaderboardUpdate();
 
 
     showMessage(
@@ -1075,10 +1045,6 @@ function ultraRebirth(){
     }
 
 
-    /*
-       СКИДАЄМО ПРОКАЧКИ
-    */
-
     game.coins=0;
 
     game.clickPower=1;
@@ -1102,10 +1068,6 @@ function ultraRebirth(){
     game.offlinePrice=100;
 
 
-    /*
-       УЛЬТРА ДАЄ ×10
-    */
-
     game.ultras++;
 
     game.ultraMultiplier *= 10;
@@ -1114,6 +1076,8 @@ function ultraRebirth(){
     save();
 
     update();
+
+    scheduleLeaderboardUpdate();
 
 
     showMessage(
@@ -1214,136 +1178,208 @@ function saveNickname(){
 
 
 /* =========================
-   🌍 РЕКОРДИ
+   ГЛОБАЛЬНІ РЕКОРДИ FIREBASE
 ========================= */
 
-function updateLeaderboard(){
+async function updateLeaderboard(){
 
-    let records =
-        JSON.parse(
-            localStorage.getItem(
-                "coinClickerRecords"
-            )
-        ) || [];
-
-
-    let player =
-        records.find(
-            r =>
-            r.nickname ===
-            game.nickname
-        );
-
-
-    if(!player){
-
-        records.push({
-
-            nickname:
-                game.nickname,
-
-            total:
-                game.total
-
-        });
-
-    }else{
-
-        if(
-            game.total >
-            player.total
-        ){
-
-            player.total=
-                game.total;
-
-        }
-
-    }
-
-
-    records.sort(
-        (a,b)=>
-        b.total-a.total
-    );
-
-
-    records=
-        records.slice(0,10);
-
-
-    localStorage.setItem(
-        "coinClickerRecords",
-        JSON.stringify(records)
-    );
-
-
-    let leaderboard =
-        document.getElementById(
-            "leaderboard"
-        );
-
-
-    leaderboard.innerHTML="";
-
-
-    if(records.length===0){
-
-        leaderboard.innerHTML=
-            "<p>Поки що немає рекордів 😢</p>";
-
+    if(!window.firebaseReady){
         return;
-
     }
 
+    try{
 
-    records.forEach(
-        (record,index)=>{
-
-            let medal;
-
-
-            if(index===0)
-                medal="🥇";
-
-            else if(index===1)
-                medal="🥈";
-
-            else if(index===2)
-                medal="🥉";
-
-            else
-                medal="🏅";
+        let playerId =
+            localStorage.getItem(
+                "coinClickerPlayerId"
+            );
 
 
-            let div =
-                document.createElement(
-                    "div"
-                );
+        if(!playerId){
 
+            playerId =
+                crypto.randomUUID();
 
-            div.className="rank";
-
-
-            div.innerHTML =
-                medal+
-                " <b>"+
-                escapeHTML(
-                    record.nickname
-                )+
-                "</b> — "+
-                Math.floor(
-                    record.total
-                )+
-                " 🪙";
-
-
-            leaderboard.appendChild(
-                div
+            localStorage.setItem(
+                "coinClickerPlayerId",
+                playerId
             );
 
         }
-    );
+
+
+        await window.firebaseSetDoc(
+
+            window.firebaseDoc(
+                window.firebaseDB,
+                "leaderboard",
+                playerId
+            ),
+
+            {
+                nickname:
+                    game.nickname || "Гість",
+
+                total:
+                    Math.floor(
+                        game.total || 0
+                    ),
+
+                updatedAt:
+                    Date.now()
+            },
+
+            {
+                merge:true
+            }
+
+        );
+
+
+        const q =
+            window.firebaseQuery(
+
+                window.firebaseCollection(
+                    window.firebaseDB,
+                    "leaderboard"
+                ),
+
+                window.firebaseOrderBy(
+                    "total",
+                    "desc"
+                ),
+
+                window.firebaseLimit(10)
+
+            );
+
+
+        const snapshot =
+            await window.firebaseGetDocs(q);
+
+
+        let leaderboard =
+            document.getElementById(
+                "leaderboard"
+            );
+
+
+        leaderboard.innerHTML="";
+
+
+        if(snapshot.empty){
+
+            leaderboard.innerHTML =
+                "<p>Поки що немає рекордів 😢</p>";
+
+            return;
+
+        }
+
+
+        let place=1;
+
+
+        snapshot.forEach(
+            docSnap=>{
+
+                let record =
+                    docSnap.data();
+
+
+                let medal;
+
+
+                if(place===1)
+                    medal="🥇";
+
+                else if(place===2)
+                    medal="🥈";
+
+                else if(place===3)
+                    medal="🥉";
+
+                else
+                    medal="🏅";
+
+
+                let div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className="rank";
+
+
+                div.innerHTML =
+                    medal+
+                    " <b>"+
+                    escapeHTML(
+                        record.nickname ||
+                        "Гість"
+                    )+
+                    "</b> — "+
+                    Number(
+                        record.total || 0
+                    ).toLocaleString()+
+                    " 🪙";
+
+
+                leaderboard.appendChild(
+                    div
+                );
+
+
+                place++;
+
+            }
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Firebase leaderboard error:",
+            error
+        );
+
+
+        document.getElementById(
+            "leaderboard"
+        ).innerHTML =
+            "⚠️ Помилка завантаження таблиці";
+
+    }
+
+}
+
+
+/* =========================
+   ВІДКЛАДЕНЕ ОНОВЛЕННЯ ТАБЛИЦІ
+========================= */
+
+let leaderboardTimer=null;
+
+
+function scheduleLeaderboardUpdate(){
+
+    if(leaderboardTimer){
+        return;
+    }
+
+
+    leaderboardTimer =
+        setTimeout(
+            ()=>{
+
+                leaderboardTimer=null;
+
+                updateLeaderboard();
+
+            },
+            2000
+        );
 
 }
 
@@ -1593,7 +1629,7 @@ setInterval(()=>{
         update();
 
 
-        updateLeaderboard();
+        scheduleLeaderboardUpdate();
 
     }
 
@@ -1704,6 +1740,11 @@ function resetGame(){
     );
 
 
+    localStorage.removeItem(
+        "coinClickerPlayerId"
+    );
+
+
     location.reload();
 
 }
@@ -1715,7 +1756,113 @@ function resetGame(){
 
 update();
 
-updateLeaderboard();
+</script>
+
+
+<!-- =========================
+     FIREBASE
+========================= -->
+
+<script type="module">
+
+import {
+    initializeApp
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+import {
+    getFirestore,
+    collection,
+    doc,
+    setDoc,
+    getDocs,
+    query,
+    orderBy,
+    limit
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyBLxtt9IlDLDZjzcZwDutrzWTIQd8xmMRk",
+
+    authDomain:
+        "coin-clicker-6791d.firebaseapp.com",
+
+    projectId:
+        "coin-clicker-6791d",
+
+    storageBucket:
+        "coin-clicker-6791d.firebasestorage.app",
+
+    messagingSenderId:
+        "848884626098",
+
+    appId:
+        "1:848884626098:web:efd560559a3648cf068fab",
+
+    measurementId:
+        "G-E0514QXLK7"
+
+};
+
+
+const app =
+    initializeApp(
+        firebaseConfig
+    );
+
+
+const db =
+    getFirestore(app);
+
+
+/* Передаємо Firebase у гру */
+
+window.firebaseDB =
+    db;
+
+window.firebaseCollection =
+    collection;
+
+window.firebaseDoc =
+    doc;
+
+window.firebaseSetDoc =
+    setDoc;
+
+window.firebaseGetDocs =
+    getDocs;
+
+window.firebaseQuery =
+    query;
+
+window.firebaseOrderBy =
+    orderBy;
+
+window.firebaseLimit =
+    limit;
+
+
+/* Firebase готовий */
+
+window.firebaseReady =
+    true;
+
+
+/* Завантажуємо глобальну таблицю */
+
+if(
+    typeof updateLeaderboard ===
+    "function"
+){
+
+    updateLeaderboard();
+
+}
 
 </script>
 
