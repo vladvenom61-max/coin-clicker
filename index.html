@@ -4,127 +4,134 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Coin Clicker</title>
+<title>Coin Clicker 3.0</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:linear-gradient(135deg,#111,#292929);
+color:white;
+text-align:center;
+min-height:100vh;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #151515, #292929);
-    color: white;
-    text-align: center;
-    min-height: 100vh;
+.container{
+max-width:750px;
+margin:auto;
+padding:12px;
 }
 
-h1 {
-    margin: 20px 0 5px;
-    font-size: 38px;
+h1{
+font-size:38px;
+margin:15px 0 5px;
 }
 
-#coins {
-    font-size: 34px;
-    margin: 10px;
-    color: gold;
-    font-weight: bold;
+#coins{
+font-size:35px;
+font-weight:bold;
+color:#ffd21c;
+margin:10px;
 }
 
-#coin {
-    width: 190px;
-    height: 190px;
-    border-radius: 50%;
-    border: 8px solid #e0a900;
-    background: radial-gradient(circle, #ffe66d, #f5b400);
-    font-size: 80px;
-    cursor: pointer;
-    box-shadow: 0 0 30px rgba(255, 210, 0, .5);
-    transition: .1s;
-    user-select: none;
+#coin{
+width:190px;
+height:190px;
+border-radius:50%;
+border:8px solid #d99d00;
+background:radial-gradient(circle,#fff06b,#f2ad00);
+font-size:80px;
+cursor:pointer;
+box-shadow:0 0 35px #f5c400;
+transition:.1s;
+user-select:none;
 }
 
-#coin:active {
-    transform: scale(.9);
+#coin:active{
+transform:scale(.88);
 }
 
-.container {
-    max-width: 700px;
-    margin: auto;
-    padding: 10px;
+.panel{
+background:rgba(255,255,255,.08);
+border-radius:18px;
+padding:18px;
+margin:15px 0;
 }
 
-.panel {
-    background: rgba(255,255,255,.08);
-    border-radius: 18px;
-    padding: 18px;
-    margin: 15px 0;
+button{
+border:0;
+border-radius:12px;
+padding:12px 17px;
+margin:5px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+background:#ffd21c;
 }
 
-button {
-    border: none;
-    border-radius: 12px;
-    padding: 13px 18px;
-    margin: 6px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    background: #ffd21c;
+button:hover{
+transform:scale(1.04);
 }
 
-button:hover {
-    transform: scale(1.04);
+.card{
+background:rgba(0,0,0,.25);
+padding:12px;
+border-radius:14px;
+margin:8px 0;
 }
 
-.upgrade {
-    background: rgba(0,0,0,.25);
-    padding: 12px;
-    border-radius: 12px;
-    margin: 8px 0;
+.pet{
+font-size:45px;
 }
 
-#rebirth {
-    background: #b45cff;
-    color: white;
-    font-size: 18px;
+.locked{
+opacity:.5;
 }
 
-.small {
-    color: #ccc;
-    font-size: 14px;
+#rebirth{
+background:#a94cff;
+color:white;
 }
 
-.pop {
-    position: fixed;
-    pointer-events: none;
-    font-size: 24px;
-    font-weight: bold;
-    color: gold;
-    animation: pop .7s forwards;
+#ultra{
+background:#ff4c8b;
+color:white;
 }
 
-@keyframes pop {
-    0% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(-80px) scale(1.4);
-    }
+.pop{
+position:fixed;
+pointer-events:none;
+font-size:24px;
+font-weight:bold;
+color:#ffd21c;
+animation:pop .7s forwards;
 }
 
-@media (max-width: 600px) {
-    h1 {
-        font-size: 30px;
-    }
+@keyframes pop{
+0%{opacity:1;transform:translateY(0)}
+100%{opacity:0;transform:translateY(-80px)}
+}
 
-    #coin {
-        width: 160px;
-        height: 160px;
-        font-size: 65px;
-    }
+.small{
+color:#bbb;
+font-size:14px;
+}
+
+.skin-gold{background:radial-gradient(circle,#fff06b,#f2ad00)!important}
+.skin-red{background:radial-gradient(circle,#ff7777,#c40000)!important}
+.skin-blue{background:radial-gradient(circle,#77ddff,#0066cc)!important}
+.skin-green{background:radial-gradient(circle,#88ff88,#159c36)!important}
+.skin-purple{background:radial-gradient(circle,#dd88ff,#7620aa)!important}
+
+@media(max-width:600px){
+h1{font-size:30px}
+#coin{
+width:160px;
+height:160px;
+font-size:65px;
+}
 }
 </style>
 </head>
@@ -133,92 +140,558 @@ button:hover {
 
 <div class="container">
 
-<h1>🪙 COIN CLICKER</h1>
+<h1>🪙 COIN CLICKER 3.0</h1>
 
 <div id="coins">🪙 0</div>
 
 <button id="coin">🪙</button>
 
 <div class="panel">
-    <h2>🛒 Магазин</h2>
+<h2>🛒 Магазин</h2>
 
-    <div class="upgrade">
-        <b>⚡ Сила кліку</b>
-        <p>+1 монета за клік</p>
-        <p>Ціна: <span id="clickPrice">25</span> 🪙</p>
-        <button onclick="buyClickPower()">Купити</button>
-    </div>
+<div class="card">
+<b>⚡ Сила кліку</b>
+<p>+1 до сили кліку</p>
+<p>Ціна: <span id="clickPrice">25</span> 🪙</p>
+<button onclick="buyClick()">Купити</button>
+</div>
 
-    <div class="upgrade">
-        <b>💰 Автоклікер</b>
-        <p>+1 монета кожну секунду</p>
-        <p>Ціна: <span id="autoPrice">100</span> 🪙</p>
-        <button onclick="buyAuto()">Купити</button>
-    </div>
+<div class="card">
+<b>🤖 Автоклікер</b>
+<p>+1 монета кожну секунду</p>
+<p>Ціна: <span id="autoPrice">100</span> 🪙</p>
+<button onclick="buyAuto()">Купити</button>
+</div>
 
-    <div class="upgrade">
-        <b>✨ Множник</b>
-        <p>Збільшує заробіток у 2 рази</p>
-        <p>Ціна: <span id="multPrice">500</span> 🪙</p>
-        <button onclick="buyMultiplier()">Купити</button>
-    </div>
+<div class="card">
+<b>✨ Множник</b>
+<p>×2 до заробітку</p>
+<p>Ціна: <span id="multPrice">500</span> 🪙</p>
+<button onclick="buyMult()">Купити</button>
+</div>
 </div>
 
 <div class="panel">
-    <h2>🔄 Переродження</h2>
+<h2>🐾 Пети</h2>
 
-    <p>Переродження: <b id="rebirths">0</b></p>
-    <p>Постійний бонус: <b id="bonus">×1</b></p>
-    <p>Потрібно: <b id="rebirthPrice">10000</b> 🪙</p>
+<div class="card">
+<div class="pet">🐶</div>
+<b>Песик</b>
+<p>Бонус ×2</p>
+<button onclick="buyPet('dog',1000)">Купити — 1000 🪙</button>
+</div>
 
-    <button id="rebirth" onclick="doRebirth()">
-        🔄 ПЕРЕРОДИТИСЯ
-    </button>
+<div class="card">
+<div class="pet">🐱</div>
+<b>Котик</b>
+<p>Бонус ×4</p>
+<button onclick="buyPet('cat',5000)">Купити — 5000 🪙</button>
+</div>
 
-    <p class="small">
-        Переродження скидає монети та магазин,<br>
-        але дає постійний бонус до заробітку!
-    </p>
+<div class="card">
+<div class="pet">🐲</div>
+<b>Дракон</b>
+<p>Бонус ×10</p>
+<button onclick="buyPet('dragon',25000)">Купити — 25000 🪙</button>
+</div>
+
+<p>Активний пет: <b id="petName">немає</b></p>
 </div>
 
 <div class="panel">
-    <h2>🏆 Статистика</h2>
-    <p>Всього зароблено: <b id="total">0</b> 🪙</p>
-    <p>Кліків: <b id="clicks">0</b></p>
-    <p>Монет за клік: <b id="perClick">1</b></p>
-    <p>Автоклікерів: <b id="auto">0</b></p>
-    <button onclick="resetGame()">🗑️ Скинути прогрес</button>
+<h2>🎨 Скіни монети</h2>
+
+<button onclick="skin('skin-gold')">🟡 Золота</button>
+<button onclick="skin('skin-red')">🔴 Червона</button>
+<button onclick="skin('skin-blue')">🔵 Синя</button>
+<button onclick="skin('skin-green')">🟢 Зелена</button>
+<button onclick="skin('skin-purple')">🟣 Фіолетова</button>
+</div>
+
+<div class="panel">
+<h2>🎁 Щоденний бонус</h2>
+<p id="dailyText">Перевірка...</p>
+<button onclick="dailyBonus()">🎁 Забрати бонус</button>
+</div>
+
+<div class="panel">
+<h2>🎰 Колесо удачі</h2>
+<p>Вартість одного обертання: 500 🪙</p>
+<button onclick="spinWheel()">🎰 Крутити</button>
+<p id="wheelResult"></p>
+</div>
+
+<div class="panel">
+<h2>🌎 Світи</h2>
+
+<div class="card">
+🌍 Земля
+<br>
+<button onclick="world('earth')">Вибрано</button>
+</div>
+
+<div class="card">
+🌙 Місяць
+<br>
+Ціна: 10000 🪙
+<br>
+<button onclick="unlockWorld('moon',10000)">Відкрити</button>
+</div>
+
+<div class="card">
+🚀 Марс
+<br>
+Ціна: 100000 🪙
+<br>
+<button onclick="unlockWorld('mars',100000)">Відкрити</button>
+</div>
+
+<p>Поточний світ: <b id="world">Земля</b></p>
+</div>
+
+<div class="panel">
+<h2>🏆 Досягнення</h2>
+
+<p id="ach1">🔒 100 кліків</p>
+<p id="ach2">🔒 10 000 монет</p>
+<p id="ach3">🔒 Перше переродження</p>
+<p id="ach4">🔒 Купити пета</p>
+</div>
+
+<div class="panel">
+<h2>🔄 Переродження</h2>
+
+<p>Перероджень: <b id="rebirths">0</b></p>
+<p>Бонус: <b id="rebirthBonus">×1</b></p>
+<p>Потрібно: <b id="rebirthPrice">10000</b> 🪙</p>
+
+<button id="rebirth" onclick="rebirth()">🔄 ПЕРЕРОДИТИСЯ</button>
+</div>
+
+<div class="panel">
+<h2>💥 Ультра-переродження</h2>
+
+<p>Потрібно: <b id="ultraPrice">1000000</b> 🪙</p>
+<p>Дає величезний постійний бонус!</p>
+
+<button id="ultra" onclick="ultraRebirth()">💥 УЛЬТРА</button>
+</div>
+
+<div class="panel">
+<h2>🏆 Статистика</h2>
+
+<p>Всього зароблено: <b id="total">0</b> 🪙</p>
+<p>Кліків: <b id="clicks">0</b></p>
+<p>За клік: <b id="perClick">1</b> 🪙</p>
+<p>Автоклікерів: <b id="auto">0</b></p>
+<p>Ультра-перероджень: <b id="ultras">0</b></p>
+
+<button onclick="resetGame()">🗑️ Скинути прогрес</button>
 </div>
 
 </div>
 
 <script>
-let game = JSON.parse(localStorage.getItem("coinClickerSave")) || {
-    coins: 0,
-    total: 0,
-    clicks: 0,
-    clickPower: 1,
-    auto: 0,
-    multiplier: 1,
-    rebirths: 0,
-    clickPrice: 25,
-    autoPrice: 100,
-    multPrice: 500
+
+let game=JSON.parse(localStorage.getItem("coinClicker3"))||{
+coins:0,
+total:0,
+clicks:0,
+clickPower:1,
+auto:0,
+multiplier:1,
+rebirths:0,
+ultras:0,
+petBonus:1,
+petName:"немає",
+clickPrice:25,
+autoPrice:100,
+multPrice:500,
+lastDaily:0,
+world:"Земля"
 };
 
-function save() {
-    localStorage.setItem("coinClickerSave", JSON.stringify(game));
+function save(){
+localStorage.setItem("coinClicker3",JSON.stringify(game));
 }
 
-function update() {
-    document.getElementById("coins").textContent =
-        "🪙 " + Math.floor(game.coins);
+function rebirthPrice(){
+return 10000*Math.pow(2,game.rebirths);
+}
 
-    document.getElementById("total").textContent =
-        Math.floor(game.total);
+function ultraPrice(){
+return 1000000*Math.pow(5,game.ultras);
+}
 
-    document.getElementById("clicks").textContent =
-        game.clicks;
+function totalMultiplier(){
+return game.multiplier*game.petBonus;
+}
 
-    document.getElement
+function update(){
+
+document.getElementById("coins").textContent="🪙 "+Math.floor(game.coins);
+
+document.getElementById("total").textContent=Math.floor(game.total);
+
+document.getElementById("clicks").textContent=game.clicks;
+
+document.getElementById("perClick").textContent=
+game.clickPower*totalMultiplier();
+
+document.getElementById("auto").textContent=game.auto;
+
+document.getElementById("rebirths").textContent=game.rebirths;
+
+document.getElementById("rebirthBonus").textContent=
+"×"+game.multiplier;
+
+document.getElementById("ultras").textContent=game.ultras;
+
+document.getElementById("clickPrice").textContent=game.clickPrice;
+
+document.getElementById("autoPrice").textContent=game.autoPrice;
+
+document.getElementById("multPrice").textContent=game.multPrice;
+
+document.getElementById("rebirthPrice").textContent=rebirthPrice();
+
+document.getElementById("ultraPrice").textContent=ultraPrice();
+
+document.getElementById("petName").textContent=game.petName;
+
+document.getElementById("world").textContent=game.world;
+
+achievements();
+
+}
+
+function addCoins(amount){
+game.coins+=amount;
+game.total+=amount;
+}
+
+document.getElementById("coin").onclick=function(e){
+
+let amount=game.clickPower*totalMultiplier();
+
+addCoins(amount);
+
+game.clicks++;
+
+pop("+"+amount+" 🪙",e.clientX,e.clientY);
+
+update();
+save();
+};
+
+function pop(text,x,y){
+
+let p=document.createElement("div");
+
+p.className="pop";
+p.textContent=text;
+
+p.style.left=x+"px";
+p.style.top=y+"px";
+
+document.body.appendChild(p);
+
+setTimeout(()=>p.remove(),700);
+}
+
+function buyClick(){
+
+if(game.coins>=game.clickPrice){
+
+game.coins-=game.clickPrice;
+
+game.clickPower++;
+
+game.clickPrice=Math.floor(game.clickPrice*1.7);
+
+update();
+save();
+}
+}
+
+function buyAuto(){
+
+if(game.coins>=game.autoPrice){
+
+game.coins-=game.autoPrice;
+
+game.auto++;
+
+game.autoPrice=Math.floor(game.autoPrice*1.8);
+
+update();
+save();
+}
+}
+
+function buyMult(){
+
+if(game.coins>=game.multPrice){
+
+game.coins-=game.multPrice;
+
+game.multiplier*=2;
+
+game.multPrice=Math.floor(game.multPrice*3);
+
+update();
+save();
+}
+}
+
+function buyPet(name,price){
+
+if(game.coins>=price){
+
+game.coins-=price;
+
+if(name==="dog"){
+game.petBonus=2;
+game.petName="🐶 Песик";
+}
+
+if(name==="cat"){
+game.petBonus=4;
+game.petName="🐱 Котик";
+}
+
+if(name==="dragon"){
+game.petBonus=10;
+game.petName="🐲 Дракон";
+}
+
+update();
+save();
+
+alert("🐾 Пет активований!");
+}
+}
+
+function skin(className){
+
+let coin=document.getElementById("coin");
+
+coin.className="";
+
+coin.classList.add(className);
+
+save();
+}
+
+function dailyBonus(){
+
+let now=Date.now();
+
+let day=86400000;
+
+if(now-game.lastDaily>=day){
+
+let reward=1000*totalMultiplier();
+
+addCoins(reward);
+
+game.lastDaily=now;
+
+document.getElementById("dailyText").textContent=
+"🎉 Ти отримав "+reward+" 🪙!";
+
+update();
+save();
+
+}else{
+
+document.getElementById("dailyText").textContent=
+"⏳ Бонус уже отримано. Повертайся завтра!";
+}
+}
+
+function spinWheel(){
+
+if(game.coins<500){
+
+document.getElementById("wheelResult").textContent=
+"❌ Потрібно 500 🪙";
+
+return;
+}
+
+game.coins-=500;
+
+let rewards=[
+100,
+250,
+500,
+1000,
+2500,
+5000,
+10000
+];
+
+let reward=rewards[Math.floor(Math.random()*rewards.length)];
+
+reward*=totalMultiplier();
+
+addCoins(reward);
+
+document.getElementById("wheelResult").textContent=
+"🎉 Ти виграв "+reward+" 🪙!";
+
+update();
+save();
+}
+
+function world(name){
+
+if(name==="earth"){
+game.world="Земля";
+}
+
+update();
+save();
+}
+
+function unlockWorld(name,price){
+
+if(game.coins>=price){
+
+game.coins-=price;
+
+if(name==="moon"){
+game.world="Місяць";
+}
+
+if(name==="mars"){
+game.world="Марс";
+}
+
+update();
+save();
+}
+}
+
+function rebirth(){
+
+let price=rebirthPrice();
+
+if(game.coins>=price){
+
+game.coins=0;
+
+game.clickPower=1;
+
+game.auto=0;
+
+game.multiplier*=2;
+
+game.petBonus=1;
+
+game.petName="немає";
+
+game.clickPrice=25;
+
+game.autoPrice=100;
+
+game.multPrice=500;
+
+game.rebirths++;
+
+update();
+save();
+
+alert("🔄 ПЕРЕРОДЖЕННЯ!\n\nТвій бонус тепер ×"+game.multiplier);
+
+}else{
+
+alert("❌ Потрібно "+price+" 🪙!");
+}
+}
+
+function ultraRebirth(){
+
+let price=ultraPrice();
+
+if(game.coins>=price){
+
+game.coins=0;
+
+game.clickPower=1;
+
+game.auto=0;
+
+game.multiplier*=10;
+
+game.petBonus=1;
+
+game.petName="немає";
+
+game.clickPrice=25;
+
+game.autoPrice=100;
+
+game.multPrice=500;
+
+game.ultras++;
+
+update();
+save();
+
+alert("💥 УЛЬТРА-ПЕРЕРОДЖЕННЯ!\n\nТепер бонус ×"+game.multiplier);
+
+}else{
+
+alert("❌ Потрібно "+price+" 🪙!");
+}
+}
+
+function achievements(){
+
+document.getElementById("ach1").textContent=
+game.clicks>=100?"✅ 100 кліків":"🔒 100 кліків";
+
+document.getElementById("ach2").textContent=
+game.total>=10000?"✅ 10 000 монет":"🔒 10 000 монет";
+
+document.getElementById("ach3").textContent=
+game.rebirths>=1?"✅ Перше переродження":"🔒 Перше переродження";
+
+document.getElementById("ach4").textContent=
+game.petName!=="немає"?"✅ Купити пета":"🔒 Купити пета";
+}
+
+setInterval(function(){
+
+if(game.auto>0){
+
+let amount=game.auto*totalMultiplier();
+
+addCoins(amount);
+
+update();
+save();
+}
+
+},1000);
+
+function resetGame(){
+
+if(confirm("Точно скинути весь прогрес?")){
+
+localStorage.removeItem("coinClicker3");
+
+location.reload();
+}
+}
+
+update();
+
+</script>
+
+</body>
+</html>
 ```
+
