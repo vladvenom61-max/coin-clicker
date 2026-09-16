@@ -2,358 +2,223 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🪙 Coin Clicker</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coin Clicker</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #111827, #1e293b);
-      color: white;
-      text-align: center;
-      padding: 25px;
-    }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #151515, #292929);
+    color: white;
+    text-align: center;
+    min-height: 100vh;
+}
 
-    h1 {
-      font-size: 42px;
-      margin-bottom: 10px;
-    }
+h1 {
+    margin: 20px 0 5px;
+    font-size: 38px;
+}
 
-    .coins {
-      font-size: 38px;
-      font-weight: bold;
-      margin: 20px;
-      color: #ffd700;
-    }
+#coins {
+    font-size: 34px;
+    margin: 10px;
+    color: gold;
+    font-weight: bold;
+}
 
-    .click-button {
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      border: 8px solid #fbbf24;
-      background: linear-gradient(145deg, #ffd700, #f59e0b);
-      font-size: 90px;
-      cursor: pointer;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      transition: transform 0.1s;
-      user-select: none;
-    }
+#coin {
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    border: 8px solid #e0a900;
+    background: radial-gradient(circle, #ffe66d, #f5b400);
+    font-size: 80px;
+    cursor: pointer;
+    box-shadow: 0 0 30px rgba(255, 210, 0, .5);
+    transition: .1s;
+    user-select: none;
+}
 
-    .click-button:active {
-      transform: scale(0.92);
-    }
+#coin:active {
+    transform: scale(.9);
+}
 
-    .info {
-      margin-top: 15px;
-      font-size: 20px;
-      color: #cbd5e1;
-    }
+.container {
+    max-width: 700px;
+    margin: auto;
+    padding: 10px;
+}
 
-    .shop {
-      max-width: 600px;
-      margin: 35px auto 0;
-      background: rgba(255,255,255,0.08);
-      border-radius: 20px;
-      padding: 25px;
-    }
+.panel {
+    background: rgba(255,255,255,.08);
+    border-radius: 18px;
+    padding: 18px;
+    margin: 15px 0;
+}
 
-    .shop h2 {
-      font-size: 30px;
-      margin-bottom: 20px;
-    }
+button {
+    border: none;
+    border-radius: 12px;
+    padding: 13px 18px;
+    margin: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #ffd21c;
+}
 
-    .upgrade {
-      background: #334155;
-      border-radius: 15px;
-      padding: 18px;
-      margin: 12px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-    }
+button:hover {
+    transform: scale(1.04);
+}
 
-    .upgrade-info {
-      text-align: left;
-    }
+.upgrade {
+    background: rgba(0,0,0,.25);
+    padding: 12px;
+    border-radius: 12px;
+    margin: 8px 0;
+}
 
-    .upgrade-title {
-      font-size: 21px;
-      font-weight: bold;
-    }
+#rebirth {
+    background: #b45cff;
+    color: white;
+    font-size: 18px;
+}
 
-    .upgrade-level {
-      color: #cbd5e1;
-      margin-top: 5px;
-    }
+.small {
+    color: #ccc;
+    font-size: 14px;
+}
 
-    .buy {
-      border: none;
-      border-radius: 10px;
-      padding: 12px 18px;
-      background: #22c55e;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.pop {
+    position: fixed;
+    pointer-events: none;
+    font-size: 24px;
+    font-weight: bold;
+    color: gold;
+    animation: pop .7s forwards;
+}
 
-    .buy:hover {
-      background: #16a34a;
-    }
-
-    .buy:disabled {
-      background: #64748b;
-      cursor: not-allowed;
-    }
-
-    .reset {
-      margin-top: 25px;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 10px;
-      background: #ef4444;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .reset:hover {
-      background: #dc2626;
-    }
-
-    .floating {
-      position: fixed;
-      pointer-events: none;
-      font-size: 25px;
-      font-weight: bold;
-      color: #ffd700;
-      animation: floatUp 0.8s ease-out forwards;
-    }
-
-    @keyframes floatUp {
-      from {
+@keyframes pop {
+    0% {
         opacity: 1;
-        transform: translateY(0);
-      }
-      to {
+        transform: translateY(0) scale(1);
+    }
+    100% {
         opacity: 0;
-        transform: translateY(-80px);
-      }
+        transform: translateY(-80px) scale(1.4);
     }
+}
 
-    @media (max-width: 600px) {
-      body {
-        padding: 15px;
-      }
-
-      h1 {
-        font-size: 32px;
-      }
-
-      .coins {
+@media (max-width: 600px) {
+    h1 {
         font-size: 30px;
-      }
-
-      .click-button {
-        width: 180px;
-        height: 180px;
-        font-size: 70px;
-      }
-
-      .upgrade {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .upgrade-info {
-        text-align: center;
-      }
     }
-  </style>
+
+    #coin {
+        width: 160px;
+        height: 160px;
+        font-size: 65px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-  <h1>🪙 COIN CLICKER 🪙</h1>
+<div class="container">
 
-  <div class="coins">
-    <span id="coins">0</span> 🪙
-  </div>
+<h1>🪙 COIN CLICKER</h1>
 
-  <button class="click-button" id="clickButton">🪙</button>
+<div id="coins">🪙 0</div>
 
-  <div class="info">
-    За клік: <b><span id="perClick">1</span> 🪙</b>
-  </div>
+<button id="coin">🪙</button>
 
-  <div class="shop">
-    <h2>🛒 МАГАЗИН</h2>
+<div class="panel">
+    <h2>🛒 Магазин</h2>
 
     <div class="upgrade">
-      <div class="upgrade-info">
-        <div class="upgrade-title">💪 Сильний клік</div>
-        <div class="upgrade-level">
-          Рівень: <span id="clickLevel">1</span>
-        </div>
-      </div>
-
-      <button class="buy" id="clickUpgrade">
-        Купити за <span id="clickCost">25</span> 🪙
-      </button>
+        <b>⚡ Сила кліку</b>
+        <p>+1 монета за клік</p>
+        <p>Ціна: <span id="clickPrice">25</span> 🪙</p>
+        <button onclick="buyClickPower()">Купити</button>
     </div>
 
     <div class="upgrade">
-      <div class="upgrade-info">
-        <div class="upgrade-title">🤖 Автоклікер</div>
-        <div class="upgrade-level">
-          Рівень: <span id="autoLevel">0</span>
-        </div>
-      </div>
-
-      <button class="buy" id="autoUpgrade">
-        Купити за <span id="autoCost">100</span> 🪙
-      </button>
+        <b>💰 Автоклікер</b>
+        <p>+1 монета кожну секунду</p>
+        <p>Ціна: <span id="autoPrice">100</span> 🪙</p>
+        <button onclick="buyAuto()">Купити</button>
     </div>
 
-    <button class="reset" id="resetButton">
-      🗑️ Скинути прогрес
+    <div class="upgrade">
+        <b>✨ Множник</b>
+        <p>Збільшує заробіток у 2 рази</p>
+        <p>Ціна: <span id="multPrice">500</span> 🪙</p>
+        <button onclick="buyMultiplier()">Купити</button>
+    </div>
+</div>
+
+<div class="panel">
+    <h2>🔄 Переродження</h2>
+
+    <p>Переродження: <b id="rebirths">0</b></p>
+    <p>Постійний бонус: <b id="bonus">×1</b></p>
+    <p>Потрібно: <b id="rebirthPrice">10000</b> 🪙</p>
+
+    <button id="rebirth" onclick="doRebirth()">
+        🔄 ПЕРЕРОДИТИСЯ
     </button>
-  </div>
 
-  <script>
-    let coins = Number(localStorage.getItem("coins")) || 0;
-    let perClick = Number(localStorage.getItem("perClick")) || 1;
+    <p class="small">
+        Переродження скидає монети та магазин,<br>
+        але дає постійний бонус до заробітку!
+    </p>
+</div>
 
-    let clickLevel = Number(localStorage.getItem("clickLevel")) || 1;
-    let autoLevel = Number(localStorage.getItem("autoLevel")) || 0;
+<div class="panel">
+    <h2>🏆 Статистика</h2>
+    <p>Всього зароблено: <b id="total">0</b> 🪙</p>
+    <p>Кліків: <b id="clicks">0</b></p>
+    <p>Монет за клік: <b id="perClick">1</b></p>
+    <p>Автоклікерів: <b id="auto">0</b></p>
+    <button onclick="resetGame()">🗑️ Скинути прогрес</button>
+</div>
 
-    let clickCost = Number(localStorage.getItem("clickCost")) || 25;
-    let autoCost = Number(localStorage.getItem("autoCost")) || 100;
+</div>
 
-    const coinsElement = document.getElementById("coins");
-    const perClickElement = document.getElementById("perClick");
+<script>
+let game = JSON.parse(localStorage.getItem("coinClickerSave")) || {
+    coins: 0,
+    total: 0,
+    clicks: 0,
+    clickPower: 1,
+    auto: 0,
+    multiplier: 1,
+    rebirths: 0,
+    clickPrice: 25,
+    autoPrice: 100,
+    multPrice: 500
+};
 
-    const clickLevelElement = document.getElementById("clickLevel");
-    const autoLevelElement = document.getElementById("autoLevel");
+function save() {
+    localStorage.setItem("coinClickerSave", JSON.stringify(game));
+}
 
-    const clickCostElement = document.getElementById("clickCost");
-    const autoCostElement = document.getElementById("autoCost");
+function update() {
+    document.getElementById("coins").textContent =
+        "🪙 " + Math.floor(game.coins);
 
-    const clickButton = document.getElementById("clickButton");
-    const clickUpgrade = document.getElementById("clickUpgrade");
-    const autoUpgrade = document.getElementById("autoUpgrade");
-    const resetButton = document.getElementById("resetButton");
+    document.getElementById("total").textContent =
+        Math.floor(game.total);
 
-    function updateDisplay() {
-      coinsElement.textContent = Math.floor(coins);
-      perClickElement.textContent = perClick;
+    document.getElementById("clicks").textContent =
+        game.clicks;
 
-      clickLevelElement.textContent = clickLevel;
-      autoLevelElement.textContent = autoLevel;
-
-      clickCostElement.textContent = clickCost;
-      autoCostElement.textContent = autoCost;
-
-      clickUpgrade.disabled = coins < clickCost;
-      autoUpgrade.disabled = coins < autoCost;
-
-      localStorage.setItem("coins", coins);
-      localStorage.setItem("perClick", perClick);
-      localStorage.setItem("clickLevel", clickLevel);
-      localStorage.setItem("autoLevel", autoLevel);
-      localStorage.setItem("clickCost", clickCost);
-      localStorage.setItem("autoCost", autoCost);
-    }
-
-    clickButton.addEventListener("click", function(event) {
-      coins += perClick;
-
-      createFloatingCoin(
-        "+" + perClick + " 🪙",
-        event.clientX,
-        event.clientY
-      );
-
-      updateDisplay();
-    });
-
-    clickUpgrade.addEventListener("click", function() {
-      if (coins >= clickCost) {
-        coins -= clickCost;
-
-        perClick += 1;
-        clickLevel += 1;
-
-        clickCost = Math.floor(clickCost * 1.6);
-
-        updateDisplay();
-      }
-    });
-
-    autoUpgrade.addEventListener("click", function() {
-      if (coins >= autoCost) {
-        coins -= autoCost;
-
-        autoLevel += 1;
-
-        autoCost = Math.floor(autoCost * 1.8);
-
-        updateDisplay();
-      }
-    });
-
-    resetButton.addEventListener("click", function() {
-      const answer = confirm(
-        "Точно хочеш скинути весь прогрес?"
-      );
-
-      if (answer) {
-        coins = 0;
-        perClick = 1;
-        clickLevel = 1;
-        autoLevel = 0;
-        clickCost = 25;
-        autoCost = 100;
-
-        updateDisplay();
-      }
-    });
-
-    function createFloatingCoin(text, x, y) {
-      const element = document.createElement("div");
-
-      element.className = "floating";
-      element.textContent = text;
-
-      element.style.left = x + "px";
-      element.style.top = y + "px";
-
-      document.body.appendChild(element);
-
-      setTimeout(function() {
-        element.remove();
-      }, 800);
-    }
-
-    setInterval(function() {
-      if (autoLevel > 0) {
-        coins += autoLevel;
-        updateDisplay();
-      }
-    }, 1000);
-
-    updateDisplay();
-  </script>
-
-</body>
-</html>
+    document.getElement
 ```
