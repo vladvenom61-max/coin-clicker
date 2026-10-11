@@ -209,5 +209,539 @@ function resetGame(){if(!confirm('⚠️ Точно скинути всю гру
 const now=Date.now(),secondsAway=Math.min(86400,Math.max(0,Math.floor((now-(game.lastOnline||now))/1000)));if(secondsAway>0){const offlineCoins=secondsAway*game.offlineLevel;if(offlineCoins>0){addCoins(offlineCoins);setTimeout(()=>showMessage('💤 Поки тебе не було: +'+fmt(offlineCoins)+' 🪙'),500)}}game.lastOnline=now;save();window.addEventListener('beforeunload',()=>{game.lastOnline=Date.now();save()});
 if(!Number.isInteger(game.skin)||game.skin<1||game.skin>8)game.skin=1;if(game.skin>4&&!game.unlockedSkins.includes(game.skin))game.skin=1;applySkin();update();initFirebase();setInterval(()=>{if(game.auto>0){addCoins(game.auto*(1+(game.autoBoostLevel||0))*totalMultiplier());save();update();scheduleLeaderboardUpdate()}},1000);
 </script>
+
+ 
+<script>
+/* COIN CLICKER 3.7 — доповнення до версії 3.6 */
+(function () {
+  'use strict';
+
+  const $ = id => document.getElementById(id);
+  const oldBuyPet = buyPet;
+  const oldMultiplier = totalMultiplier;
+  const oldUpdate = update;
+  const oldSwitchTab = switchTab;
+  const oldResetUpgrades = resetUpgrades;
+  let spaceFrame = 0;
+  let spaceRunning = false;
+  let spaceLast = 0;
+  let spaceTime = 0;
+  let spaceStars = 0;
+  let spacePlayer = 240;
+  let spaceObjects = [];
+  const spaceKeys = {};
+  const SPACE_BEST_KEY = 'coinClicker3_spaceBest';
+
+  // Новий дизайн та версія
+  document.title = 'Coin Clicker 3.7';
+  document.querySelector('h1').innerHTML =
+    '🪙 COIN CLICKER <span style="font-size:13px;opacity:.8">3.7</span>';
+
+  const style = document.createElement('style');
+  style.textContent = `
+    .cc37-card {
+      border: 1px solid #8b8cff55;
+      background: linear-gradient(135deg,#191e43ee,#111a31ee);
+    }
+    .cc37-card button {
+      background: linear-gradient(135deg,#c8b6ff,#8b7cff);
+      color: #171331;
+    }
+    .cc37-new {
+      animation: cc37Glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes cc37Glow {
+      from { box-shadow: 0 0 8px #9b8cff22; }
+      to { box-shadow: 0 0 23px #9b8cff88; }
+    }
+    #spaceCanvas {
+      width: 100%;
+      max-width: 480px;
+      height: auto;
+      display: block;
+      margin: 12px auto;
+      border: 2px solid #9c9bff88;
+      border-radius: 16px;
+      background: #080d25;
+      touch-action: none;
+    }
+    .cc37-save-buttons {
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+  `;
+  document.head.appendChild(style);
+
+  // 1. Нові вихованці — старі вихованці працюють як раніше.
+  const petsPanel = [...document.querySelectorAll('.panel')]
+    .find(p => p.querySelector('h2')?.textContent.includes('ПЕТИ'));
+
+  if (petsPanel) {
+    const newPets = document.createElement('div');
+    newPets.className = 'cc37-card panel';
+    newPets.innerHTML = `
+      <h3>🌟 Космічні вихованці 3.7</h3>
+      <button onclick="buyPet('fox37')">
+        🦊 Космічний лис ×150<br>💰 5B
+      </button>
+      <button onclick="buyPet('robot37')">
+        🤖 Робот-пес ×250<br>💰 25B
+      </button>
+      <button onclick="buyPet('phoenix37')">
+        🌟 Золотий фенікс ×500<br>💰 100B
+      </button>
+      <p class="small">Новий вихованець замінює попереднього.</p>
+    `;
+    petsPanel.appendChild(newPets);
+  }
+
+  buyPet = function (type) {
+    const newPets = {
+      fox37: { price: 5e9, bonus: 150, name: '🦊 Космічний лис' },
+      robot37: { price: 25e9, bonus: 250, name: '🤖 Робот-пес' },
+      phoenix37: { price: 100e9, bonus: 500, name: '🌟 Золотий фенікс' }
+    };
+
+    const pet = newPets[type];
+    if (!pet) return oldBuyPet(type);
+
+    if (game.coins < pet.price) {
+      return showMessage('❌ Потрібно ' + fmt(pet.price) + ' 🪙');
+    }
+
+    game.coins -= pet.price;
+    game.petBonus = pet.bonus;
+    game.petName = pet.name;
+    game.upgradesBought = (game.upgradesBought || 0) + 1;
+
+    save();
+    update();
+    scheduleLeaderboardUpdate();
+    showMessage('🐾 Твій новий вихованець: ' + pet.name + '!');
+  };
+
+  // 2. Квантове ядро — постійне додаткове посилення заробітку.
+  if (!Number.isFinite(game.quantumLevel)) game.quantumLevel = 0;
+  if (!Number.isFinite(game.quantumPrice)) game.quantumPrice = 1e6;
+
+  totalMultiplier = function () {
+    return oldMultiplier() * (1 + (game.quantumLevel || 0) * 0.25);
+  };
+
+  const shop = document.querySelector('.shop-grid');
+  if (shop) {
+    const quantumButton = document.createElement('button');
+    quantumButton.className = 'cc37-new';
+    quantumButton.innerHTML = `
+      ⚛️ Квантове ядро<br>
+      💰 <span id="quantumPrice">1M</span><br>
+      <small>+25% заробітку за рівень</small><br>
+      <small>Рівень: <span id="quantumLevel">0</span></small>
+    `;
+    quantumButton.onclick = buyQuantumCore;
+    shop.appendChild(quantumButton);
+  }
+
+  function buyQuantumCore() {
+    const price = game.quantumPrice || 1e6;
+
+    if (game.coins < price) {
+      return showMessage('❌ Потрібно ' + fmt(price) + ' 🪙');
+    }
+
+    game.coins -= price;
+    game.quantumLevel = (game.quantumLevel || 0) + 1;
+    game.quantumPrice = Math.floor(price * 2);
+    game.upgradesBought = (game.upgradesBought || 0) + 1;
+
+    save();
+    update();
+    scheduleLeaderboardUpdate();
+    showMessage('⚛️ Квантове ядро покращено! +25% до заробітку!');
+  }
+
+  // Переродження скидає рівні нових звичайних покращень.
+  resetUpgrades = function () {
+    oldResetUpgrades();
+    game.quantumLevel = 0;
+    game.quantumPrice = 1e6;
+  };
+
+  update = function () {
+    oldUpdate();
+    if ($('quantumLevel')) $('quantumLevel').textContent = game.quantumLevel || 0;
+    if ($('quantumPrice')) $('quantumPrice').textContent = fmt(game.quantumPrice || 1e6);
+  };
+
+  // 3. Резервна копія збереження.
+  const savePanel = document.createElement('div');
+  savePanel.className = 'panel cc37-card';
+  savePanel.innerHTML = `
+    <h2>💾 Резервна копія 3.7</h2>
+    <p class="small">
+      Збережи файл із прогресом, щоб мати змогу відновити його пізніше.
+    </p>
+    <div class="cc37-save-buttons">
+      <button id="cc37Export">📥 Зберегти копію</button>
+      <button id="cc37ImportButton">📤 Відновити копію</button>
+    </div>
+    <input id="cc37ImportFile" type="file" accept=".json,application/json"
+      style="display:none">
+  `;
+  $('mainGameView').appendChild(savePanel);
+
+  $('cc37Export').onclick = function () {
+    save();
+    const data = {
+      version: '3.7',
+      game: game,
+      playerID: localStorage.getItem('coinClickerPlayerId'),
+      friends: friends
+    };
+
+    const blob = new Blob(
+      [JSON.stringify(data, null, 2)],
+      { type: 'application/json' }
+    );
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'CoinClicker-backup-3.7.json';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    showMessage('💾 Резервну копію створено!');
+  };
+
+  $('cc37ImportButton').onclick = () => $('cc37ImportFile').click();
+
+  $('cc37ImportFile').onchange = function () {
+    const file = this.files && this.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function () {
+      try {
+        const data = JSON.parse(reader.result);
+        const imported = data.game;
+
+        if (!imported || typeof imported !== 'object' ||
+            !Number.isFinite(Number(imported.coins)) ||
+            !Number.isFinite(Number(imported.total))) {
+          throw new Error('invalid backup');
+        }
+
+        if (!confirm('Відновити копію? Поточний прогрес буде замінено.')) {
+          return;
+        }
+
+        Object.assign(game, defaults, imported);
+        if (!Array.isArray(game.usedCodes)) game.usedCodes = [];
+        if (!Array.isArray(game.questClaims)) game.questClaims = [];
+        if (!Array.isArray(game.unlockedSkins)) {
+          game.unlockedSkins = [1, 2, 3, 4];
+        }
+
+        if (Array.isArray(data.friends)) {
+          friends = data.friends.filter(x => typeof x === 'string');
+          localStorage.setItem('coinClickerFriends', JSON.stringify(friends));
+        }
+
+        // ID гравця не змінюємо, щоб не створювати новий профіль.
+        save();
+        applySkin();
+        update();
+        updateLeaderboard(true);
+        showMessage('✅ Прогрес відновлено!');
+      } catch (e) {
+        showMessage('❌ Не вдалося прочитати копію. Вибери JSON-файл гри.');
+      }
+    };
+    reader.readAsText(file);
+    this.value = '';
+  };
+
+  // 4. Пошук друзів і копіювання ID друга.
+  const friendList = $('friendsList');
+  if (friendList) {
+    const search = document.createElement('input');
+    search.id = 'cc37FriendSearch';
+    search.placeholder = '🔎 Знайти друга за ID';
+    search.style.width = '95%';
+    $('friendsPanel').insertBefore(search, friendList);
+
+    const oldShowFriends = showFriends;
+    showFriends = function () {
+      oldShowFriends();
+
+      const query = (search.value || '').trim().toLowerCase();
+      [...friendList.querySelectorAll('.rank')].forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(query)
+          ? ''
+          : 'none';
+
+        const id = friends.find(friend =>
+          row.textContent.includes(friend)
+        );
+
+        if (id && !row.querySelector('.cc37CopyFriend')) {
+          const copy = document.createElement('button');
+          copy.className = 'cc37CopyFriend';
+          copy.textContent = '📋 Копіювати ID';
+          copy.onclick = async () => {
+            try {
+              await navigator.clipboard.writeText(id);
+              showMessage('📋 ID друга скопійовано!');
+            } catch {
+              showMessage('Не вдалося скопіювати ID.');
+            }
+          };
+          row.appendChild(copy);
+        }
+      });
+    };
+
+    search.addEventListener('input', showFriends);
+  }
+
+  // 5. Нова мінігра: Космічний політ.
+  const miniTab = $('miniTabButton');
+  const spaceTab = document.createElement('button');
+  spaceTab.id = 'spaceTabButton';
+  spaceTab.className = 'tab-button';
+  spaceTab.textContent = '🚀 Космічний політ';
+  spaceTab.onclick = () => switchTab('space');
+  miniTab.parentNode.appendChild(spaceTab);
+
+  const spaceView = document.createElement('div');
+  spaceView.id = 'spaceGameView';
+  spaceView.style.display = 'none';
+  spaceView.innerHTML = `
+    <div class="panel cc37-card">
+      <h2>🚀 Космічний політ</h2>
+      <p class="small">
+        Ухиляйся від астероїдів і збирай енергетичні сфери!
+        Керування: ← → або A/D. На телефоні торкайся лівої чи правої частини гри.
+      </p>
+      <p>⏱️ Час: <b id="spaceTime">0</b> с
+         &nbsp; ⭐ Сфери: <b id="spaceStars">0</b></p>
+      <canvas id="spaceCanvas" width="480" height="520"></canvas>
+      <button id="spaceStart">▶️ Почати політ</button>
+      <button id="spaceLeft">⬅️ Ліворуч</button>
+      <button id="spaceRight">➡️ Праворуч</button>
+      <p id="spaceStatus" class="small">Натисни «Почати політ»!</p>
+      <p class="small">⭐ За сферу — монети. За час польоту — додаткова нагорода.</p>
+    </div>
+  `;
+  $('miniGamesView').after(spaceView);
+
+  const canvas = $('spaceCanvas');
+  const ctx = canvas.getContext('2d');
+
+  function drawSpace() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const bg = ctx.createLinearGradient(0, 0, 0, 520);
+    bg.addColorStop(0, '#080d25');
+    bg.addColorStop(1, '#252052');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, 480, 520);
+
+    // Зірки на фоні
+    for (let i = 0; i < 45; i++) {
+      const x = (i * 83 + 17) % 480;
+      const y = (i * 137 + 31) % 520;
+      ctx.fillStyle = '#ffffff99';
+      ctx.fillRect(x, y, 2, 2);
+    }
+
+    spaceObjects.forEach(o => {
+      ctx.beginPath();
+      if (o.type === 'star') {
+        ctx.fillStyle = '#ffe36b';
+        ctx.arc(o.x, o.y, 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#fff8bd';
+        ctx.fillRect(o.x - 2, o.y - 7, 4, 14);
+      } else {
+        ctx.fillStyle = '#a4a7c4';
+        ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#626985';
+        ctx.fillRect(o.x - 5, o.y - 2, 6, 4);
+      }
+    });
+
+    // Космічний корабель
+    ctx.fillStyle = '#70eaff';
+    ctx.beginPath();
+    ctx.moveTo(spacePlayer, 445);
+    ctx.lineTo(spacePlayer - 19, 480);
+    ctx.lineTo(spacePlayer, 472);
+    ctx.lineTo(spacePlayer + 19, 480);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(spacePlayer, 458, 5, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (!spaceRunning) {
+      ctx.fillStyle = '#080d25bb';
+      ctx.fillRect(30, 205, 420, 80);
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 22px Arial';
+      ctx.fillText('🚀 КОСМІЧНИЙ ПОЛІТ', 240, 238);
+      ctx.font = '16px Arial';
+      ctx.fillText('Ухиляйся та збирай сфери!', 240, 265);
+    }
+  }
+
+  function endSpace() {
+    if (!spaceRunning) return;
+    spaceRunning = false;
+    if (spaceFrame) cancelAnimationFrame(spaceFrame);
+    spaceFrame = 0;
+
+    const reward = Math.floor(spaceTime * 25 * totalMultiplier());
+    if (reward > 0) addCoins(reward);
+
+    save();
+    update();
+    scheduleLeaderboardUpdate();
+    $('spaceStatus').textContent =
+      '💥 Політ завершено! Час: ' + spaceTime +
+      ' с. Бонус: +' + fmt(reward) + ' 🪙. Сфери: ' + spaceStars;
+    drawSpace();
+  }
+
+  function spaceLoop(now) {
+    if (!spaceRunning) return;
+
+    const dt = Math.min(2, (now - (spaceLast || now)) / 16.67);
+    spaceLast = now;
+    spaceTime += dt / 60;
+
+    if (Math.random() < 0.035 * dt) {
+      spaceObjects.push({
+        x: 15 + Math.random() * 450,
+        y: -20,
+        r: 10 + Math.random() * 10,
+        type: Math.random() < 0.23 ? 'star' : 'rock'
+      });
+    }
+
+    for (const o of spaceObjects) {
+      o.y += (o.type === 'star' ? 3 : 3.8) * dt;
+
+      if (o.type === 'star' &&
+          Math.abs(o.x - spacePlayer) < 23 && o.y > 435 && o.y < 490) {
+        o.collected = true;
+        spaceStars++;
+        addCoins(Math.floor(100 * totalMultiplier()));
+
+        if (spaceStars % 10 === 0) {
+          game.diamonds = (game.diamonds || 0) + 1;
+          $('spaceStatus').textContent = '💎 10 сфер зібрано! +1 діамант!';
+        } else {
+          $('spaceStatus').textContent = '⭐ +100 монет за сферу!';
+        }
+
+        save();
+        update();
+        scheduleLeaderboardUpdate();
+      }
+
+      if (o.type === 'rock' &&
+          Math.abs(o.x - spacePlayer) < o.r + 12 &&
+          o.y > 438 && o.y < 482) {
+        endSpace();
+        return;
+      }
+    }
+
+    spaceObjects = spaceObjects.filter(o => o.y < 545 && !o.collected);
+    if (spaceKeys.ArrowLeft || spaceKeys.a) spacePlayer -= 5 * dt;
+    if (spaceKeys.ArrowRight || spaceKeys.d) spacePlayer += 5 * dt;
+    spacePlayer = Math.max(20, Math.min(460, spacePlayer));
+
+    $('spaceTime').textContent = Math.floor(spaceTime);
+    $('spaceStars').textContent = spaceStars;
+    drawSpace();
+    spaceFrame = requestAnimationFrame(spaceLoop);
+  }
+
+  function startSpace() {
+    if (spaceFrame) cancelAnimationFrame(spaceFrame);
+    spaceRunning = true;
+    spaceLast = performance.now();
+    spaceTime = 0;
+    spaceStars = 0;
+    spacePlayer = 240;
+    spaceObjects = [];
+    $('spaceTime').textContent = '0';
+    $('spaceStars').textContent = '0';
+    $('spaceStatus').textContent = '🚀 Політ почався! Уникай астероїдів!';
+    spaceFrame = requestAnimationFrame(spaceLoop);
+  }
+
+  $('spaceStart').onclick = startSpace;
+  $('spaceLeft').onpointerdown = () => spaceKeys.ArrowLeft = true;
+  $('spaceLeft').onpointerup = () => spaceKeys.ArrowLeft = false;
+  $('spaceLeft').onpointerleave = () => spaceKeys.ArrowLeft = false;
+  $('spaceRight').onpointerdown = () => spaceKeys.ArrowRight = true;
+  $('spaceRight').onpointerup = () => spaceKeys.ArrowRight = false;
+  $('spaceRight').onpointerleave = () => spaceKeys.ArrowRight = false;
+
+  canvas.addEventListener('pointerdown', e => {
+    const rect = canvas.getBoundingClientRect();
+    spacePlayer = (e.clientX - rect.left) / rect.width * 480;
+  });
+  canvas.addEventListener('pointermove', e => {
+    if (spaceRunning && e.buttons) {
+      const rect = canvas.getBoundingClientRect();
+      spacePlayer = (e.clientX - rect.left) / rect.width * 480;
+    }
+  });
+
+  window.addEventListener('keydown', e => {
+    if (spaceView.style.display !== 'none') {
+      if (['ArrowLeft', 'ArrowRight', ' '].includes(e.key)) e.preventDefault();
+      if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') spaceKeys.ArrowLeft = true;
+      if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') spaceKeys.ArrowRight = true;
+    }
+  });
+
+  window.addEventListener('keyup', e => {
+    if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') spaceKeys.ArrowLeft = false;
+    if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') spaceKeys.ArrowRight = false;
+  });
+
+  switchTab = function (tab) {
+    if (tab !== 'space') {
+      spaceView.style.display = 'none';
+      spaceTab.classList.remove('active');
+      oldSwitchTab(tab);
+      return;
+    }
+
+    $('mainGameView').style.display = 'none';
+    $('miniGamesView').style.display = 'none';
+    spaceView.style.display = 'block';
+    $('coinTabButton').classList.remove('active');
+    $('miniTabButton').classList.remove('active');
+    spaceTab.classList.add('active');
+    drawSpace();
+  };
+
+  drawSpace();
+  update();
+
+  console.log('Coin Clicker 3.7 доповнення завантажено!');
+})();
+</script>
+
 </body>
 </html>
