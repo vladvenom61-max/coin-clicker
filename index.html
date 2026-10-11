@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Coin Clicker 3.5</title>
+<title>Coin Clicker 3.6</title>
 <style>
 :root{--accent:#ffd21c;--panel:rgba(255,255,255,.09);--text:#fff;--muted:#c4c8d2}
 *{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:var(--text);text-align:center;background:#10182b;transition:background .5s; background-size:cover;background-position:center;background-attachment:fixed}
@@ -41,11 +41,27 @@ input{background:#eef3ff;color:#172039;border:2px solid transparent}input:focus{
 @keyframes panelIn{from{opacity:.6;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:480px){.shop-grid{grid-template-columns:1fr}.shop-grid button{min-height:66px}#coinButton{width:165px;height:165px;font-size:62px}.panel{padding:13px;border-radius:18px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition:none!important}}
+
+/* Coin Clicker 3.6 — Mini Games / Flappy Bird */
+.tabbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:12px 0 20px}
+.tab-button{min-width:170px;padding:13px 18px}
+.tab-button.active{outline:3px solid #fff;filter:brightness(1.12)}
+#miniGamesView{display:none}
+#flappyCanvas{display:block;width:100%;max-width:480px;height:auto;margin:12px auto;border:3px solid #ffffff55;border-radius:16px;background:#8be3ff;touch-action:manipulation;box-shadow:0 8px 28px #0004}
+.flappy-controls{display:flex;justify-content:center;flex-wrap:wrap;gap:8px}
+.flappy-stat{display:inline-block;min-width:120px;padding:10px 14px;margin:4px;border-radius:12px;background:#ffffff12}
+@media(max-width:480px){.tab-button{min-width:135px;flex:1}#flappyCanvas{border-radius:12px}}
+
 </style>
 </head>
 <body data-world="Земля">
 <div class="container">
-<h1>🪙 COIN CLICKER <span style="font-size:13px;opacity:.7">3.5</span></h1>
+<h1>🪙 COIN CLICKER <span style="font-size:13px;opacity:.7">3.6</span></h1>
+<div class="tabbar" role="navigation" aria-label="Розділи гри">
+<button id="coinTabButton" class="tab-button active" onclick="switchTab('coin')">🪙 Coin Clicker</button>
+<button id="miniTabButton" class="tab-button" onclick="switchTab('mini')">🎮 Мініігри</button>
+</div>
+<div id="mainGameView">
 <div class="panel"><h2>👤 Профіль</h2><p>Твій нік:</p><input id="nicknameInput" maxlength="20" placeholder="Введи свій нік"><br><button onclick="saveNickname()">💾 Зберегти нік</button><p>Гравець: <b id="nickname">Гість</b></p></div>
 <div class="panel"><h2>👥 МОЇ ДРУЗІ</h2><button onclick="openFriends()">👥 МОЇ ДРУЗІ</button><div id="friendsPanel" style="display:none"><hr><h3>🆔 Мій ID</h3><p id="myID" style="word-break:break-all">Завантаження...</p><button onclick="copyMyID()">📋 Скопіювати ID</button><hr><h3>➕ Додати друга</h3><input id="friendID" placeholder="Введи ID друга"><br><button onclick="addFriend()">➕ Додати друга</button><div id="friendsList"></div></div></div>
 <div class="panel"><h2>🌍 ГЛОБАЛЬНІ РЕКОРДИ</h2><p class="small">🏆 Найбільше всього зароблених монет</p><div id="leaderboard"><p>🔄 Підключення до таблиці...</p></div><p id="leaderboardStatus" class="status">Перевіряємо з'єднання…</p><button onclick="updateLeaderboard(true)">🔄 Оновити таблицю</button></div>
@@ -64,6 +80,18 @@ input{background:#eef3ff;color:#172039;border:2px solid transparent}input:focus{
 <div class="panel"><h2>🌟 Ультра-переродження</h2><button class="rebirth-button" onclick="ultraRebirth()">🌟 УЛЬТРА<br>💰 <span id="ultraPrice">1000000</span><span id="ultraCheck" class="checkmark" aria-label="Достатньо монет">✅</span></button><p>Ультра: <b id="ultras">0</b></p><p>Бонус ультра: <b id="ultraMultiplier">×1</b></p><p class="small">Ціна зростає на 5% після кожного ультра.</p></div>
 <div class="panel stats"><h2>📊 Статистика</h2><p>🪙 Всього зароблено: <b id="total">0</b></p><p>👆 Кліків: <b id="clicks">0</b></p><p>⚡ За клік: <b id="perClick">1</b></p><p>🤖 Автоклікер: <b id="auto">0</b></p><p>✖️ Магазинний множник: <b id="multiplier">1</b></p><p>♻️ Бонус ребіртів: <b id="rebirthMultiplierStat">×1</b></p><p>🌟 Бонус ультра: <b id="ultraMultiplierStat">×1</b></p></div>
 <div class="panel"><button onclick="resetGame()">🗑️ СКИНУТИ ГРУ</button><p class="small">Прогрес зберігається в цьому браузері. Глобальні рекорди зберігаються окремо у Firebase.</p></div>
+</div><!-- end mainGameView -->
+<div id="miniGamesView">
+ <div class="panel">
+  <h2>🐦 Flappy Bird</h2>
+  <p class="small">Клацай по грі або натискай ПРОБІЛ, щоб пташка злітала. Пролітай між трубами та заробляй монети!</p>
+  <div><span class="flappy-stat">⭐ Очки: <b id="flappyScore">0</b></span><span class="flappy-stat">🏆 Рекорд: <b id="flappyBest">0</b></span></div>
+  <canvas id="flappyCanvas" width="480" height="520" aria-label="Гра Flappy Bird"></canvas>
+  <div class="flappy-controls"><button id="flappyStartButton" onclick="startFlappy()">▶️ Почати гру</button><button id="flappyFlapButton" onclick="flappyFlap()">🐦 Злетіти!</button></div>
+  <p id="flappyStatus" class="small" aria-live="polite">Натисни «Почати гру», а потім клацай або тисни ПРОБІЛ.</p>
+  <p class="small">🪙 Нагорода: 10 монет за кожну трубу (з твоїми множниками). Новий рекорд — додаткові 500 монет × множники!</p>
+ </div>
+</div>
 </div>
 <script>
 const SAVE_KEY='coinClicker3';
@@ -126,6 +154,29 @@ function fmt(n){
 function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function updateAchievements(){const a=[];if(game.clicks>=10)a.push('👆 10 кліків');if(game.clicks>=100)a.push('🔥 100 кліків');if(game.total>=1000)a.push('🪙 1000 зароблено');if(game.total>=10000)a.push('💰 10 000 зароблено');if(game.rebirths>=1)a.push('♻️ Перший ребірт');if(game.ultras>=1)a.push('🌟 Перший ультра');document.getElementById('achievements').innerHTML=a.length?a.map(escapeHTML).join('<br>'):'🔒 Поки що немає'}
 function update(){document.getElementById('coins').textContent=fmt(game.coins);document.getElementById('nickname').textContent=game.nickname||'Гість';document.getElementById('clickPrice').textContent=fmt(game.clickPrice);document.getElementById('autoPrice').textContent=fmt(game.autoPrice);document.getElementById('multPrice').textContent=game.multiplier>=128?'МАКСИМУМ':fmt(game.multPrice);document.getElementById('superPrice').textContent=fmt(game.superPrice);document.getElementById('superLevel').textContent=fmt(game.superLevel);document.getElementById('luckyPrice').textContent=fmt(game.luckyPrice);document.getElementById('luckyLevel').textContent=fmt(game.luckyLevel);document.getElementById('autoBoostPrice').textContent=fmt(game.autoBoostPrice);document.getElementById('autoBoostLevel').textContent=fmt(game.autoBoostLevel);document.getElementById('megaClickPrice').textContent=fmt(game.megaClickPrice||100000);document.getElementById('dailyStreak').textContent=game.dailyStreak||0;document.getElementById('dailyStatus').textContent=(Date.now()-(Number(game.lastDaily)||0)<86400000)?'✅ Нагороду вже забрано. Повертайся завтра!':'🎁 Нагорода готова!';document.getElementById('petName').textContent=game.petName;document.getElementById('offlineLevel').textContent=game.offlineLevel;document.getElementById('offlineRate').textContent=game.offlineLevel;document.getElementById('offlinePrice').textContent=fmt(game.offlinePrice);document.getElementById('world').textContent=game.world;document.getElementById('rebirthPrice').textContent=fmt(rebirthPrice());document.getElementById('ultraPrice').textContent=fmt(ultraPrice());document.getElementById('rebirths').textContent=game.rebirths;document.getElementById('ultras').textContent=game.ultras;document.getElementById('rebirthMultiplier').textContent='×'+game.rebirthMultiplier;document.getElementById('ultraMultiplier').textContent='×'+game.ultraMultiplier;document.getElementById('total').textContent=fmt(game.total);document.getElementById('clicks').textContent=fmt(game.clicks);document.getElementById('perClick').textContent=fmt(game.clickPower*totalMultiplier());document.getElementById('auto').textContent=game.auto*(1+(game.autoBoostLevel||0));document.getElementById('multiplier').textContent=game.multiplier;document.getElementById('rebirthMultiplierStat').textContent='×'+game.rebirthMultiplier;document.getElementById('ultraMultiplierStat').textContent='×'+game.ultraMultiplier;document.getElementById('rebirthCheck').classList.toggle('visible',game.coins>=rebirthPrice());document.getElementById('ultraCheck').classList.toggle('visible',game.coins>=ultraPrice());document.getElementById('moonButton').classList.toggle('locked',!moonUnlocked());document.getElementById('moonButton').classList.toggle('active',game.world==='Місяць');document.getElementById('earthButton').classList.toggle('active',game.world==='Земля');document.getElementById('marsButton').classList.remove('active');document.getElementById('moonRequirement').textContent=moonUnlocked()?'✅ Місяць розблоковано!':`🔒 Для Місяця потрібно: ${Math.max(0,10-game.rebirths)} звичайних ребіртів і ${Math.max(0,1-game.ultras)} ультра.`;document.body.dataset.world=game.world;updateAchievements();updateWheelButton();updateQuests()}
+// Tabs: the original Coin Clicker view and the new mini-games view.
+function switchTab(tab){
+ const mini=tab==='mini';
+ document.getElementById('mainGameView').style.display=mini?'none':'block';
+ document.getElementById('miniGamesView').style.display=mini?'block':'none';
+ document.getElementById('coinTabButton').classList.toggle('active',!mini);
+ document.getElementById('miniTabButton').classList.toggle('active',mini);
+ if(mini)drawFlappy();
+}
+// Flappy Bird stores only its own high score separately; the Coin Clicker save key stays unchanged.
+const FLAPPY_KEY='coinClicker3_flappy';
+let flappyBest=0;try{flappyBest=Math.max(0,Number(localStorage.getItem(FLAPPY_KEY))||0)}catch{}
+let flappy={running:false,over:false,started:false,score:0,birdY:220,velocity:0,pipes:[],last:0,raf:0,awarded:0};
+const flappyCanvas=document.getElementById('flappyCanvas'),flappyCtx=flappyCanvas.getContext('2d');
+function updateFlappyLabels(){document.getElementById('flappyScore').textContent=flappy.score;document.getElementById('flappyBest').textContent=flappyBest}
+function resetFlappyState(){flappy.running=false;flappy.over=false;flappy.started=false;flappy.score=0;flappy.birdY=220;flappy.velocity=0;flappy.pipes=[];flappy.last=0;flappy.awarded=0;updateFlappyLabels()}
+function startFlappy(){if(flappy.raf)cancelAnimationFrame(flappy.raf);resetFlappyState();flappy.running=true;flappy.started=true;flappy.pipes=[{x:530,gapY:190,scored:false},{x:790,gapY:330,scored:false}];document.getElementById('flappyStatus').textContent='Гра почалася! Клацай або натискай ПРОБІЛ.';document.getElementById('flappyStartButton').textContent='🔄 Почати знову';flappy.last=performance.now();drawFlappy();flappy.raf=requestAnimationFrame(flappyLoop)}
+function flappyFlap(){if(!flappy.running){if(!flappy.started||flappy.over)startFlappy();if(!flappy.running)return}flappy.velocity=-6.8;drawFlappy()}
+function endFlappy(){if(!flappy.running)return;flappy.running=false;flappy.over=true;if(flappy.raf)cancelAnimationFrame(flappy.raf);flappy.raf=0;let extra=0;if(flappy.score>flappyBest){flappyBest=flappy.score;try{localStorage.setItem(FLAPPY_KEY,String(flappyBest))}catch{}extra=Math.floor(500*totalMultiplier());addCoins(extra);document.getElementById('flappyStatus').textContent='🏆 Новий рекорд! +'+fmt(extra)+' бонусних монет! Натисни «Почати знову», щоб спробувати ще.'}else{document.getElementById('flappyStatus').textContent='💥 Гру завершено! Очки: '+flappy.score+'. Натисни «Почати знову», щоб спробувати ще.'}save();update();scheduleLeaderboardUpdate();updateFlappyLabels();drawFlappy()}
+function flappyLoop(now){if(!flappy.running)return;const dt=Math.min(2,(now-(flappy.last||now))/16.67);flappy.last=now;flappy.velocity+=0.34*dt;flappy.birdY+=flappy.velocity*dt;for(const p of flappy.pipes){p.x-=2.7*dt;if(!p.scored&&p.x+66<78){p.scored=true;flappy.score++;const reward=Math.floor(10*totalMultiplier());addCoins(reward);document.getElementById('flappyStatus').textContent='🪙 +'+fmt(reward)+' монет за трубу!';save();update();scheduleLeaderboardUpdate()}}flappy.pipes=flappy.pipes.filter(p=>p.x>-80);if(flappy.pipes.length<3){const last=flappy.pipes[flappy.pipes.length-1];if(!last||last.x<270)flappy.pipes.push({x:520,gapY:110+Math.random()*250,scored:false})}if(flappy.birdY<12||flappy.birdY>470){endFlappy();return}for(const p of flappy.pipes){const birdLeft=60,birdRight=96,birdTop=flappy.birdY-13,birdBottom=flappy.birdY+13;if(birdRight>p.x&&birdLeft<p.x+66&&(birdTop<p.gapY-78||birdBottom>p.gapY+78)){endFlappy();return}}updateFlappyLabels();drawFlappy();flappy.raf=requestAnimationFrame(flappyLoop)}
+function drawFlappy(){if(!flappyCtx)return;const c=flappyCtx,w=c.canvas.width,h=c.canvas.height;c.clearRect(0,0,w,h);const sky=c.createLinearGradient(0,0,0,h);sky.addColorStop(0,'#63caff');sky.addColorStop(1,'#d5f8ff');c.fillStyle=sky;c.fillRect(0,0,w,h);c.fillStyle='#ffffff99';for(const cloud of [[70,85,28],[320,120,36],[210,45,22]]){c.beginPath();c.arc(cloud[0],cloud[1],cloud[2],0,Math.PI*2);c.arc(cloud[0]+cloud[2]*.8,cloud[1]+5,cloud[2]*.7,0,Math.PI*2);c.fill()}for(const p of flappy.pipes){const topH=p.gapY-78,bottomY=p.gapY+78;c.fillStyle='#23a83d';c.fillRect(p.x,0,66,topH);c.fillRect(p.x-5,topH-18,76,18);c.fillRect(p.x,bottomY,66,h-bottomY-36);c.fillRect(p.x-5,bottomY,76,18);c.fillStyle='#63e35d';c.fillRect(p.x+8,0,10,Math.max(0,topH-18));c.fillRect(p.x+8,bottomY+18,10,h-bottomY-54)}c.fillStyle='#d9a44b';c.fillRect(0,h-36,w,36);c.fillStyle='#78c84a';c.fillRect(0,h-42,w,8);c.save();c.translate(78,flappy.birdY);c.rotate(Math.max(-.35,Math.min(.65,flappy.velocity*.045)));c.fillStyle='#ffd72f';c.beginPath();c.ellipse(0,0,18,14,0,0,Math.PI*2);c.fill();c.fillStyle='#fff';c.beginPath();c.arc(8,-5,6,0,Math.PI*2);c.fill();c.fillStyle='#172238';c.beginPath();c.arc(10,-5,2.5,0,Math.PI*2);c.fill();c.fillStyle='#ff7d28';c.beginPath();c.moveTo(15,1);c.lineTo(29,5);c.lineTo(15,8);c.closePath();c.fill();c.fillStyle='#f2a51e';c.beginPath();c.ellipse(-6,5,9,5,-.2,0,Math.PI*2);c.fill();c.restore();if(!flappy.running){c.fillStyle='#10233cdd';c.fillRect(40,185,400,112);c.textAlign='center';c.fillStyle='#fff';c.font='bold 27px Arial';c.fillText(flappy.over?'ГРУ ЗАВЕРШЕНО':'FLAPPY BIRD',240,225);c.font='17px Arial';c.fillText(flappy.over?'Спробуй ще раз!':'Натисни «Почати гру»',240,257)}}
+flappyCanvas.addEventListener('pointerdown',e=>{e.preventDefault();flappyFlap()});window.addEventListener('keydown',e=>{if(e.code==='Space'&&document.getElementById('miniGamesView').style.display!=='none'){e.preventDefault();flappyFlap()}});updateFlappyLabels();drawFlappy();
+
 // Firebase leaderboard: always leave loading state, even when config/rules/network fail.
 let firebaseApi=null, firebaseDb=null, firebaseReady=false, leaderboardBusy=false, lastLeaderboardWrite=0, leaderboardTimer=null;
 function setLeaderboardStatus(s){document.getElementById('leaderboardStatus').textContent=s}
