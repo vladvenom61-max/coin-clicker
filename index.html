@@ -2,344 +2,112 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Coin Clicker 4.0</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coin Clicker 4.0 FULL</title>
 <style>
-:root{--accent:#ffd21c;--panel:rgba(255,255,255,.09);--text:#fff;--muted:#c4c8d2}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:var(--text);text-align:center;background:#10182b;transition:background .5s; background-size:cover;background-position:center;background-attachment:fixed}
-body[data-world="Земля"]{background-image:linear-gradient(135deg,rgba(5,15,35,.72),rgba(7,44,78,.76)),url('https://images.unsplash.com/photo-1614730984906-4f4b4b5f1f6f?auto=format&fit=crop&w=1800&q=85')}
-body[data-world="Місяць"]{background-image:linear-gradient(135deg,rgba(10,10,20,.72),rgba(45,45,58,.78)),url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1800&q=85')}
-body[data-world="Марс"]{background-image:linear-gradient(135deg,rgba(35,10,5,.8),rgba(95,30,12,.78)),url('https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1800&q=85')}
-/* Moon background fallback is a rich lunar gradient, so it still looks correct if an image host is unavailable. */
-body[data-world="Місяць"]{background-image:radial-gradient(circle at 75% 15%,#c9cbd0 0 4%,transparent 4.5%),radial-gradient(circle at 30% 70%,#626773 0 2%,transparent 2.5%),radial-gradient(circle at 65% 65%,#414652 0 3%,transparent 3.5%),linear-gradient(135deg,#080a12,#242a38 55%,#11131d)}
-.container{max-width:850px;margin:auto;padding:15px}.topline{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap}h1{font-size:clamp(28px,5vw,42px);margin:14px 0;text-shadow:0 3px 16px #0008}.panel{background:rgba(12,17,29,.78);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px);border-radius:18px;padding:18px;margin:15px 0;box-shadow:0 8px 28px #0002}.coins{font-size:clamp(30px,6vw,44px);font-weight:bold;margin:20px;color:var(--accent);text-shadow:0 2px 15px #ffd21c55}#coinButton{width:210px;height:210px;border-radius:50%;border:8px solid #d99d00;background:radial-gradient(circle,#fff06b,#f2ad00);font-size:80px;cursor:pointer;box-shadow:0 0 35px #f5c400;transition:transform .1s,filter .2s;touch-action:manipulation}#coinButton:active{transform:scale(.88)}button{border:0;border-radius:12px;padding:12px 17px;margin:5px;font-size:16px;font-weight:bold;cursor:pointer;background:linear-gradient(135deg,#ffe66b,#ffbf00);color:#302300;transition:transform .15s,filter .15s;box-shadow:0 4px 12px #0002}button:hover{transform:translateY(-2px);filter:brightness(1.07)}button:active{transform:scale(.97)}button:disabled{opacity:.6;cursor:not-allowed;transform:none}.world-button{min-width:125px}.world-button.active{outline:3px solid #fff;box-shadow:0 0 18px #fff5}.coming{font-size:12px;background:#ff654f;color:#fff;padding:4px 7px;border-radius:8px;display:inline-block}.rebirth-button{min-width:230px;position:relative;padding-right:46px}.checkmark{display:none;position:absolute;right:12px;top:50%;transform:translateY(-50%) scale(.5);font-size:25px;color:#087d31;text-shadow:0 1px 2px #fff8;animation:pop .22s ease-out forwards}.checkmark.visible{display:inline-block}@keyframes pop{to{transform:translateY(-50%) scale(1)}}#message{min-height:25px;color:var(--accent);font-size:18px;margin:10px}.small{color:var(--muted);font-size:14px}.stats{text-align:left;background:rgba(0,0,0,.2);padding:15px;border-radius:12px}.rank{background:rgba(0,0,0,.25);padding:12px;margin:7px 0;border-radius:12px;font-size:18px;overflow-wrap:anywhere}.skin1{background:radial-gradient(circle,#fff06b,#f2ad00)!important}.skin2{background:radial-gradient(circle,#77ddff,#0066cc)!important}.skin3{background:radial-gradient(circle,#dd88ff,#7620aa)!important}.skin4{background:radial-gradient(circle,#88ff88,#159c36)!important}.skin5{background:conic-gradient(#ff4d6d,#ffd166,#06d6a0,#4cc9f0,#9b5de5,#ff4d6d)!important;border-color:#fff!important}.skin6{background:radial-gradient(circle at 30% 25%,#ffffff,#9d7bff 12%,#34205f 42%,#090d2c 75%)!important;border-color:#bca7ff!important}.skin7{background:radial-gradient(circle at 35% 25%,#fff2a6,#ff9b21 35%,#ef3e18 68%,#731800)!important;border-color:#ffad4d!important}.skin8{background:radial-gradient(circle at 35% 25%,#ffffff,#b7f3ff 30%,#43bce8 60%,#2365d8)!important;border-color:#e3fbff!important}.status{font-size:14px;color:var(--muted);min-height:20px}.locked{opacity:.68}.coin-pop{position:fixed;pointer-events:none;font-weight:bold;color:#ffe45e;text-shadow:0 2px 5px #000;animation:floatup .75s ease-out forwards;z-index:10}@keyframes floatup{to{transform:translateY(-65px);opacity:0}}input{padding:12px;border-radius:10px;border:0;font-size:16px;width:80%;max-width:300px;margin:5px}hr{border:0;border-top:1px solid #ffffff25;margin:18px 0}.world-icon{font-size:24px}@media(max-width:600px){.container{padding:9px}#coinButton{width:170px;height:170px;font-size:65px}.panel{padding:14px}.rebirth-button{min-width:220px}}
-
-/* Coin Clicker 3.3: refreshed glass UI and playful motion */
-:root{--accent:#ffe36b;--muted:#c9d5ee}
-body{background-color:#090e1c;background-image:radial-gradient(ellipse at 15% 0%,#263a68 0,transparent 42%),radial-gradient(ellipse at 95% 45%,#39205b 0,transparent 38%),linear-gradient(160deg,#080d19,#111a31 65%,#080d19);background-attachment:fixed}
-.container{max-width:900px;padding:clamp(10px,2.5vw,24px)}
-h1{letter-spacing:1.5px;background:linear-gradient(90deg,#fff5bd,#ffd34d,#ff9d58);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 15px #ffc92835);animation:titleGlow 4s ease-in-out infinite alternate}
-.panel{background:linear-gradient(145deg,rgba(24,34,59,.86),rgba(12,18,34,.84));border:1px solid rgba(180,205,255,.16);border-radius:22px;box-shadow:0 12px 34px #0003,inset 0 1px 0 #ffffff0c;transition:transform .22s,border-color .22s,box-shadow .22s;animation:panelIn .45s ease both}
-.panel:hover{border-color:#ffe36b45;box-shadow:0 15px 38px #0004,inset 0 1px 0 #ffffff12}
-.coins{font-variant-numeric:tabular-nums;letter-spacing:.5px;animation:coinGlow 2.6s ease-in-out infinite}
-#coinButton{border:7px solid #ffe083;background:radial-gradient(circle at 35% 28%,#fff9a8 0 8%,#ffe65b 25%,#ffb800 68%,#e98700 100%);box-shadow:0 0 0 8px #ffcb2420,0 0 38px #ffbe2b65,inset 0 -9px 0 #b86a1740;animation:coinFloat 3s ease-in-out infinite}
-#coinButton:hover{filter:brightness(1.08) saturate(1.08)}
-button{border-radius:14px;background:linear-gradient(135deg,#fff0a0,#ffd04a 58%,#ffb82f);box-shadow:0 5px 0 #9b681d65,0 9px 18px #0002;transition:transform .16s,filter .16s,box-shadow .16s}
-button:hover{transform:translateY(-3px);filter:brightness(1.08);box-shadow:0 7px 0 #9b681d55,0 13px 24px #0003}
-button:active{transform:translateY(2px) scale(.98);box-shadow:0 2px 0 #9b681d55}
-.shop-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:600px;margin:12px auto}
-.shop-grid button{margin:0;min-height:80px;line-height:1.5}
-.quest-row{padding:12px;margin:9px 0;border:1px solid #ffffff18;border-radius:13px;background:#ffffff08;text-align:left}.quest-row button{float:right}.quest-row:after{content:"";display:block;clear:both}.new-tag{font-size:11px;background:#73e6ad;color:#123;padding:3px 7px;border-radius:9px;margin-left:5px}
-.shop-grid small{font-size:12px;opacity:.75}
-.stats{border:1px solid #ffffff13}
-.rank{border:1px solid #ffffff10;background:linear-gradient(100deg,#ffffff0d,#ffffff04)}
-input{background:#eef3ff;color:#172039;border:2px solid transparent}input:focus{outline:none;border-color:#ffd34d;box-shadow:0 0 0 4px #ffd34d24}
-.coin-pop{font-size:20px;color:#fff18b;filter:drop-shadow(0 2px 7px #ffb30080)}
-@keyframes titleGlow{from{filter:drop-shadow(0 3px 10px #ffc92820)}to{filter:drop-shadow(0 3px 20px #ffc92865)}}
-@keyframes coinGlow{0%,100%{text-shadow:0 2px 12px #ffd21c40}50%{text-shadow:0 2px 24px #ffd21ca0}}
-@keyframes coinFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-5px) rotate(1deg)}}
-@keyframes panelIn{from{opacity:.6;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:480px){.shop-grid{grid-template-columns:1fr}.shop-grid button{min-height:66px}#coinButton{width:165px;height:165px;font-size:62px}.panel{padding:13px;border-radius:18px}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition:none!important}}
-
-/* Coin Clicker 3.6 — Diamonds, pets, super rebirth and Flappy Bird */
-.diamond-count{font-size:clamp(24px,5vw,34px);font-weight:bold;color:#8beaff;text-shadow:0 0 18px #32cfff66}
-.gem-card{border:1px solid #69dfff55;background:linear-gradient(135deg,#12334bdb,#171e38e8)}
-/* Mini Games / Flappy Bird */
-.tabbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:12px 0 20px}
-.tab-button{min-width:170px;padding:13px 18px}
-.tab-button.active{outline:3px solid #fff;filter:brightness(1.12)}
-#miniGamesView{display:none}
-#flappyCanvas{display:block;width:100%;max-width:480px;height:auto;margin:12px auto;border:3px solid #ffffff55;border-radius:16px;background:#8be3ff;touch-action:manipulation;box-shadow:0 8px 28px #0004}
-.flappy-controls{display:flex;justify-content:center;flex-wrap:wrap;gap:8px}
-.flappy-stat{display:inline-block;min-width:120px;padding:10px 14px;margin:4px;border-radius:12px;background:#ffffff12}
-@media(max-width:480px){.tab-button{min-width:135px;flex:1}#flappyCanvas{border-radius:12px}}
-
+:root{--bg:#0c1020;--panel:#171d31;--panel2:#202943;--gold:#ffd43b;--cyan:#55e6ff;--text:#f5f7ff;--muted:#aeb8d3;--line:#303b5a;--green:#69f0ae;--pink:#ff72c6}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#1b2750 0,#0c1020 48%);color:var(--text);font:15px/1.45 system-ui,Segoe UI,Arial,sans-serif;min-height:100vh}
+header{text-align:center;padding:20px 14px 10px}h1{margin:0;font-size:clamp(28px,5vw,42px)}h1 span{color:var(--gold)}header p{color:var(--muted);margin:4px}
+.wrap{max-width:1150px;margin:auto;padding:0 14px 30px}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}
+.stat,.panel{background:linear-gradient(145deg,var(--panel),#12182a);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 10px 25px #0002}.stat small{display:block;color:var(--muted)}.stat strong{font-size:clamp(18px,3vw,26px);overflow-wrap:anywhere}
+nav{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0}.tab,button{border:1px solid #3b496b;border-radius:10px;padding:10px 13px;background:var(--panel2);color:var(--text);font:inherit;cursor:pointer;transition:.15s}
+button:hover,.tab:hover{filter:brightness(1.15)}.tab.active{background:var(--gold);color:#171717;border-color:var(--gold);font-weight:800}.page{display:none}.page.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+h2{margin:0 0 10px;font-size:22px}h3{margin:0 0 7px;font-size:17px}.muted{color:var(--muted)}.small{font-size:13px}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.spread{display:flex;justify-content:space-between;align-items:center;gap:10px}.item{padding:12px;border:1px solid var(--line);background:#ffffff05;border-radius:12px;margin:8px 0}.item p{margin:5px 0;color:var(--muted)}button.primary{background:var(--gold);color:#171717;font-weight:800;border-color:var(--gold)}button.good{border-color:#3e946f;color:var(--green)}button.danger{border-color:#a74c6d;color:#ff9bb8}button:disabled{opacity:.45;cursor:not-allowed}
+.bigcoin{display:block;margin:18px auto;width:min(220px,55vw);aspect-ratio:1;border-radius:50%;border:7px solid #fff4;background:radial-gradient(circle at 30% 25%,#fff7a3,#ffd43b 38%,#d89000 78%);color:#704000;font-size:76px;box-shadow:0 0 0 10px #ffd43b18,0 15px 40px #0006;cursor:pointer;transition:transform .08s}.bigcoin:active{transform:scale(.94)}
+input{background:#0d1324;color:var(--text);border:1px solid #3b496b;border-radius:9px;padding:10px;font:inherit;max-width:100%;min-width:0}input[type=text],input:not([type]){width:100%}.field{display:grid;gap:5px;margin:8px 0}.notice{padding:10px 12px;border-radius:10px;background:#55e6ff12;border:1px solid #55e6ff44;margin:8px 0}.progress{height:9px;background:#090d19;border-radius:9px;overflow:hidden;margin:8px 0}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--gold));width:0%}
+.pet-icon{font-size:28px}.footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#f5f7ff;color:#151a29;border-radius:12px;padding:11px 17px;box-shadow:0 8px 30px #0007;z-index:20;display:none;max-width:90vw}
+@media(max-width:740px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.grid,.grid.three{grid-template-columns:1fr}.tab{flex:1 1 28%;padding:9px 7px;font-size:13px}.panel{padding:12px}}
 </style>
 </head>
-<body data-world="Земля">
-<div class="container">
-<h1>🪙 COIN CLICKER <span style="font-size:13px;opacity:.7">4.0</span></h1>
-<div class="tabbar" role="navigation" aria-label="Розділи гри">
-<button id="coinTabButton" class="tab-button active" onclick="switchTab('coin')">🪙 Coin Clicker</button>
-<button id="miniTabButton" class="tab-button" onclick="switchTab('mini')">🎮 Мініігри</button>
-</div>
-<div id="mainGameView">
-<div class="panel"><h2>👤 Профіль</h2><p>Твій нік:</p><input id="nicknameInput" maxlength="20" placeholder="Введи свій нік"><br><button onclick="saveNickname()">💾 Зберегти нік</button><p>Гравець: <b id="nickname">Гість</b></p></div>
-<div class="panel"><h2>👥 МОЇ ДРУЗІ</h2><button onclick="openFriends()">👥 МОЇ ДРУЗІ</button><div id="friendsPanel" style="display:none"><hr><h3>🆔 Мій ID</h3><p id="myID" style="word-break:break-all">Завантаження...</p><button onclick="copyMyID()">📋 Скопіювати ID</button><hr><h3>➕ Додати друга</h3><input id="friendID" placeholder="Введи ID друга"><br><button onclick="addFriend()">➕ Додати друга</button><div id="friendsList"></div></div></div>
-<div class="panel"><h2>🌍 ГЛОБАЛЬНІ РЕКОРДИ</h2><p class="small">🏆 Найбільше всього зароблених монет</p><div id="leaderboard"><p>🔄 Підключення до таблиці...</p></div><p id="leaderboardStatus" class="status">Перевіряємо з'єднання…</p><button onclick="updateLeaderboard(true)">🔄 Оновити таблицю</button></div>
-<div class="coins">🪙 <span id="coins">0</span></div><button id="coinButton" onclick="clickCoin()">🪙</button><div id="message" aria-live="polite"></div>
-<div class="panel shop-panel"><h2>🛒 Магазин покращень</h2><p class="small">Прокачуйся та заробляй ще швидше!</p><div class="shop-grid"><button onclick="buyClickPower()">⚡ +1 за клік<br>💰 <span id="clickPrice">25</span></button><button onclick="buyAuto()">🤖 Автоклікер<br>💰 <span id="autoPrice">100</span></button><button onclick="buyMultiplier()">✖️ Множник<br>💰 <span id="multPrice">50000</span></button><button onclick="buySuperClick()">✨ Суперклік +10<br>💰 <span id="superPrice">2.5K</span><br><small>Рівень: <span id="superLevel">0</span></small></button><button onclick="buyLuckyUpgrade()">🍀 Щаслива монета<br>💰 <span id="luckyPrice">10K</span><br><small>Бонус: +<span id="luckyLevel">0</span>%</small></button><button onclick="buyAutoBoost()">🚀 Турбо-автоклікер<br>💰 <span id="autoBoostPrice">25K</span><br><small>Рівень: <span id="autoBoostLevel">0</span></small></button><button onclick="buyMegaClick()">💥 Мега-клік +50<br>💰 <span id="megaClickPrice">100K</span><br><small>Новинка 3.5</small></button></div><p class="small">Максимальний магазинний множник: ×128</p></div>
-<div class="panel"><h2>🐾 ПЕТИ <span class="new-tag">+2 НОВІ</span></h2><button onclick="buyPet('dog')">🐶 Пес ×2<br>💰 1K</button><button onclick="buyPet('cat')">🐱 Кіт ×4<br>💰 5K</button><button onclick="buyPet('dragon')">🐲 Дракон ×10<br>💰 25K</button><button onclick="buyPet('hamster')">🐹 Хом’як ×15<br>💰 100K</button><button onclick="buyPet('phoenix')">🔥 Фенікс ×25<br>💰 1M</button><button onclick="buyPet('sloth')">🦥 Лінивець ×35<br>💰 5M</button><button onclick="buyPet('alien')">👽 Прибулець ×50<br>💰 25M</button><button onclick="buyPet('unicorn')">🦄 Єдиноріг ×75<br>💰 100M</button><button onclick="buyPet('cosmic')">🌌 Космічний дракон ×100<br>💰 1B</button><p>Поточний пет: <b id="petName">немає</b></p><p class="small">Пети дають множник заробітку. Купівля нового пета замінює попереднього.</p></div>
-<div class="panel gem-card"><h2>💎 Система діамантів</h2><p>Твої діаманти: <span class="diamond-count">💎 <b id="diamonds">0</b></span></p><p class="small">Заробляй 1 діамант за кожні 5 пройдених труб у Flappy Bird. Також отримуй діаманти за суперребьорн!</p><h3>💎 Магазин діамантів</h3><p>Постійний бонус до всього заробітку: +10% за рівень.</p><button onclick="buyDiamondBoost()">✨ Купити бонус +10%<br>💎 <span id="diamondBoostPrice">5</span><br><small>Рівень: <span id="diamondBoostLevel">0</span></small></button></div>
-<div class="panel"><h2>🎨 Скіни</h2><button onclick="skin(1)">🟡 Золотий</button><button onclick="skin(2)">🔵 Синій</button><button onclick="skin(3)">🟣 Фіолетовий</button><button onclick="skin(4)">🟢 Зелений</button><button onclick="buySkin(5)">🌈 Веселка — 5K</button><button onclick="buySkin(6)">🌌 Космос — 25K</button><button onclick="buySkin(7)">🔥 Вогонь — 100K</button><button onclick="buySkin(8)">💎 Діамант — 500K</button><p class="small">Нові скіни купуються один раз і залишаються відкритими.</p></div>
-<div class="panel"><h2>💤 Офлайн-заробіток</h2><p>Рівень: <b id="offlineLevel">1</b></p><p>🪙 <b id="offlineRate">1</b> монета/сек</p><p>Наступний рівень: 💰 <b id="offlinePrice">100</b></p><button onclick="upgradeOffline()">⬆️ ПРОКАЧАТИ ОФЛАЙН</button></div>
-<div class="panel"><h2>🎁 Щоденна нагорода <span class="new-tag">СТРІК</span></h2><p>🔥 Серія днів: <b id="dailyStreak">0</b></p><p class="small">За щоденний вхід нагорода зростає до 7-го дня.</p><button onclick="dailyBonus()">🎁 Забрати бонус</button><p class="small" id="dailyStatus"></p></div>
-<div class="panel"><h2>🎡 Колесо удачі</h2><p class="small">Безкоштовно! Одне обертання кожні 20 хвилин.</p><button id="wheelButton" onclick="wheel()">🎡 Крутити безкоштовно</button><p class="small" id="wheelTimer">✅ Колесо готове!</p></div>
-<div class="panel"><h2>🌌 Світи</h2><button class="world-button" id="earthButton" onclick="world('Земля')">🌍 Земля</button><button class="world-button" id="moonButton" onclick="world('Місяць')">🌙 Місяць</button><button class="world-button locked" id="marsButton" onclick="world('Марс')">🔴 Марс <span class="coming">СКОРО!</span></button><p>Поточний світ: <b id="world">Земля</b></p><p id="moonRequirement" class="small"></p></div>
-<div class="panel"><h2>🎁 Промокоди</h2><p class="small">Введи код, щоб отримати безкоштовні монети. Кожен код діє один раз.</p><input id="codeInput" maxlength="30" placeholder="Введи промокод"><br><button onclick="redeemCode()">🎟️ Активувати код</button><p class="small">Доступні коди: COINCLICKER35, UPDATE35, VEMON4IK61</p></div>
-<div class="panel"><h2>📜 Щоденні квести <span class="new-tag">НОВИНКА</span></h2><p class="small">Виконуй завдання та забирай монети. Кожну нагороду можна забрати один раз.</p><div id="quests"></div></div>
-<div class="panel"><h2>🏆 Досягнення</h2><div id="achievements">Поки що немає</div></div>
-<div class="panel"><h2>♻️ Звичайне переродження</h2><button class="rebirth-button" onclick="rebirth()">♻️ РЕБІРТ<br>💰 <span id="rebirthPrice">100000</span><span id="rebirthCheck" class="checkmark" aria-label="Достатньо монет">✅</span></button><p>Ребіртів: <b id="rebirths">0</b></p><p>Постійний бонус: <b id="rebirthMultiplier">×1</b></p><p class="small">Ціна зростає на 5% після кожного ребірту.</p></div>
-<div class="panel"><h2>🌟 Ультра-переродження</h2><button class="rebirth-button" onclick="ultraRebirth()">🌟 УЛЬТРА<br>💰 <span id="ultraPrice">1000000</span><span id="ultraCheck" class="checkmark" aria-label="Достатньо монет">✅</span></button><p>Ультра: <b id="ultras">0</b></p><p>Бонус ультра: <b id="ultraMultiplier">×1</b></p><p class="small">Ціна зростає на 5% після кожного ультра.</p></div>
-<div class="panel gem-card"><h2>♾️ Суперребьорн</h2><p>Це ще сильніше переродження! Воно дає постійний множник та 5 діамантів.</p><button class="rebirth-button" onclick="superRebirth()">♾️ СУПЕРРЕБЬОРН<br>💰 <span id="superRebirthPrice">100M</span></button><p>Суперребьорнів: <b id="superRebirths">0</b></p><p>Постійний бонус: <b id="superRebirthMultiplier">×1</b></p><p class="small">Потрібні монети. Ціна зростає на 15% після кожного суперребьорну. Скидаються звичайні покращення, але діаманти, звичайні ребірти та ультра зберігаються.</p></div>
-<div class="panel stats"><h2>📊 Статистика</h2><p>🪙 Всього зароблено: <b id="total">0</b></p><p>👆 Кліків: <b id="clicks">0</b></p><p>⚡ За клік: <b id="perClick">1</b></p><p>🤖 Автоклікер: <b id="auto">0</b></p><p>✖️ Магазинний множник: <b id="multiplier">1</b></p><p>♻️ Бонус ребіртів: <b id="rebirthMultiplierStat">×1</b></p><p>🌟 Бонус ультра: <b id="ultraMultiplierStat">×1</b></p><p>♾️ Бонус суперребьорну: <b id="superRebirthMultiplierStat">×1</b></p><p>💎 Діаманти: <b id="diamondStat">0</b></p></div>
-<div class="panel"><button onclick="resetGame()">🗑️ СКИНУТИ ГРУ</button><p class="small">Прогрес зберігається в цьому браузері. Глобальні рекорди зберігаються окремо у Firebase.</p></div>
-</div><!-- end mainGameView -->
-<div id="miniGamesView">
- <div class="panel">
-  <h2>🐦 Flappy Bird</h2>
-  <p class="small">Клацай по грі або натискай ПРОБІЛ, щоб пташка злітала. Пролітай між трубами та заробляй монети!</p>
-  <div><span class="flappy-stat">⭐ Очки: <b id="flappyScore">0</b></span><span class="flappy-stat">🏆 Рекорд: <b id="flappyBest">0</b></span></div>
-  <canvas id="flappyCanvas" width="480" height="520" aria-label="Гра Flappy Bird"></canvas>
-  <div class="flappy-controls"><button id="flappyStartButton" onclick="startFlappy()">▶️ Почати гру</button><button id="flappyFlapButton" onclick="flappyFlap()">🐦 Злетіти!</button></div>
-  <p id="flappyStatus" class="small" aria-live="polite">Натисни «Почати гру», а потім клацай або тисни ПРОБІЛ.</p>
-  <p class="small">🪙 Нагорода: 10 монет за кожну трубу (з твоїми множниками). Новий рекорд — додаткові 500 монет × множники!</p>
- </div>
-</div>
-</div>
+<body>
+<header><h1>🪙 COIN <span>CLICKER</span> 4.0</h1><p>FULL VERSION • без BETA • автозбереження</p></header>
+<div class="wrap">
+<section class="stats">
+<div class="stat"><small>🪙 Монети</small><strong id="coins">0</strong></div><div class="stat"><small>💎 Діаманти</small><strong id="diamonds">0</strong></div><div class="stat"><small>🖱️ За клік</small><strong id="perClick">1</strong></div><div class="stat"><small>⚡ За секунду</small><strong id="perSec">0</strong></div>
+</section>
+<div class="notice" id="offlineNotice" hidden></div>
+<nav id="tabs">
+<button class="tab active" data-page="clicker">🪙 Клікер</button><button class="tab" data-page="shop">🛒 Магазин</button><button class="tab" data-page="pets">🐾 Пети</button><button class="tab" data-page="skins">🎨 Скіни</button><button class="tab" data-page="worlds">🌍 Світи</button><button class="tab" data-page="quests">📜 Завдання</button><button class="tab" data-page="profile">👤 Профіль</button><button class="tab" data-page="friends">🤝 Друзі</button><button class="tab" data-page="leaderboard">🏆 Рейтинг</button><button class="tab" data-page="stats">📊 Статистика</button><button class="tab" data-page="minigames">🎮 Мініігри</button><button class="tab" data-page="settings">⚙️ Дані</button>
+</nav>
+<section class="page active" id="page-clicker"><div class="grid">
+<div class="panel" style="text-align:center"><h2>Натискай на монету!</h2><p class="muted">Кожен клік дає монети.</p><button class="bigcoin" id="clickCoin">🪙</button><div class="row" style="justify-content:center"><button id="dailyBtn" class="primary">🎁 Щоденний бонус</button><button id="wheelBtn">🎡 Колесо</button></div><p id="dailyText" class="muted small">Бонус раз на день. Колесо раз на 20 хвилин.</p></div>
+<div class="panel"><h2>💎 Діаманти</h2><p>Особлива валюта для підсилень та рідкісних скінів.</p><div class="item"><div class="spread"><b>💎 Сила кліку</b><b id="diamondBoostInfo">+0%</b></div><p>Кожен рівень додає +10% до кліку.</p><button id="buyDiamondBoost">Купити</button></div><div class="item"><b>🎁 Діамант за кліки</b><p>За кожні 100 кліків отримуєш 1 💎 автоматично.</p><p class="small" id="diamondProgress"></p></div><div class="item"><b>🎟️ Промокод</b><div class="row"><input id="promoInput" placeholder="Введи промокод"><button id="promoBtn">Активувати</button></div><p class="small">Демо-коди: COIN4, DIAMOND, WELCOME.</p></div></div>
+</div></section>
+<section class="page" id="page-shop"><div class="panel"><h2>🛒 Магазин покращень</h2><div id="upgrades"></div></div><div class="panel" style="margin-top:12px"><h2>♻️ Ребірти</h2><p>Звичайний ребірт скидає монети та рівні покращень, але додає постійний ×2. Діаманти, пети, скіни й світи зберігаються.</p><div class="grid three"><div class="item"><h3>Звичайний</h3><p id="rebirthInfo"></p><button id="rebirthBtn" class="primary">Зробити ребірт</button></div><div class="item"><h3>🌟 Ультра</h3><p id="ultraInfo"></p><button id="ultraBtn">Ультра ребірт</button></div><div class="item"><h3>✨ Супер</h3><p id="superInfo"></p><button id="superBtn">Супер ребірт</button></div></div></div><div class="panel" style="margin-top:12px"><h2>⚛️ Квантове ядро</h2><p>Кожен рівень ядра додає +25% до всіх монет: множник ядра = 1,25 у степені рівня. Ціна починається з 1 000 000 і подвоюється щоразу.</p><div class="spread"><span id="coreLevel">Рівень 0</span><b id="coreBonus">Бонус: +0%</b></div><div class="progress"><span id="coreProgress"></span></div><div class="row"><b id="coreCost">Ціна: 1M</b><button id="coreBuy" class="primary">Покращити ядро</button></div></div></section>
+<section class="page" id="page-pets"><div class="panel"><h2>🐾 Вихованці</h2><p>Пети множать монети. Одночасно активний один пет; придбані залишаються назавжди.</p><div id="petsList"></div></div></section>
+<section class="page" id="page-skins"><div class="panel"><h2>🎨 Скіни монети</h2><p>Частина скінів купується за діаманти.</p><div id="skinsList" class="grid"></div></div></section>
+<section class="page" id="page-worlds"><div class="panel"><h2>🌍 Мультивсесвіт</h2><p>Земля доступна відразу. Місяць потребує 10 звичайних і 1 ультра ребірту. Марс потребує 5 ультра ребіртів.</p><div id="worldsList" class="grid"></div></div></section>
+<section class="page" id="page-quests"><div class="panel"><h2>📜 Завдання</h2><div id="questsList"></div><h2 style="margin-top:18px">🏅 Досягнення</h2><div id="achievements"></div></div></section>
+<section class="page" id="page-profile"><div class="panel"><h2>👤 Профіль гравця</h2><div class="item"><p>ID гравця</p><div class="spread"><strong id="playerId">—</strong><button id="copyId">Копіювати ID</button></div><p class="small">ID цього пристрою.</p></div><label class="field">Нікнейм<input id="nicknameInput" maxlength="20" placeholder="Твій нікнейм"></label><button id="saveNick" class="primary">Зберегти нікнейм</button><div class="item"><h3>Підсумок</h3><p id="profileSummary"></p></div></div></section>
+<section class="page" id="page-friends"><div class="panel"><h2>🤝 Друзі</h2><p>Це локальний список друзів у браузері; онлайн-зв'язок між гравцями потребує сервера.</p><div class="row"><input id="friendIdInput" placeholder="ID друга"><button id="addFriend" class="primary">Додати</button></div><div id="friendsList"></div></div></section>
+<section class="page" id="page-leaderboard"><div class="panel"><h2>🏆 Локальний рейтинг</h2><p>Рейтинг формується з записів у цьому браузері, це не глобальний онлайн-рейтинг.</p><div id="leaderboardList"></div><button id="refreshLeaderboard">Оновити рейтинг</button></div></section>
+<section class="page" id="page-stats"><div class="panel"><h2>📊 Статистика</h2><div id="statsList" class="grid"></div></div></section>
+<section class="page" id="page-minigames"><div class="grid"><div class="panel"><h2>🐦 Flappy Coin</h2><p>Натискай кнопку й набирай очки. За кожні 5 очок — 100 монет.</p><div class="spread"><b>Очки: <span id="flappyScore">0</span></b><button id="flappyTap" class="primary">Полетіли!</button></div><p class="small muted">Спрощена мінігра-клік-виклик.</p></div><div class="panel"><h2>🚀 Космічний політ</h2><p>Запуск коштує 1 000 монет; нагорода випадкова.</p><button id="spaceFlight" class="primary">Запустити політ</button><p id="spaceResult" class="muted"></p></div></div></section>
+<section class="page" id="page-settings"><div class="grid"><div class="panel"><h2>💾 Резервна копія</h2><p>Експортуй збереження перед очищенням браузера.</p><div class="row"><button id="exportSave" class="primary">Експортувати JSON</button><label class="tab" for="importFile">Імпортувати JSON</label><input id="importFile" type="file" accept=".json,application/json" hidden></div><p class="small muted">Імпорт замінить поточний прогрес.</p><button id="resetSave" class="danger">Скинути прогрес</button></div><div class="panel"><h2>ℹ️ Збереження</h2><p>Прогрес автоматично зберігається в localStorage цього браузера. Очищення даних сайту може видалити його — користуйся резервною копією.</p><p>Скарги й бани поки не додаємо: відкладаємо на потім.</p></div></div></section>
+</div><div class="footer">Coin Clicker 4.0 FULL • Автозбереження увімкнено</div><div class="toast" id="toast"></div>
 <script>
+(()=>{'use strict';
 const SAVE_KEY='coinClicker3';
-const defaults={coins:0,total:0,clicks:0,clickPower:1,auto:0,multiplier:1,rebirths:0,rebirthMultiplier:1,ultras:0,ultraMultiplier:1,petBonus:1,petName:'немає',clickPrice:25,autoPrice:100,multPrice:50000,lastDaily:0,world:'Земля',lastOnline:Date.now(),nickname:'Гість',offlineLevel:1,offlinePrice:100,skin:1,superPrice:2500,superLevel:0,unlockedSkins:[1,2,3,4],luckyLevel:0,luckyPrice:10000,autoBoostLevel:0,autoBoostPrice:25000,lastWheel:0,megaClickPrice:100000,upgradesBought:0,usedCodes:[],questClaims:[],dailyStreak:0,lastDailyDay:0,diamonds:0,diamondBoostLevel:0,superRebirths:0,superRebirthMultiplier:1};
-let game;try{game={...defaults,...JSON.parse(localStorage.getItem(SAVE_KEY)||'{}')}}catch{game={...defaults}}
-for(const k of ['coins','total','clicks','clickPower','auto','multiplier','rebirths','rebirthMultiplier','ultras','ultraMultiplier','petBonus','clickPrice','autoPrice','multPrice','offlineLevel','offlinePrice','superPrice','superLevel']){if(!Number.isFinite(Number(game[k]))||Number(game[k])<0)game[k]=defaults[k]}
-if(!Array.isArray(game.usedCodes))game.usedCodes=[];if(!Array.isArray(game.questClaims))game.questClaims=[];game.multiplier=Math.min(128,Math.max(1,game.multiplier));if(!['Земля','Місяць','Марс'].includes(game.world))game.world='Земля';if(!Array.isArray(game.unlockedSkins))game.unlockedSkins=[1,2,3,4];game.unlockedSkins=[...new Set([1,2,3,4,...game.unlockedSkins.filter(n=>Number.isInteger(n)&&n>=1&&n<=8)])];for(const k of ['luckyLevel','luckyPrice','autoBoostLevel','autoBoostPrice','megaClickPrice','upgradesBought','dailyStreak','lastDailyDay'])if(!Number.isFinite(Number(game[k]))||Number(game[k])<0)game[k]=defaults[k];
-for(const k of ['diamonds','diamondBoostLevel','superRebirths'])if(!Number.isFinite(Number(game[k]))||Number(game[k])<0)game[k]=defaults[k];if(!Number.isFinite(Number(game.superRebirthMultiplier))||game.superRebirthMultiplier<1)game.superRebirthMultiplier=1;
-function save(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(game))}catch(e){console.warn('Save failed',e)}}
-function showMessage(text){const el=document.getElementById('message');el.textContent=text;clearTimeout(showMessage.timer);showMessage.timer=setTimeout(()=>el.textContent='',2600)}
-function getPlayerID(){let id=localStorage.getItem('coinClickerPlayerId');if(!id){id=crypto.randomUUID?crypto.randomUUID():'cc-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2);localStorage.setItem('coinClickerPlayerId',id)}return id}
-let friends=[];try{friends=JSON.parse(localStorage.getItem('coinClickerFriends')||'[]')}catch{friends=[]}
-function openFriends(){const p=document.getElementById('friendsPanel');p.style.display=p.style.display==='none'?'block':'none';if(p.style.display==='block'){showMyID();showFriends()}}
-function showMyID(){document.getElementById('myID').textContent=getPlayerID()}
-async function copyMyID(){try{await navigator.clipboard.writeText(getPlayerID());showMessage('📋 ID скопійовано!')}catch{showMessage('Не вдалося скопіювати — виділи ID та скопіюй вручну.')}}
-function addFriend(){const input=document.getElementById('friendID'),id=input.value.trim();if(!id)return showMessage('❌ Введи ID друга!');if(id===getPlayerID())return showMessage('😅 Не можна додати самого себе!');if(friends.includes(id))return showMessage('⚠️ Цей друг уже доданий!');friends.push(id);localStorage.setItem('coinClickerFriends',JSON.stringify(friends));input.value='';showFriends();showMessage('✅ Друг доданий!')}
-function showFriends(){const list=document.getElementById('friendsList');list.replaceChildren();const h=document.createElement('h3');h.textContent='👤 Твої друзі';list.appendChild(h);if(!friends.length){const p=document.createElement('p');p.textContent='Поки що друзів немає 😢';list.appendChild(p);return}friends.forEach((id,i)=>{const div=document.createElement('div');div.className='rank';const span=document.createElement('span');span.textContent='👤 Друг '+(i+1)+' — '+id;const br=document.createElement('br');const b=document.createElement('button');b.textContent='❌ Видалити';b.onclick=()=>removeFriend(i);div.append(span,br,b);list.appendChild(div)})}
-function removeFriend(i){if(!confirm('Видалити цього друга?'))return;friends.splice(i,1);localStorage.setItem('coinClickerFriends',JSON.stringify(friends));showFriends();showMessage('❌ Друг видалений')}
-function totalMultiplier(){return game.multiplier*game.rebirthMultiplier*game.ultraMultiplier*(game.superRebirthMultiplier||1)*game.petBonus*(1+(game.luckyLevel||0)*0.01)*(1+(game.diamondBoostLevel||0)*0.1)}
-function addCoins(amount){amount=Math.max(0,Number(amount)||0);game.coins+=amount;game.total+=amount}
-function clickCoin(){const amount=game.clickPower*totalMultiplier();addCoins(amount);game.clicks++;const r=document.getElementById('coinButton').getBoundingClientRect();const pop=document.createElement('div');pop.className='coin-pop';pop.textContent='+'+fmt(amount)+' 🪙';pop.style.left=(r.left+r.width/2)+'px';pop.style.top=(r.top+20)+'px';document.body.appendChild(pop);setTimeout(()=>pop.remove(),800);save();update();scheduleLeaderboardUpdate()}
-function buyClickPower(){if(game.coins<game.clickPrice)return showMessage('❌ Недостатньо монет!');game.coins-=game.clickPrice;game.clickPower++;game.upgradesBought=(game.upgradesBought||0)+1;game.clickPrice=Math.floor(game.clickPrice*1.7);save();update()}
-function buyAuto(){if(game.coins<game.autoPrice)return showMessage('❌ Недостатньо монет!');game.coins-=game.autoPrice;game.auto++;game.upgradesBought=(game.upgradesBought||0)+1;game.autoPrice=Math.floor(game.autoPrice*1.8);save();update()}
-function buyMultiplier(){if(game.multiplier>=128)return showMessage('🛑 Максимальний множник ×128!');if(game.coins<game.multPrice)return showMessage('❌ Потрібно '+fmt(game.multPrice)+' 🪙');game.coins-=game.multPrice;game.multiplier=Math.min(128,game.multiplier*2);game.upgradesBought=(game.upgradesBought||0)+1;game.multPrice=Math.floor(game.multPrice*3);save();update();showMessage('✖️ Множник тепер ×'+game.multiplier+'!')}
-function buySuperClick(){if(game.coins<game.superPrice)return showMessage('❌ Потрібно '+fmt(game.superPrice)+' 🪙');game.coins-=game.superPrice;game.clickPower+=10;game.upgradesBought=(game.upgradesBought||0)+1;game.superLevel++;game.superPrice=Math.floor(game.superPrice*2);save();update();showMessage('✨ Суперклік куплено! +10 сили за клік!')}
-function buyPet(type){const pets={dog:{price:1000,bonus:2,name:'🐶 Пес'},cat:{price:5000,bonus:4,name:'🐱 Кіт'},dragon:{price:25000,bonus:10,name:'🐲 Дракон'},hamster:{price:100000,bonus:15,name:'🐹 Хом’як'},phoenix:{price:1000000,bonus:25,name:'🔥 Фенікс'},sloth:{price:5000000,bonus:35,name:'🦥 Лінивець'},alien:{price:25000000,bonus:50,name:'👽 Прибулець'},unicorn:{price:100000000,bonus:75,name:'🦄 Єдиноріг'},cosmic:{price:1000000000,bonus:100,name:'🌌 Космічний дракон'}};const p=pets[type];if(!p)return;if(game.coins<p.price)return showMessage('❌ Потрібно '+fmt(p.price)+' 🪙');game.coins-=p.price;game.upgradesBought=(game.upgradesBought||0)+1;game.petBonus=p.bonus;game.petName=p.name;save();update();showMessage('🐾 Тепер твій пет: '+p.name)}
-function buySkin(n){const skins={5:{price:5000,name:'🌈 Веселка'},6:{price:25000,name:'🌌 Космос'},7:{price:100000,name:'🔥 Вогонь'},8:{price:500000,name:'💎 Діамант'}};const s=skins[n];if(!s)return;if(game.unlockedSkins.includes(n)){skin(n);return}if(game.coins<s.price)return showMessage('❌ Потрібно '+fmt(s.price)+' 🪙');game.coins-=s.price;game.upgradesBought=(game.upgradesBought||0)+1;game.unlockedSkins.push(n);game.skin=n;applySkin();save();update();showMessage('🎨 Відкрито скін: '+s.name)}
-function buyLuckyUpgrade(){if(game.coins<game.luckyPrice)return showMessage('❌ Потрібно '+fmt(game.luckyPrice)+' 🪙');game.coins-=game.luckyPrice;game.upgradesBought=(game.upgradesBought||0)+1;game.luckyLevel++;game.luckyPrice=Math.floor(game.luckyPrice*2.2);save();update();showMessage('🍀 Бонус монети збільшено!')}
-function buyAutoBoost(){if(game.coins<game.autoBoostPrice)return showMessage('❌ Потрібно '+fmt(game.autoBoostPrice)+' 🪙');game.coins-=game.autoBoostPrice;game.upgradesBought=(game.upgradesBought||0)+1;game.autoBoostLevel++;game.autoBoostPrice=Math.floor(game.autoBoostPrice*2);save();update();showMessage('🚀 Турбо-автоклікер покращено!')}
-function buyMegaClick(){if(game.coins<game.megaClickPrice)return showMessage('❌ Потрібно '+fmt(game.megaClickPrice)+' 🪙');game.coins-=game.megaClickPrice;game.clickPower+=50;game.upgradesBought=(game.upgradesBought||0)+1;game.megaClickPrice=Math.floor(game.megaClickPrice*2.2);save();update();showMessage('💥 Мега-клік! +50 сили за клік!')}
-function skin(n){if(n>4&&!(game.unlockedSkins||[]).includes(n))return showMessage('🔒 Спочатку купи цей скін у магазині скінів!');game.skin=n;applySkin();save();showMessage('🎨 Скін змінено!')}
-function applySkin(){const coin=document.getElementById('coinButton');coin.classList.remove('skin1','skin2','skin3','skin4','skin5','skin6','skin7','skin8');coin.classList.add('skin'+(game.skin||1))}
-function dailyBonus(){const now=Date.now(),day=Math.floor(now/86400000),last=Number(game.lastDailyDay)||0;if(now-(Number(game.lastDaily)||0)<86400000)return showMessage('⏳ Щоденну нагороду вже забрано!');game.dailyStreak=(last===day-1)?Math.min(7,(game.dailyStreak||0)+1):1;game.lastDailyDay=day;const reward=Math.floor(1000*totalMultiplier()*Math.min(7,game.dailyStreak));addCoins(reward);game.lastDaily=now;save();update();scheduleLeaderboardUpdate();showMessage('🎁 День '+game.dailyStreak+': +'+fmt(reward)+' 🪙!')}
-function redeemCode(){const input=document.getElementById('codeInput'),code=input.value.trim().toUpperCase();if(!code)return showMessage('✍️ Введи промокод!');const codes={'COINCLICKER35':10000,'UPDATE35':5000,'VEMON4IK61':25000};if((game.usedCodes||[]).includes(code))return showMessage('⚠️ Цей код уже використано!');if(!Object.prototype.hasOwnProperty.call(codes,code))return showMessage('❌ Невідомий промокод!');const reward=Math.floor(codes[code]*totalMultiplier());addCoins(reward);game.usedCodes.push(code);input.value='';save();update();scheduleLeaderboardUpdate();showMessage('🎉 Код '+code+' активовано: +'+fmt(reward)+' 🪙')}
-const QUESTS=[{id:'clicks100',title:'👆 Справжній клікер',desc:'Зроби 100 кліків',goal:100,reward:5000,progress:()=>game.clicks},{id:'earn50k',title:'🪙 Золота купка',desc:'Зароби загалом 50K монет',goal:50000,reward:15000,progress:()=>game.total},{id:'upgrades5',title:'🛠️ Майстер покращень',desc:'Купи 5 покращень у магазині',goal:5,reward:10000,progress:()=>game.upgradesBought||0}];
-function claimQuest(id){const q=QUESTS.find(x=>x.id===id);if(!q)return;if((game.questClaims||[]).includes(id))return showMessage('✅ Цю нагороду вже забрано!');if(q.progress()<q.goal)return showMessage('⏳ Спочатку виконай завдання!');const reward=Math.floor(q.reward*totalMultiplier());addCoins(reward);game.questClaims.push(id);save();update();scheduleLeaderboardUpdate();showMessage('🏆 Квест виконано! +'+fmt(reward)+' 🪙')}
-function updateQuests(){const root=document.getElementById('quests');if(!root)return;root.replaceChildren();QUESTS.forEach(q=>{const progress=Math.min(q.goal,Math.max(0,q.progress())),claimed=(game.questClaims||[]).includes(q.id),row=document.createElement('div');row.className='quest-row';const title=document.createElement('b');title.textContent=q.title;const desc=document.createElement('p');desc.className='small';desc.textContent=q.desc+' — '+fmt(progress)+' / '+fmt(q.goal);const reward=document.createElement('p');reward.className='small';reward.textContent='🎁 Нагорода: '+fmt(q.reward)+' × множники';const btn=document.createElement('button');btn.textContent=claimed?'✅ Забрано':progress>=q.goal?'🎁 Забрати':'🔒 Ще не виконано';btn.disabled=claimed||progress<q.goal;btn.onclick=()=>claimQuest(q.id);row.append(title,btn,desc,reward);root.appendChild(row)})}
-function wheel(){const now=Date.now(),cooldown=20*60*1000,remaining=cooldown-(now-(Number(game.lastWheel)||0));if(remaining>0){updateWheelButton();return showMessage('⏳ Колесо буде доступне через '+formatWheelTime(remaining)+'!')}const rewards=[100,250,500,1000,2500,5000,10000];const reward=Math.floor(rewards[Math.floor(Math.random()*rewards.length)]*totalMultiplier());game.lastWheel=now;addCoins(reward);save();update();updateWheelButton();scheduleLeaderboardUpdate();showMessage('🎉 Ти виграв '+fmt(reward)+' 🪙! Наступне обертання — через 20 хвилин.')}
-function formatWheelTime(ms){const seconds=Math.max(0,Math.ceil(ms/1000));const m=Math.floor(seconds/60),s=seconds%60;return m+' хв '+String(s).padStart(2,'0')+' с'}
-function updateWheelButton(){const button=document.getElementById('wheelButton'),timer=document.getElementById('wheelTimer');if(!button||!timer)return;const remaining=20*60*1000-(Date.now()-(Number(game.lastWheel)||0));if(remaining>0){button.disabled=true;button.textContent='⏳ Ще '+formatWheelTime(remaining);timer.textContent='🎁 Наступне безкоштовне обертання через '+formatWheelTime(remaining)}else{button.disabled=false;button.textContent='🎡 Крутити безкоштовно';timer.textContent='✅ Колесо готове!'} }
-setInterval(updateWheelButton,1000);
-function moonUnlocked(){return game.rebirths>=10&&game.ultras>=1}
-function world(name){if(name==='Марс')return showMessage('🔴 Марс скоро відкриється!');if(name==='Місяць'&&!moonUnlocked())return showMessage('🔒 Для Місяця потрібно 10 ребіртів і 1 ультра!');game.world=name;document.body.dataset.world=name;save();update();showMessage('🌌 Світ: '+name)}
-function rebirthPrice(){return Math.floor(100000*Math.pow(1.05,game.rebirths))}
-function ultraPrice(){return Math.floor(1000000*Math.pow(1.05,game.ultras))}
-function resetUpgrades(){game.coins=0;game.clickPower=1;game.auto=0;game.petBonus=1;game.petName='немає';game.clickPrice=25;game.autoPrice=100;game.multiplier=1;game.multPrice=50000;game.offlineLevel=1;game.offlinePrice=100;game.skin=1;game.superPrice=2500;game.superLevel=0;game.luckyLevel=0;game.luckyPrice=10000;game.autoBoostLevel=0;game.autoBoostPrice=25000;game.megaClickPrice=100000}
-function rebirth(){const price=rebirthPrice();if(game.coins<price)return showMessage('❌ Потрібно '+fmt(price)+' 🪙');resetUpgrades();game.rebirths++;game.rebirthMultiplier*=2;save();update();scheduleLeaderboardUpdate();showMessage('♻️ Ребірт! Постійний бонус ×'+game.rebirthMultiplier+'!')}
-function ultraRebirth(){const price=ultraPrice();if(game.coins<price)return showMessage('❌ Потрібно '+fmt(price)+' 🪙');resetUpgrades();game.ultras++;game.ultraMultiplier*=10;save();update();scheduleLeaderboardUpdate();showMessage('🌟 Ультра! Бонус ×'+game.ultraMultiplier+'!')}
-function superRebirthPrice(){return Math.floor(100000000*Math.pow(1.15,game.superRebirths||0))}
-function superRebirth(){const price=superRebirthPrice();if(game.coins<price)return showMessage('❌ Для суперребьорну потрібно '+fmt(price)+' 🪙');resetUpgrades();game.superRebirths=(game.superRebirths||0)+1;game.superRebirthMultiplier=(game.superRebirthMultiplier||1)*2;game.diamonds=(game.diamonds||0)+5;save();update();scheduleLeaderboardUpdate();showMessage('♾️ Суперребьорн! ×'+game.superRebirthMultiplier+' та +5 💎!')}
-function buyDiamondBoost(){const price=5+(game.diamondBoostLevel||0)*5;if((game.diamonds||0)<price)return showMessage('💎 Потрібно '+price+' діамантів!');game.diamonds-=price;game.diamondBoostLevel=(game.diamondBoostLevel||0)+1;save();update();showMessage('✨ Постійний бонус +10% придбано!')}
-
-function upgradeOffline(){if(game.coins<game.offlinePrice)return showMessage('❌ Потрібно '+fmt(game.offlinePrice)+' 🪙');game.coins-=game.offlinePrice;game.offlineLevel++;game.offlinePrice=Math.floor(game.offlinePrice*2);save();update();showMessage('💤 Офлайн прокачано!')}
-function saveNickname(){const name=document.getElementById('nicknameInput').value.trim();if(!name)return showMessage('❌ Введи нік!');game.nickname=name.slice(0,20);save();update();updateLeaderboard(true);showMessage('👤 Нік збережено!')}
-function fmt(n){
- const value=Math.max(0,Number(n)||0);
- if(!Number.isFinite(value))return '∞';
- const units=[['K',1e3],['M',1e6],['B',1e9],['QA',1e12],['QI',1e15],['SX',1e18],['SP',1e21],['OP',1e24],['NO',1e27],['Dc',1e30],['KWD',1e33],['KWI',1e36]];
- if(value<1000)return Math.floor(value).toLocaleString('uk-UA');
- let tier=0;while(tier<units.length-1&&value>=units[tier+1][1])tier++;
- const scaled=value/units[tier][1];
- const short=scaled.toFixed(scaled>=100?0:1).replace(/\.0$/,'');
- return short+units[tier][0];
+const $=id=>document.getElementById(id), now=()=>Date.now();
+const fmt=n=>{if(!Number.isFinite(n))return '∞';if(Math.abs(n)<1000)return Math.floor(n).toLocaleString('uk-UA');const u=['K','M','B','T','Qa','Qi','Sx','Sp','Oc','No','Dc'];let i=-1;do{n/=1000;i++}while(Math.abs(n)>=1000&&i<u.length-1);return (n>=100?n.toFixed(0):n>=10?n.toFixed(1):n.toFixed(2))+u[i]};
+const fresh=()=>({version:'4.0',coins:0,diamonds:0,totalEarned:0,totalClicks:0,clickPower:1,autoLevel:0,multLevel:0,diamondBoost:0,rebirths:0,ultraRebirths:0,superRebirths:0,coreLevel:0,pet:'none',pets:['none'],skin:0,skins:[0],world:'earth',worlds:['earth'],nickname:'Player',playerId:'CC-'+Math.random().toString(36).slice(2,10).toUpperCase(),friends:[],lastSave:now(),lastDaily:0,lastWheel:0,dailyStreak:0,claimed:{},promoUsed:[],quests:{},flappyScore:0,spaceFlights:0,sessionClicks:0,sessionStarted:now(),clicksSinceDiamond:0});
+let s=fresh();
+function load(){try{let raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem('coinClicker4')||localStorage.getItem('coinClicker3.7');if(raw){let d=JSON.parse(raw);s={...fresh(),...d};for(const k of ['claimed','quests'])s[k]=s[k]||{};for(const k of ['pets','skins','worlds','friends','promoUsed'])s[k]=Array.isArray(s[k])?s[k]:[];s.playerId=s.playerId||fresh().playerId;s.pets=s.pets.length?s.pets:['none'];s.skins=s.skins.length?s.skins:[0];s.worlds=s.worlds.length?s.worlds:['earth'];}}catch(e){console.warn(e)}}
+function toast(msg){const el=$('toast');el.textContent=msg;el.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>el.style.display='none',2500)}
+function save(){s.lastSave=now();try{localStorage.setItem(SAVE_KEY,JSON.stringify(s));localStorage.setItem('coinClicker4',JSON.stringify(s))}catch(e){toast('Не вдалося зберегти. Експортуй резервну копію.')}updateUI()}
+const pets=[['none','Без пета','❔',1,0,'coins'],['dog','Собака','🐶',2,500,'coins'],['cat','Кіт','🐱',4,2500,'coins'],['dragon','Дракон','🐉',10,25000,'coins'],['fox','Лисиця','🦊',25,250000,'coins'],['robot','Робот-пес','🤖',50,100,'diamonds'],['phoenix','Золотий фенікс','🦅',100,250,'diamonds'],['cosmic1','Космічний слизень','🪼',150,500,'diamonds'],['cosmic2','Космічний дракон','🐲',250,1000,'diamonds'],['cosmic3','Галактичний фенікс','🌌',500,2500,'diamonds']];
+const skins=[[0,'Класична','🪙',0,'coins'],[1,'Золота','🌟',5000,'coins'],[2,'Рубінова','🔴',20,'diamonds'],[3,'Сапфірова','🔵',35,'diamonds'],[4,'Смарагдова','🟢',50,'diamonds'],[5,'Неонова','💠',75,'diamonds'],[6,'Галактична','🌌',120,'diamonds'],[7,'Квантова','⚛️',200,'diamonds'],[8,'Королівська','👑',350,'diamonds']];
+const worlds=[['earth','Земля','🌍',1,()=>true,'Доступна відразу'],['moon','Місяць','🌕',3,()=>s.rebirths>=10&&s.ultraRebirths>=1,'10 ребіртів і 1 ультра ребірт'],['mars','Марс','🔴',10,()=>s.ultraRebirths>=5,'5 ультра ребіртів']];
+const ups=[['clickPower','Сильний клік','👆','Додає +1 до базової сили кліку',25,1.65],['autoLevel','Автоклікер','⚙️','Заробляє монети щосекунди',100,1.8],['multLevel','Множник монет','🚀','Кожен рівень додає +25% до доходу',500,2.1]];
+const quests=[['clicks100','Перші 100 кліків','Зроби 100 кліків загалом',100,()=>s.totalClicks,()=>{earn(1000);s.diamonds++},'+1 000 монет і +1 💎'],['earn10k','Капітал','Зароби 10 000 монет за весь час',10000,()=>s.totalEarned,()=>earn(5000),'+5 000 монет'],['buyPet','Друг людини','Придбай будь-якого пета',1,()=>s.pets.filter(x=>x!=='none').length,()=>s.diamonds+=5,'+5 💎'],['rebirth1','Нове життя','Зроби 1 звичайний ребірт',1,()=>s.rebirths,()=>s.diamonds+=10,'+10 💎'],['core1','Квантовий стрибок','Покращ квантове ядро до рівня 1',1,()=>s.coreLevel,()=>earn(100000),'+100K монет']];
+const pet=()=>pets.find(x=>x[0]===s.pet)||pets[0], world=()=>worlds.find(x=>x[0]===s.world)||worlds[0];
+const coreMult=()=>Math.pow(1.25,s.coreLevel), rebMult=()=>Math.pow(2,s.rebirths)*Math.pow(5,s.ultraRebirths)*Math.pow(10,s.superRebirths);
+const totalMult=()=> (1+s.multLevel*.25)*rebMult()*coreMult()*pet()[3]*world()[3]*(1+s.diamondBoost*.1);
+const clickValue=()=>Math.max(1,Math.floor(s.clickPower*totalMult())), autoValue=()=>Math.floor(s.autoLevel*totalMult());
+const earn=n=>{if(!Number.isFinite(n)||n<=0)return;s.coins+=n;s.totalEarned+=n};
+const spend=(currency,cost)=>{if(s[currency]<cost)return false;s[currency]-=cost;return true};
+const esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function buyUpgrade(id){let u=ups.find(x=>x[0]===id),cost=Math.floor(u[4]*Math.pow(u[5],s[id]||0));if(!spend('coins',cost)){toast('Не вистачає монет!');return}s[id]++;save();toast('Покращення придбано!')}
+function doClick(){earn(clickValue());s.totalClicks++;s.sessionClicks++;s.clicksSinceDiamond++;if(s.clicksSinceDiamond>=100){s.clicksSinceDiamond-=100;s.diamonds++;toast('+1 💎 за 100 кліків!')}save()}
+function daily(){if(now()-s.lastDaily<86400000){toast('Щоденний бонус уже забрано.');return}s.dailyStreak=Math.min(7,(s.dailyStreak||0)+1);s.lastDaily=now();earn(500*s.dailyStreak);if(s.dailyStreak>=3)s.diamonds++;save();toast(`Щодня: +${fmt(500*s.dailyStreak)} монет${s.dailyStreak>=3?' і +1 💎':''}!`)}
+function wheel(){if(now()-s.lastWheel<1200000){toast(`Колесо доступне через ${Math.ceil((1200000-(now()-s.lastWheel))/60000)} хв.`);return}s.lastWheel=now();let prize=[['+500 монет',()=>earn(500)],['+2 000 монет',()=>earn(2000)],['+5 000 монет',()=>earn(5000)],['+1 діамант',()=>s.diamonds++],['+5 діамантів',()=>s.diamonds+=5],['+10 000 монет',()=>earn(10000)]][Math.floor(Math.random()*6)];prize[1]();save();toast('🎡 Випало: '+prize[0]+'!')}
+function buyPet(id){let p=pets.find(x=>x[0]===id);if(s.pets.includes(id)){s.pet=id;save();toast(p[1]+' активний!');return}if(!spend(p[5],p[4])){toast('Не вистачає '+(p[5]==='coins'?'монет':'діамантів')+'!');return}s.pets.push(id);s.pet=id;save();toast('Пета придбано!')}
+function buySkin(id){let sk=skins.find(x=>x[0]===id);if(!s.skins.includes(id)){if(!spend(sk[4],sk[3])){toast('Не вистачає '+(sk[4]==='coins'?'монет':'діамантів')+'!');return}s.skins.push(id)}s.skin=id;save();toast('Скін змінено!')}
+function changeWorld(id){let w=worlds.find(x=>x[0]===id);if(!w[4]()){toast('Світ заблокований: '+w[5]);return}s.world=id;if(!s.worlds.includes(id))s.worlds.push(id);save();toast(`Світ ${w[1]}: множник ×${w[3]}`)}
+function rebirth(kind){let cost,field,mult;if(kind==='normal'){cost=1e6*Math.pow(5,s.rebirths);field='rebirths';mult=2;if(s.coins<cost){toast('Потрібно '+fmt(cost)+' монет.');return}s.coins=0;}else if(kind==='ultra'){cost=10;field='ultraRebirths';mult=5;if(s.rebirths<5){toast('Потрібно 5 звичайних ребіртів.');return}if(!spend('diamonds',cost)){toast('Потрібно 10 💎.');return}s.coins=0;}else{cost=5;field='superRebirths';mult=10;if(s.ultraRebirths<3){toast('Потрібно 3 ультра ребірти.');return}if(!spend('diamonds',cost)){toast('Потрібно 5 💎.');return}s.coins=0}if(kind==='normal')s.rebirths++;else s[field]++;s.clickPower=1;s.autoLevel=0;s.multLevel=0;save();toast('Успішно! Постійний множник ×'+mult)}
+function render(){
+$('upgrades').innerHTML=ups.map(u=>{let cost=Math.floor(u[4]*Math.pow(u[5],s[u[0]]||0));return `<div class="item"><div class="spread"><h3>${u[2]} ${u[1]}</h3><b>Рівень ${s[u[0]]||0}</b></div><p>${u[3]}</p><div class="spread"><span>Ціна: ${fmt(cost)} 🪙</span><button data-up="${u[0]}" ${s.coins<cost?'disabled':''}>Купити</button></div></div>`}).join('');
+$('petsList').innerHTML=pets.map(p=>{let owned=s.pets.includes(p[0]),active=s.pet===p[0];return `<div class="item"><div class="spread"><h3><span class="pet-icon">${p[2]}</span> ${p[1]}</h3><b>×${p[3]}</b></div><p>${owned?'Відкрито':`Ціна: ${fmt(p[4])} ${p[5]==='coins'?'🪙':'💎'}`}</p><button data-pet="${p[0]}" ${active?'disabled':''}>${active?'Активний':owned?'Обрати':'Придбати'}</button></div>`}).join('');
+$('skinsList').innerHTML=skins.map(x=>{let owned=s.skins.includes(x[0]),active=s.skin===x[0];return `<div class="item"><h3>${x[2]} ${x[1]}</h3><p>${owned?'Відкрито':`Ціна: ${fmt(x[3])} ${x[4]==='coins'?'🪙':'💎'}`}</p><button data-skin="${x[0]}" ${active?'disabled':''}>${active?'Обрано':owned?'Обрати':'Відкрити'}</button></div>`}).join('');
+$('worldsList').innerHTML=worlds.map(w=>{let unlocked=w[4](),active=s.world===w[0];return `<div class="item"><h3>${w[2]} ${w[1]}</h3><p>Множник доходу: ×${w[3]}</p><p>${unlocked?'Відкрито':w[5]}</p><button data-world="${w[0]}" ${!unlocked||active?'disabled':''}>${active?'Поточний світ':unlocked?'Перейти':'Заблоковано'}</button></div>`}).join('');
+$('questsList').innerHTML=quests.map(q=>{let n=Math.min(q[3],q[4]()),done=!!s.quests[q[0]];return `<div class="item"><div class="spread"><h3>${done?'✅':'📌'} ${q[1]}</h3><b>${n}/${q[3]}</b></div><p>${q[2]}</p><div class="progress"><span style="width:${n/q[3]*100}%"></span></div><div class="spread"><span class="small muted">${q[6]}</span><button data-quest="${q[0]}" ${done||n<q[3]?'disabled':''}>${done?'Отримано':'Забрати'}</button></div></div>`}).join('');
+let ach=[['🖱️ Клікер',s.totalClicks>=100,`${s.totalClicks} кліків`],['💰 Багатій',s.totalEarned>=10000,`${fmt(s.totalEarned)} зароблено`],['🐾 Колекціонер',s.pets.length>=4,`${s.pets.length} петів`],['⚛️ Квантовий',s.coreLevel>=1,`ядро рівня ${s.coreLevel}`]];$('achievements').innerHTML=ach.map(a=>`<div class="item">${a[1]?'🏅':'🔒'} <b>${a[0]}</b><p>${a[2]}</p></div>`).join('');
+$('friendsList').innerHTML=s.friends.length?s.friends.map((f,i)=>`<div class="item spread"><span>🤝 ${esc(f)}</span><button class="danger" data-remove="${i}">Видалити</button></div>`).join(''):'<p class="muted">Список друзів порожній.</p>';
+let records=[];try{records=JSON.parse(localStorage.getItem('cc4Leaderboard')||'[]')}catch(e){}let all=[...records.filter(x=>x.id!==s.playerId),{nickname:s.nickname,score:s.totalEarned,id:s.playerId}].sort((a,b)=>b.score-a.score).slice(0,10);$('leaderboardList').innerHTML=all.map((x,i)=>`<div class="item spread"><span>${['🥇','🥈','🥉'][i]||'#'+(i+1)} <b>${esc(x.nickname||'Player')}</b><br><small class="muted">${esc(x.id||'')}</small></span><b>${fmt(x.score)} 🪙</b></div>`).join('');try{localStorage.setItem('cc4Leaderboard',JSON.stringify(all))}catch(e){}
+let stat=[['🪙 Усього зароблено',fmt(s.totalEarned)],['🖱️ Усього кліків',fmt(s.totalClicks)],['⚙️ Автоклікер',fmt(autoValue())+'/сек'],['♻️ Ребірти',s.rebirths],['🌟 Ультра ребірти',s.ultraRebirths],['✨ Супер ребірти',s.superRebirths],['⚛️ Рівень ядра',s.coreLevel],['🐾 Петів відкрито',s.pets.length],['🌍 Поточний світ',world()[1]],['⏱️ Ця сесія',Math.floor((now()-s.sessionStarted)/60000)+' хв']];$('statsList').innerHTML=stat.map(x=>`<div class="item"><p>${x[0]}</p><h3>${x[1]}</h3></div>`).join('');
 }
-function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function updateAchievements(){const a=[];if(game.clicks>=10)a.push('👆 10 кліків');if(game.clicks>=100)a.push('🔥 100 кліків');if(game.total>=1000)a.push('🪙 1000 зароблено');if(game.total>=10000)a.push('💰 10 000 зароблено');if(game.rebirths>=1)a.push('♻️ Перший ребірт');if(game.ultras>=1)a.push('🌟 Перший ультра');document.getElementById('achievements').innerHTML=a.length?a.map(escapeHTML).join('<br>'):'🔒 Поки що немає'}
-function update(){document.getElementById('diamonds').textContent=fmt(game.diamonds||0);document.getElementById('diamondBoostLevel').textContent=game.diamondBoostLevel||0;document.getElementById('diamondBoostPrice').textContent=5+(game.diamondBoostLevel||0)*5;document.getElementById('superRebirthPrice').textContent=fmt(superRebirthPrice());document.getElementById('superRebirths').textContent=game.superRebirths||0;document.getElementById('superRebirthMultiplier').textContent='×'+(game.superRebirthMultiplier||1);document.getElementById('coins').textContent=fmt(game.coins);document.getElementById('nickname').textContent=game.nickname||'Гість';document.getElementById('clickPrice').textContent=fmt(game.clickPrice);document.getElementById('autoPrice').textContent=fmt(game.autoPrice);document.getElementById('multPrice').textContent=game.multiplier>=128?'МАКСИМУМ':fmt(game.multPrice);document.getElementById('superPrice').textContent=fmt(game.superPrice);document.getElementById('superLevel').textContent=fmt(game.superLevel);document.getElementById('luckyPrice').textContent=fmt(game.luckyPrice);document.getElementById('luckyLevel').textContent=fmt(game.luckyLevel);document.getElementById('autoBoostPrice').textContent=fmt(game.autoBoostPrice);document.getElementById('autoBoostLevel').textContent=fmt(game.autoBoostLevel);document.getElementById('megaClickPrice').textContent=fmt(game.megaClickPrice||100000);document.getElementById('dailyStreak').textContent=game.dailyStreak||0;document.getElementById('dailyStatus').textContent=(Date.now()-(Number(game.lastDaily)||0)<86400000)?'✅ Нагороду вже забрано. Повертайся завтра!':'🎁 Нагорода готова!';document.getElementById('petName').textContent=game.petName;document.getElementById('offlineLevel').textContent=game.offlineLevel;document.getElementById('offlineRate').textContent=game.offlineLevel;document.getElementById('offlinePrice').textContent=fmt(game.offlinePrice);document.getElementById('world').textContent=game.world;document.getElementById('rebirthPrice').textContent=fmt(rebirthPrice());document.getElementById('ultraPrice').textContent=fmt(ultraPrice());document.getElementById('rebirths').textContent=game.rebirths;document.getElementById('ultras').textContent=game.ultras;document.getElementById('rebirthMultiplier').textContent='×'+game.rebirthMultiplier;document.getElementById('ultraMultiplier').textContent='×'+game.ultraMultiplier;document.getElementById('total').textContent=fmt(game.total);document.getElementById('clicks').textContent=fmt(game.clicks);document.getElementById('perClick').textContent=fmt(game.clickPower*totalMultiplier());document.getElementById('auto').textContent=game.auto*(1+(game.autoBoostLevel||0));document.getElementById('multiplier').textContent=game.multiplier;document.getElementById('rebirthMultiplierStat').textContent='×'+game.rebirthMultiplier;document.getElementById('ultraMultiplierStat').textContent='×'+game.ultraMultiplier;document.getElementById('superRebirthMultiplierStat').textContent='×'+(game.superRebirthMultiplier||1);document.getElementById('diamondStat').textContent=fmt(game.diamonds||0);document.getElementById('rebirthCheck').classList.toggle('visible',game.coins>=rebirthPrice());document.getElementById('ultraCheck').classList.toggle('visible',game.coins>=ultraPrice());document.getElementById('moonButton').classList.toggle('locked',!moonUnlocked());document.getElementById('moonButton').classList.toggle('active',game.world==='Місяць');document.getElementById('earthButton').classList.toggle('active',game.world==='Земля');document.getElementById('marsButton').classList.remove('active');document.getElementById('moonRequirement').textContent=moonUnlocked()?'✅ Місяць розблоковано!':`🔒 Для Місяця потрібно: ${Math.max(0,10-game.rebirths)} звичайних ребіртів і ${Math.max(0,1-game.ultras)} ультра.`;document.body.dataset.world=game.world;updateAchievements();updateWheelButton();updateQuests()}
-// Tabs: the original Coin Clicker view and the new mini-games view.
-function switchTab(tab){
- const mini=tab==='mini';
- document.getElementById('mainGameView').style.display=mini?'none':'block';
- document.getElementById('miniGamesView').style.display=mini?'block':'none';
- document.getElementById('coinTabButton').classList.toggle('active',!mini);
- document.getElementById('miniTabButton').classList.toggle('active',mini);
- if(mini)drawFlappy();
-}
-// Flappy Bird stores only its own high score separately; the Coin Clicker save key stays unchanged.
-const FLAPPY_KEY='coinClicker3_flappy';
-let flappyBest=0;try{flappyBest=Math.max(0,Number(localStorage.getItem(FLAPPY_KEY))||0)}catch{}
-let flappy={running:false,over:false,started:false,score:0,birdY:220,velocity:0,pipes:[],last:0,raf:0,awarded:0};
-const flappyCanvas=document.getElementById('flappyCanvas'),flappyCtx=flappyCanvas.getContext('2d');
-function updateFlappyLabels(){document.getElementById('flappyScore').textContent=flappy.score;document.getElementById('flappyBest').textContent=flappyBest}
-function resetFlappyState(){flappy.running=false;flappy.over=false;flappy.started=false;flappy.score=0;flappy.birdY=220;flappy.velocity=0;flappy.pipes=[];flappy.last=0;flappy.awarded=0;updateFlappyLabels()}
-function startFlappy(){if(flappy.raf)cancelAnimationFrame(flappy.raf);resetFlappyState();flappy.running=true;flappy.started=true;flappy.pipes=[{x:530,gapY:190,scored:false},{x:790,gapY:330,scored:false}];document.getElementById('flappyStatus').textContent='Гра почалася! Клацай або натискай ПРОБІЛ.';document.getElementById('flappyStartButton').textContent='🔄 Почати знову';flappy.last=performance.now();drawFlappy();flappy.raf=requestAnimationFrame(flappyLoop)}
-function flappyFlap(){if(!flappy.running){if(!flappy.started||flappy.over)startFlappy();if(!flappy.running)return}flappy.velocity=-6.8;drawFlappy()}
-function endFlappy(){if(!flappy.running)return;flappy.running=false;flappy.over=true;if(flappy.raf)cancelAnimationFrame(flappy.raf);flappy.raf=0;let extra=0;if(flappy.score>flappyBest){flappyBest=flappy.score;try{localStorage.setItem(FLAPPY_KEY,String(flappyBest))}catch{}extra=Math.floor(500*totalMultiplier());addCoins(extra);document.getElementById('flappyStatus').textContent='🏆 Новий рекорд! +'+fmt(extra)+' бонусних монет! Натисни «Почати знову», щоб спробувати ще.'}else{document.getElementById('flappyStatus').textContent='💥 Гру завершено! Очки: '+flappy.score+'. Натисни «Почати знову», щоб спробувати ще.'}save();update();scheduleLeaderboardUpdate();updateFlappyLabels();drawFlappy()}
-function flappyLoop(now){if(!flappy.running)return;const dt=Math.min(2,(now-(flappy.last||now))/16.67);flappy.last=now;flappy.velocity+=0.34*dt;flappy.birdY+=flappy.velocity*dt;for(const p of flappy.pipes){p.x-=2.7*dt;if(!p.scored&&p.x+66<78){p.scored=true;flappy.score++;const reward=Math.floor(10*totalMultiplier());addCoins(reward);let gemText='';if(flappy.score%5===0){game.diamonds=(game.diamonds||0)+1;gemText=' +1 💎 за 5 труб!'}document.getElementById('flappyStatus').textContent='🪙 +'+fmt(reward)+' монет за трубу!'+gemText;save();update();scheduleLeaderboardUpdate()}}flappy.pipes=flappy.pipes.filter(p=>p.x>-80);if(flappy.pipes.length<3){const last=flappy.pipes[flappy.pipes.length-1];if(!last||last.x<270)flappy.pipes.push({x:520,gapY:110+Math.random()*250,scored:false})}if(flappy.birdY<12||flappy.birdY>470){endFlappy();return}for(const p of flappy.pipes){const birdLeft=60,birdRight=96,birdTop=flappy.birdY-13,birdBottom=flappy.birdY+13;if(birdRight>p.x&&birdLeft<p.x+66&&(birdTop<p.gapY-78||birdBottom>p.gapY+78)){endFlappy();return}}updateFlappyLabels();drawFlappy();flappy.raf=requestAnimationFrame(flappyLoop)}
-function drawFlappy(){if(!flappyCtx)return;const c=flappyCtx,w=c.canvas.width,h=c.canvas.height;c.clearRect(0,0,w,h);const sky=c.createLinearGradient(0,0,0,h);sky.addColorStop(0,'#63caff');sky.addColorStop(1,'#d5f8ff');c.fillStyle=sky;c.fillRect(0,0,w,h);c.fillStyle='#ffffff99';for(const cloud of [[70,85,28],[320,120,36],[210,45,22]]){c.beginPath();c.arc(cloud[0],cloud[1],cloud[2],0,Math.PI*2);c.arc(cloud[0]+cloud[2]*.8,cloud[1]+5,cloud[2]*.7,0,Math.PI*2);c.fill()}for(const p of flappy.pipes){const topH=p.gapY-78,bottomY=p.gapY+78;c.fillStyle='#23a83d';c.fillRect(p.x,0,66,topH);c.fillRect(p.x-5,topH-18,76,18);c.fillRect(p.x,bottomY,66,h-bottomY-36);c.fillRect(p.x-5,bottomY,76,18);c.fillStyle='#63e35d';c.fillRect(p.x+8,0,10,Math.max(0,topH-18));c.fillRect(p.x+8,bottomY+18,10,h-bottomY-54)}c.fillStyle='#d9a44b';c.fillRect(0,h-36,w,36);c.fillStyle='#78c84a';c.fillRect(0,h-42,w,8);c.save();c.translate(78,flappy.birdY);c.rotate(Math.max(-.35,Math.min(.65,flappy.velocity*.045)));c.fillStyle='#ffd72f';c.beginPath();c.ellipse(0,0,18,14,0,0,Math.PI*2);c.fill();c.fillStyle='#fff';c.beginPath();c.arc(8,-5,6,0,Math.PI*2);c.fill();c.fillStyle='#172238';c.beginPath();c.arc(10,-5,2.5,0,Math.PI*2);c.fill();c.fillStyle='#ff7d28';c.beginPath();c.moveTo(15,1);c.lineTo(29,5);c.lineTo(15,8);c.closePath();c.fill();c.fillStyle='#f2a51e';c.beginPath();c.ellipse(-6,5,9,5,-.2,0,Math.PI*2);c.fill();c.restore();if(!flappy.running){c.fillStyle='#10233cdd';c.fillRect(40,185,400,112);c.textAlign='center';c.fillStyle='#fff';c.font='bold 27px Arial';c.fillText(flappy.over?'ГРУ ЗАВЕРШЕНО':'FLAPPY BIRD',240,225);c.font='17px Arial';c.fillText(flappy.over?'Спробуй ще раз!':'Натисни «Почати гру»',240,257)}}
-flappyCanvas.addEventListener('pointerdown',e=>{e.preventDefault();flappyFlap()});window.addEventListener('keydown',e=>{if(e.code==='Space'&&document.getElementById('miniGamesView').style.display!=='none'){e.preventDefault();flappyFlap()}});updateFlappyLabels();drawFlappy();
-
-// Firebase leaderboard: always leave loading state, even when config/rules/network fail.
-let firebaseApi=null, firebaseDb=null, firebaseReady=false, leaderboardBusy=false, lastLeaderboardWrite=0, leaderboardTimer=null;
-function setLeaderboardStatus(s){document.getElementById('leaderboardStatus').textContent=s}
-function renderLeaderboardError(message){document.getElementById('leaderboard').innerHTML='<p>⚠️ '+escapeHTML(message)+'</p>';setLeaderboardStatus('Таблиця недоступна. Перевір підключення Firebase та правила Firestore.')}
-async function initFirebase(){try{
- const appMod=await import('https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js');
- const fs=await import('https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js');
- const firebaseConfig={apiKey:'AIzaSyBLxtt9IlDLDZjzcZwDutrzWTIQd8xmMRk',authDomain:'coin-clicker-6791d.firebaseapp.com',projectId:'coin-clicker-6791d',storageBucket:'coin-clicker-6791d.firebasestorage.app',messagingSenderId:'848884626098',appId:'1:848884626098:web:efd560559a3648cf068fab',measurementId:'G-E0514QXLK7'};
- const app=appMod.initializeApp(firebaseConfig);firebaseDb=fs.getFirestore(app);firebaseApi=fs;firebaseReady=true;setLeaderboardStatus('Firebase підключено. Завантажуємо рекорди…');await updateLeaderboard(true);
- }catch(e){console.error('Firebase initialization failed:',e);renderLeaderboardError('Не вдалося підключитися до Firebase. Перевір конфігурацію та інтернет.')}}
-async function updateLeaderboard(force=false){if(leaderboardBusy)return;if(!firebaseReady||!firebaseDb||!firebaseApi){if(force)renderLeaderboardError('Firebase ще не підключений або не налаштований.');return}leaderboardBusy=true;setLeaderboardStatus('Оновлюємо рекорди…');const timeout=new Promise((_,reject)=>setTimeout(()=>reject(new Error('timeout')),10000));try{
- const fs=firebaseApi,playerId=getPlayerID();
- // Do not send a write for every auto-click tick; refresh own record at most every 15 seconds, or when forced.
- if(force||Date.now()-lastLeaderboardWrite>15000){await Promise.race([fs.setDoc(fs.doc(firebaseDb,'leaderboard',playerId),{nickname:(game.nickname||'Гість').slice(0,20),total:Math.floor(game.total||0),updatedAt:Date.now()},{merge:true}),timeout]);lastLeaderboardWrite=Date.now()}
- const q=fs.query(fs.collection(firebaseDb,'leaderboard'),fs.orderBy('total','desc'),fs.limit(10));const snapshot=await Promise.race([fs.getDocs(q),timeout]);const el=document.getElementById('leaderboard');el.replaceChildren();if(snapshot.empty){const p=document.createElement('p');p.textContent='Поки що немає рекордів — зіграй і стань першим!';el.appendChild(p)}else{let place=1;snapshot.forEach(ds=>{const record=ds.data(),div=document.createElement('div');div.className='rank';const medal=place===1?'🥇':place===2?'🥈':place===3?'🥉':'🏅';const b=document.createElement('b');b.textContent=record.nickname||'Гість';div.append(medal+' ',b,' — '+fmt(record.total||0)+' 🪙');el.appendChild(div);place++})}setLeaderboardStatus('Останнє оновлення: '+new Date().toLocaleTimeString('uk-UA'));
- }catch(e){console.error('Leaderboard error:',e);renderLeaderboardError(e.message==='timeout'?'Сервер довго не відповідає. Спробуй оновити таблицю.':'Не вдалося прочитати/записати рекорди. Перевір правила Firestore.')}finally{leaderboardBusy=false}}
-function scheduleLeaderboardUpdate(){if(leaderboardTimer)return;leaderboardTimer=setTimeout(()=>{leaderboardTimer=null;updateLeaderboard(false)},5000)}
-function resetGame(){if(!confirm('⚠️ Точно скинути всю гру? Це видалить локальний прогрес і ID друзів, але не видалить запис у глобальній таблиці.'))return;localStorage.removeItem(SAVE_KEY);localStorage.removeItem('coinClickerRecords');localStorage.removeItem('coinClickerPlayerId');localStorage.removeItem('coinClickerFriends');location.reload()}
-// Apply offline income once per launch.
-const now=Date.now(),secondsAway=Math.min(86400,Math.max(0,Math.floor((now-(game.lastOnline||now))/1000)));if(secondsAway>0){const offlineCoins=secondsAway*game.offlineLevel;if(offlineCoins>0){addCoins(offlineCoins);setTimeout(()=>showMessage('💤 Поки тебе не було: +'+fmt(offlineCoins)+' 🪙'),500)}}game.lastOnline=now;save();window.addEventListener('beforeunload',()=>{game.lastOnline=Date.now();save()});
-if(!Number.isInteger(game.skin)||game.skin<1||game.skin>8)game.skin=1;if(game.skin>4&&!game.unlockedSkins.includes(game.skin))game.skin=1;applySkin();update();initFirebase();setInterval(()=>{if(game.auto>0){addCoins(game.auto*(1+(game.autoBoostLevel||0))*totalMultiplier());save();update();scheduleLeaderboardUpdate()}},1000);
-</script>
-
-<script>
-/* COIN CLICKER 4.0 — вкладки, профіль та магазин скінів за діаманти.
-   Використовує той самий SAVE_KEY, тому старий локальний прогрес не скидається. */
-(function(){
-  const $ = id => document.getElementById(id);
-  const container = document.querySelector('.container');
-  const main = $('mainGameView');
-  const mini = $('miniGamesView');
-  const oldTabbar = document.querySelector('.tabbar');
-  if (!container || !main || !oldTabbar) return;
-
-  const tabs = [
-    ['clicker','🪙 Клікер'], ['shop','🛒 Магазин'], ['pets','🐾 Пети'],
-    ['skins','🎨 Скіни'], ['worlds','🌍 Світи'], ['profile','👤 Профіль'],
-    ['leaderboard','🏆 Рекорди'], ['friends','👥 Друзі'], ['stats','📊 Статистика'],
-    ['mini','🎮 Мініігри']
-  ];
-  oldTabbar.replaceChildren();
-  oldTabbar.classList.add('cc40-tabs');
-  const views = {};
-  const buttons = {};
-  const content = document.createElement('div');
-  content.id = 'cc40Content';
-  main.insertBefore(content, main.firstChild);
-  for (const [id,label] of tabs) {
-    const b = document.createElement('button');
-    b.className = 'tab-button'; b.textContent = label; b.type='button';
-    b.onclick = () => switchTab(id);
-    oldTabbar.appendChild(b); buttons[id]=b;
-    if (id !== 'mini') {
-      const section=document.createElement('section');
-      section.id='cc40-view-'+id; section.style.display='none';
-      content.appendChild(section); views[id]=section;
-    }
-  }
-  const css=document.createElement('style');
-  css.textContent=`
-    .cc40-tabs{position:sticky;top:0;z-index:20;padding:9px 6px;background:#0b1024ed;border:1px solid #ffffff18;border-radius:16px;backdrop-filter:blur(12px);box-shadow:0 8px 25px #0004}
-    .cc40-tabs .tab-button{min-width:0;flex:1 1 125px;font-size:14px;padding:11px 10px;margin:2px}
-    .cc40-tabs .tab-button.active{outline:2px solid #fff;box-shadow:0 0 18px #ffe36b55}
-    #cc40Content>.panel{margin-top:14px}
-    .cc40-profile-id{overflow-wrap:anywhere;padding:12px;border-radius:12px;background:#ffffff0d;border:1px solid #ffffff18}
-    .cc40-section-title{margin-top:4px}
-    @media(max-width:480px){.cc40-tabs .tab-button{flex:1 1 29%;font-size:12px;padding:10px 5px}}
-  `;
-  document.head.appendChild(css);
-
-  const panels=[...main.querySelectorAll(':scope > .panel')];
-  function destination(panel){
-    const h=(panel.querySelector('h2')?.textContent||'').toLocaleLowerCase('uk');
-    if(h.includes('друзі')) return 'friends';
-    if(h.includes('глобальні рекорди')) return 'leaderboard';
-    if(h.includes('пети')) return 'pets';
-    if(h.includes('скіни')) return 'skins';
-    if(h.includes('світи')) return 'worlds';
-    if(h.includes('статистика')) return 'stats';
-    if(h.includes('система діамантів')) return 'clicker';
-    if(h.includes('магазин покращень')||h.includes('офлайн-заробіток')||h.includes('щоденна нагорода')||h.includes('колесо удачі')||h.includes('промокоди')||h.includes('переродження')||h.includes('ребьорн')||h.includes('ребірт')) return 'shop';
-    if(h.includes('щоденні квести')||h.includes('досягнення')||h.includes('профіль')||h.includes('резервна копія')||h.includes('скинути гру')) return 'profile';
-    return 'profile';
-  }
-  for(const p of panels) views[destination(p)].appendChild(p);
-
-  // Переміщуємо сам клік та баланс у вкладку «Клікер».
-  const coinDisplay=main.querySelector(':scope > .coins');
-  const coinButton=$('coinButton'), message=$('message');
-  const clickHero=document.createElement('div'); clickHero.className='panel';
-  clickHero.innerHTML='<h2 class="cc40-section-title">🪙 Заробляй монети!</h2><p class="small">Натискай на монету, щоб заробляти. Прогрес 3.6 збережено.</p>';
-  if(coinDisplay) clickHero.appendChild(coinDisplay);
-  if(coinButton) clickHero.appendChild(coinButton);
-  if(message) clickHero.appendChild(message);
-  views.clicker.insertBefore(clickHero,views.clicker.firstChild);
-
-  // Профіль: ID гравця та редагування ніку олівцем.
-  const profilePanel=[...views.profile.querySelectorAll('.panel')].find(p=>(p.querySelector('h2')?.textContent||'').includes('Профіль'));
-  if(profilePanel){
-    const nameInput=$('nicknameInput');
-    const saveName=profilePanel.querySelector('button[onclick="saveNickname()"]');
-    const idBox=document.createElement('div'); idBox.className='cc40-profile-id';
-    idBox.innerHTML='<h3>🆔 Твій ID</h3><p id="cc40ProfileID"></p><button type="button" id="cc40CopyID">📋 Скопіювати ID</button><hr><p class="small">✏️ Щоб змінити нік, натисни олівець.</p>';
-    profilePanel.appendChild(idBox);
-    const nicknameHeading=[...profilePanel.querySelectorAll('p')].find(p=>p.textContent.includes('Твій нік'));
-    if(nicknameHeading){nicknameHeading.textContent='Твій нік:';const pencil=document.createElement('button');pencil.type='button';pencil.textContent='✏️';pencil.title='Редагувати нік';pencil.onclick=()=>{nameInput.style.display=nameInput.style.display==='none'?'':'none';if(saveName)saveName.style.display=nameInput.style.display; if(nameInput.style.display!=='none')nameInput.focus()};nicknameHeading.appendChild(pencil)}
-    if(nameInput)nameInput.style.display='none'; if(saveName)saveName.style.display='none';
-    $('cc40CopyID').onclick=()=>copyMyID();
-    $('cc40ProfileID').textContent=getPlayerID();
-  }
-
-  // Скіни 5–8 тепер купуються за діаманти. Старі скіни залишаються доступними.
-  const skinPanel=views.skins;
-  if(skinPanel){
-    const buttons=[...skinPanel.querySelectorAll('button')];
-    const prices={5:5,6:15,7:30,8:60};
-    const labels={5:'🌈 Веселка',6:'🌌 Космос',7:'🔥 Вогонь',8:'💎 Діамант'};
-    buttons.forEach(b=>{
-      const m=b.getAttribute('onclick')?.match(/buySkin\((\d+)\)/); if(!m)return;
-      const n=Number(m[1]); b.innerHTML=labels[n]+'<br>💎 '+prices[n];
-      b.onclick=()=>buySkinForDiamonds(n,prices[n]);
-    });
-    const note=document.createElement('p'); note.className='small';
-    note.textContent='Скіни 1–4 безкоштовні. Скіни 5–8 купуються за діаманти та назавжди залишаються відкритими.';
-    skinPanel.appendChild(note);
-  }
-  window.buySkinForDiamonds=function(n,price){
-    if((game.unlockedSkins||[]).includes(n)){skin(n);return}
-    if((game.diamonds||0)<price)return showMessage('💎 Потрібно '+price+' діамантів!');
-    game.diamonds-=price;game.unlockedSkins.push(n);game.skin=n;
-    applySkin();save();update();showMessage('🎨 Скін відкрито за діаманти!');
-  };
-
-  // Діаманти й клік-сила показуються в одному розділі.
-  const gemPanel=views.clicker.querySelector('.gem-card');
-  if(gemPanel){const title=gemPanel.querySelector('h2');if(title)title.textContent='💎 Діаманти та постійні бонуси';}
-
-  window.switchTab=function(id){
-    const valid=tabs.some(t=>t[0]===id); if(!valid)id='clicker';
-    for(const [key] of tabs){if(buttons[key])buttons[key].classList.toggle('active',key===id)}
-    main.style.display=id==='mini'?'none':'block';
-    if(mini)mini.style.display=id==='mini'?'block':'none';
-    for(const [key,section] of Object.entries(views))section.style.display=key===id?'block':'none';
-    if(id==='friends'){openFriends(); if($('friendsPanel'))$('friendsPanel').style.display='block';showMyID();showFriends();}
-    if(id==='leaderboard')updateLeaderboard(true);
-    if(id==='clicker')update();
-    window.scrollTo({top:0,behavior:'smooth'});
-  };
-  // The friend panel is a separate tab; open it automatically on entry.
-  switchTab('clicker');
-  console.log('Coin Clicker 4.0 tabs loaded');
+function updateUI(){$('coins').textContent=fmt(s.coins);$('diamonds').textContent=fmt(s.diamonds);$('perClick').textContent=fmt(clickValue());$('perSec').textContent=fmt(autoValue());$('clickCoin').textContent=(skins.find(x=>x[0]===s.skin)||skins[0])[2];$('diamondBoostInfo').textContent='+'+(s.diamondBoost*10)+'%';$('buyDiamondBoost').textContent='Купити за '+(10+s.diamondBoost*5)+' 💎';$('diamondProgress').textContent=`Прогрес: ${s.clicksSinceDiamond}/100 кліків`;$('coreLevel').textContent='Рівень '+s.coreLevel;$('coreBonus').textContent='Бонус: +'+Math.round((coreMult()-1)*100)+'%';let coreCost=1e6*Math.pow(2,s.coreLevel);$('coreCost').textContent='Ціна: '+fmt(coreCost);$('coreBuy').disabled=s.coins<coreCost;$('coreProgress').style.width=Math.min(100,s.coins/coreCost*100)+'%';$('rebirthInfo').textContent=`Ціна ${fmt(1e6*Math.pow(5,s.rebirths))} монет • рівень ${s.rebirths} • ×${fmt(Math.pow(2,s.rebirths))}`;$('ultraInfo').textContent=`10 💎 • рівень ${s.ultraRebirths} • ×${fmt(Math.pow(5,s.ultraRebirths))}`;$('superInfo').textContent=`5 💎 • рівень ${s.superRebirths} • ×${fmt(Math.pow(10,s.superRebirths))}`;$('playerId').textContent=s.playerId;$('nicknameInput').value=s.nickname;$('profileSummary').textContent=`${s.nickname} • ${fmt(s.totalEarned)} монет зароблено • ${s.totalClicks} кліків • ${s.rebirths} ребіртів`;$('dailyText').textContent=now()-s.lastDaily>=86400000?'Щоденний бонус готовий!':'Щоденний бонус уже забрано сьогодні.';$('flappyScore').textContent=s.flappyScore;render()}
+$('tabs').onclick=e=>{let b=e.target.closest('[data-page]');if(!b)return;document.querySelectorAll('.tab[data-page]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id==='page-'+b.dataset.page))};
+$('clickCoin').onclick=doClick;$('dailyBtn').onclick=daily;$('wheelBtn').onclick=wheel;
+$('buyDiamondBoost').onclick=()=>{let cost=10+s.diamondBoost*5;if(!spend('diamonds',cost)){toast('Не вистачає діамантів!');return}s.diamondBoost++;save();toast('Підсилення куплено!')};
+$('promoBtn').onclick=()=>{let code=$('promoInput').value.trim().toUpperCase();if(s.promoUsed.includes(code)){toast('Цей код уже використаний.');return}let prize={COIN4:()=>earn(4000),DIAMOND:()=>s.diamonds+=10,WELCOME:()=>{earn(1000);s.diamonds+=2}}[code];if(!prize){toast('Невідомий промокод.');return}prize();s.promoUsed.push(code);$('promoInput').value='';save();toast('Промокод активовано!')};
+$('coreBuy').onclick=()=>{let cost=1e6*Math.pow(2,s.coreLevel);if(!spend('coins',cost)){toast('Не вистачає монет!');return}s.coreLevel++;save();toast(`Ядро рівня ${s.coreLevel}: бонус +25% за рівень!`)};
+$('rebirthBtn').onclick=()=>rebirth('normal');$('ultraBtn').onclick=()=>rebirth('ultra');$('superBtn').onclick=()=>rebirth('super');
+$('saveNick').onclick=()=>{let n=$('nicknameInput').value.trim().slice(0,20);if(!n){toast('Введи нікнейм.');return}s.nickname=n;save();toast('Нікнейм збережено!')};
+$('copyId').onclick=()=>{if(navigator.clipboard?.writeText)navigator.clipboard.writeText(s.playerId).then(()=>toast('ID скопійовано!')).catch(()=>toast('Твій ID: '+s.playerId));else toast('Твій ID: '+s.playerId)};
+$('addFriend').onclick=()=>{let id=$('friendIdInput').value.trim();if(!id){toast('Введи ID друга.');return}if(id===s.playerId){toast('Не можна додати себе.');return}if(s.friends.includes(id)){toast('Друг уже в списку.');return}s.friends.push(id);$('friendIdInput').value='';save();toast('Друга додано до локального списку!')};
+$('refreshLeaderboard').onclick=()=>{updateUI();toast('Рейтинг оновлено.')};
+$('flappyTap').onclick=()=>{s.flappyScore++;if(s.flappyScore%5===0){earn(100);toast('+100 монет!')}save()};
+$('spaceFlight').onclick=()=>{if(!spend('coins',1000)){toast('Потрібно 1 000 монет.');return}s.spaceFlights++;let prize=500+Math.floor(Math.random()*4501);earn(prize);$('spaceResult').textContent=`Політ №${s.spaceFlights}: отримано ${fmt(prize)} монет!`;save()};
+document.addEventListener('click',e=>{let b=e.target.closest('[data-up]');if(b)buyUpgrade(b.dataset.up);let p=e.target.closest('[data-pet]');if(p)buyPet(p.dataset.pet);let sk=e.target.closest('[data-skin]');if(sk)buySkin(+sk.dataset.skin);let w=e.target.closest('[data-world]');if(w)changeWorld(w.dataset.world);let q=e.target.closest('[data-quest]');if(q){let item=quests.find(x=>x[0]===q.dataset.quest);if(!s.quests[item[0]]&&item[4]()>=item[3]){item[5]();s.quests[item[0]]=true;save();toast('Завдання виконано!')}}let r=e.target.closest('[data-remove]');if(r){s.friends.splice(+r.dataset.remove,1);save()}});
+$('exportSave').onclick=()=>{let blob=new Blob([JSON.stringify(s,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='coin-clicker-4.0-save.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Резервну копію експортовано!')};
+$('importFile').onchange=async e=>{let file=e.target.files[0];if(!file)return;try{let d=JSON.parse(await file.text());if(!d||typeof d!=='object'||!('coins'in d))throw Error();if(!confirm('Імпортувати збереження? Поточний прогрес буде замінено.'))return;s={...fresh(),...d};save();toast('Збереження імпортовано!')}catch(err){toast('Некоректний файл збереження.')}e.target.value=''};
+$('resetSave').onclick=()=>{if(!confirm('Скинути весь прогрес? Спершу експортуй резервну копію, якщо вона потрібна.'))return;localStorage.removeItem(SAVE_KEY);localStorage.removeItem('coinClicker4');s=fresh();save();toast('Прогрес скинуто.')};
+load();
+const elapsed=Math.max(0,Math.min(8*3600,(now()-(s.lastSave||now()))/1000));if(elapsed>60){let offline=Math.floor(autoValue()*elapsed);if(offline>0){earn(offline);$('offlineNotice').hidden=false;$('offlineNotice').textContent=`🌙 Поки тебе не було (${Math.floor(elapsed/60)} хв), автоклікер заробив ${fmt(offline)} монет!`}}
+s.lastSave=now();updateUI();setInterval(()=>{let n=autoValue();if(n>0)earn(n);updateUI();},1000);setInterval(save,10000);
 })();
 </script>
-
 </body>
 </html>
