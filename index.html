@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Coin Clicker 4.0 FULL</title>
+<title>Coin Clicker 0.1 FULL</title>
 <style>
 :root{--bg:#0c1020;--panel:#171d31;--panel2:#202943;--gold:#ffd43b;--cyan:#55e6ff;--text:#f5f7ff;--muted:#aeb8d3;--line:#303b5a;--green:#69f0ae;--pink:#ff72c6}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#1b2750 0,#0c1020 48%);color:var(--text);font:15px/1.45 system-ui,Segoe UI,Arial,sans-serif;min-height:100vh}
@@ -21,7 +21,7 @@ input{background:#0d1324;color:var(--text);border:1px solid #3b496b;border-radiu
 </style>
 </head>
 <body>
-<header><h1>🪙 COIN <span>CLICKER</span> 4.0</h1><p>FULL VERSION • без BETA • автозбереження</p></header>
+<header><h1>🪙 COIN <span>CLICKER</span> 0.1</h1><p>FULL VERSION • без BETA • автозбереження</p></header>
 <div class="wrap">
 <section class="stats">
 <div class="stat"><small>🪙 Монети</small><strong id="coins">0</strong></div><div class="stat"><small>💎 Діаманти</small><strong id="diamonds">0</strong></div><div class="stat"><small>🖱️ За клік</small><strong id="perClick">1</strong></div><div class="stat"><small>⚡ За секунду</small><strong id="perSec">0</strong></div>
@@ -45,28 +45,103 @@ input{background:#0d1324;color:var(--text);border:1px solid #3b496b;border-radiu
 <section class="page" id="page-stats"><div class="panel"><h2>📊 Статистика</h2><div id="statsList" class="grid"></div></div></section>
 <section class="page" id="page-minigames"><div class="grid"><div class="panel"><h2>🐦 Flappy Coin</h2><p>Натискай кнопку й набирай очки. За кожні 5 очок — 100 монет.</p><div class="spread"><b>Очки: <span id="flappyScore">0</span></b><button id="flappyTap" class="primary">Полетіли!</button></div><p class="small muted">Спрощена мінігра-клік-виклик.</p></div><div class="panel"><h2>🚀 Космічний політ</h2><p>Запуск коштує 1 000 монет; нагорода випадкова.</p><button id="spaceFlight" class="primary">Запустити політ</button><p id="spaceResult" class="muted"></p></div></div></section>
 <section class="page" id="page-settings"><div class="grid"><div class="panel"><h2>💾 Резервна копія</h2><p>Експортуй збереження перед очищенням браузера.</p><div class="row"><button id="exportSave" class="primary">Експортувати JSON</button><label class="tab" for="importFile">Імпортувати JSON</label><input id="importFile" type="file" accept=".json,application/json" hidden></div><p class="small muted">Імпорт замінить поточний прогрес.</p><button id="resetSave" class="danger">Скинути прогрес</button></div><div class="panel"><h2>ℹ️ Збереження</h2><p>Прогрес автоматично зберігається в localStorage цього браузера. Очищення даних сайту може видалити його — користуйся резервною копією.</p><p>Скарги й бани збережені локально в цьому браузері. Для справжніх онлайн-банів усіх гравців потрібен сервер.</p></div></div><div class="panel" style="margin-top:12px"><h2>🚨 Скарги та бани</h2><div class="notice">Демо-модерація: скарги й бани видно лише в цьому браузері. Це не надсилає скаргу адміністратору й не блокує гравця на інших пристроях.</div><div class="grid"><div class="item"><h3>🚨 Подати скаргу</h3><label class="field">ID або нік гравця<input id="reportTarget" maxlength="60" placeholder="ID або нік"></label><label class="field">Причина<select id="reportReason" style="width:100%;background:#0d1324;color:var(--text);border:1px solid #3b496b;border-radius:9px;padding:10px;font:inherit"><option>Спам</option><option>Образи або цькування</option><option>Чіти або експлойти</option><option>Неприйнятний нікнейм</option><option>Інше</option></select></label><label class="field">Деталі (необов'язково)<input id="reportDetails" maxlength="240" placeholder="Коротко опиши проблему"></label><button id="submitReport" class="primary">Надіслати локальну скаргу</button></div><div class="item"><h3>🔨 Локальний бан</h3><p class="small muted">Для тестування модерації на цьому пристрої.</p><label class="field">ID або нік гравця<input id="banTarget" maxlength="60" placeholder="ID або нік"></label><label class="field">Причина<input id="banReason" maxlength="160" placeholder="Причина бану"></label><button id="banBtn" class="danger">Забанити локально</button></div></div><h3 style="margin-top:14px">📨 Список скарг</h3><div id="reportsList"></div><h3 style="margin-top:14px">⛔ Список локальних банів</h3><div id="bansList"></div></div></section>
-</div><div class="footer">Coin Clicker 4.0 FULL • Автозбереження увімкнено</div><div class="toast" id="toast"></div>
+</div><div class="footer">Coin Clicker 0.1 FULL • Автозбереження увімкнено</div><div class="toast" id="toast"></div>
 <script>
 (()=>{'use strict';
-const SAVE_KEY='coinClicker3';
+const SAVE_KEY='coinClicker0.1';
 const $=id=>document.getElementById(id), now=()=>Date.now();
 const fmt=n=>{if(!Number.isFinite(n))return '∞';if(Math.abs(n)<1000)return Math.floor(n).toLocaleString('uk-UA');const u=['K','M','B','T','Qa','Qi','Sx','Sp','Oc','No','Dc'];let i=-1;do{n/=1000;i++}while(Math.abs(n)>=1000&&i<u.length-1);return (n>=100?n.toFixed(0):n>=10?n.toFixed(1):n.toFixed(2))+u[i]};
-const fresh=()=>({version:'4.0',coins:0,diamonds:0,totalEarned:0,totalClicks:0,clickPower:1,autoLevel:0,multLevel:0,diamondBoost:0,rebirths:0,ultraRebirths:0,superRebirths:0,coreLevel:0,pet:'none',pets:['none'],skin:0,skins:[0],world:'earth',worlds:['earth'],nickname:'Player',playerId:'CC-'+Math.random().toString(36).slice(2,10).toUpperCase(),friends:[],reports:[],bans:[],lastSave:now(),lastDaily:0,lastWheel:0,dailyStreak:0,claimed:{},promoUsed:[],quests:{},flappyScore:0,spaceFlights:0,sessionClicks:0,sessionStarted:now(),clicksSinceDiamond:0});
+const fresh=()=>({version:'0.1',coins:0,diamonds:0,totalEarned:0,totalClicks:0,clickPower:1,autoLevel:0,multLevel:0,diamondBoost:0,rebirths:0,ultraRebirths:0,superRebirths:0,coreLevel:0,pet:'none',pets:['none'],skin:0,skins:[0],world:'earth',worlds:['earth'],nickname:'Player',playerId:'CC-'+Math.random().toString(36).slice(2,10).toUpperCase(),friends:[],reports:[],bans:[],lastSave:now(),lastDaily:0,lastWheel:0,dailyStreak:0,claimed:{},promoUsed:[],quests:{},flappyScore:0,spaceFlights:0,sessionClicks:0,sessionStarted:now(),clicksSinceDiamond:0,achievements:{}});
 let s=fresh();
-function normalizeState(data){const base=fresh();const d=data&&typeof data==='object'&&!Array.isArray(data)?data:{};s={...base,...d};for(const k of ['coins','diamonds','totalEarned','totalClicks','clickPower','autoLevel','multLevel','diamondBoost','rebirths','ultraRebirths','superRebirths','coreLevel','lastSave','lastDaily','lastWheel','dailyStreak','flappyScore','spaceFlights','sessionClicks','sessionStarted','clicksSinceDiamond']){const n=Number(s[k]);s[k]=Number.isFinite(n)&&n>=0?n:base[k]}for(const k of ['claimed','quests'])s[k]=s[k]&&typeof s[k]==='object'&&!Array.isArray(s[k])?s[k]:{};for(const k of ['pets','skins','worlds','friends','promoUsed','reports','bans'])s[k]=Array.isArray(s[k])?s[k]:[];s.pets=s.pets.length?s.pets:['none'];s.skins=s.skins.length?s.skins:[0];s.worlds=s.worlds.length?s.worlds:['earth'];s.reports=s.reports.filter(r=>r&&typeof r==='object'&&typeof r.target==='string').slice(-100);s.bans=s.bans.filter(b=>b&&typeof b==='object'&&typeof b.target==='string').slice(-100);s.friends=s.friends.filter(x=>typeof x==='string').slice(0,200);s.playerId=typeof s.playerId==='string'&&s.playerId?s.playerId:base.playerId;s.nickname=typeof s.nickname==='string'&&s.nickname.trim()?s.nickname.trim().slice(0,20):'Player';if(!pets.some(p=>p[0]===s.pet))s.pet='none';if(!skins.some(x=>x[0]===Number(s.skin)))s.skin=0;s.skin=Number(s.skin);if(!worlds.some(w=>w[0]===s.world))s.world='earth';return s}
+function normalizeState(data){const base=fresh();const d=data&&typeof data==='object'&&!Array.isArray(data)?data:{};s={...base,...d};for(const k of ['coins','diamonds','totalEarned','totalClicks','clickPower','autoLevel','multLevel','diamondBoost','rebirths','ultraRebirths','superRebirths','coreLevel','lastSave','lastDaily','lastWheel','dailyStreak','flappyScore','spaceFlights','sessionClicks','sessionStarted','clicksSinceDiamond']){const n=Number(s[k]);s[k]=Number.isFinite(n)&&n>=0?n:base[k]}for(const k of ['claimed','quests','achievements'])s[k]=s[k]&&typeof s[k]==='object'&&!Array.isArray(s[k])?s[k]:{};for(const k of ['pets','skins','worlds','friends','promoUsed','reports','bans'])s[k]=Array.isArray(s[k])?s[k]:[];s.pets=s.pets.length?s.pets:['none'];s.skins=s.skins.length?s.skins:[0];s.worlds=s.worlds.length?s.worlds:['earth'];s.reports=s.reports.filter(r=>r&&typeof r==='object'&&typeof r.target==='string').slice(-100);s.bans=s.bans.filter(b=>b&&typeof b==='object'&&typeof b.target==='string').slice(-100);s.friends=s.friends.filter(x=>typeof x==='string').slice(0,200);s.playerId=typeof s.playerId==='string'&&s.playerId?s.playerId:base.playerId;s.nickname=typeof s.nickname==='string'&&s.nickname.trim()?s.nickname.trim().slice(0,20):'Player';if(!pets.some(p=>p[0]===s.pet))s.pet='none';if(!skins.some(x=>x[0]===Number(s.skin)))s.skin=0;s.skin=Number(s.skin);if(!worlds.some(w=>w[0]===s.world))s.world='earth';return s}
 function load(){try{
-const keys=['coinClicker4','coinClicker3','coinClicker3.7','coinClicker3.6','coinClicker3.1','coinClicker'];
-const candidates=[];
-for(const key of keys){try{const raw=localStorage.getItem(key);if(!raw)continue;const parsed=JSON.parse(raw);if(!parsed||typeof parsed!=='object'||Array.isArray(parsed))continue;const d=normalizeState(parsed);const score=Math.max(0,Number(d.totalEarned)||0)+Math.max(0,Number(d.coins)||0)+Math.max(0,Number(d.diamonds)||0)*1000+Math.max(0,Number(d.rebirths)||0)*1000000+Math.max(0,Number(d.ultraRebirths)||0)*1000000000+Math.max(0,Number(d.superRebirths)||0)*1000000000000;candidates.push({d,score,key});}catch(_){}}
-if(candidates.length){candidates.sort((a,b)=>b.score-a.score);s=candidates[0].d;console.info('Завантажено збереження:',candidates[0].key);}
+  const freshSave=localStorage.getItem(SAVE_KEY);
+  if(freshSave){
+    const parsed=JSON.parse(freshSave);
+    if(parsed&&typeof parsed==='object'&&!Array.isArray(parsed))s=normalizeState(parsed);
+    return;
+  }
+  // Start Coin Clicker 0.1 with fresh gameplay, while keeping the player's identity.
+  const oldKeys=['coinClicker4','coinClicker3','coinClicker3.7','coinClicker3.6','coinClicker3.1','coinClicker'];
+  let profile=null;
+  for(const key of oldKeys){
+    try{
+      const raw=localStorage.getItem(key);
+      if(!raw)continue;
+      const d=JSON.parse(raw);
+      if(d&&typeof d==='object'&&!Array.isArray(d)){profile=d;break}
+    }catch(_){}
+  }
+  s=fresh();
+  if(profile){
+    if(typeof profile.nickname==='string'&&profile.nickname.trim())s.nickname=profile.nickname.trim().slice(0,20);
+    if(typeof profile.playerId==='string'&&profile.playerId)s.playerId=profile.playerId;
+    if(Array.isArray(profile.friends))s.friends=profile.friends.filter(x=>typeof x==='string').slice(0,200);
+  }
 }catch(e){console.warn('Не вдалося завантажити збереження:',e);s=fresh()}}
 function toast(msg){const el=$('toast');el.textContent=msg;el.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>el.style.display='none',2500)}
-function save(){s.lastSave=now();try{const raw=JSON.stringify(s);localStorage.setItem(SAVE_KEY,raw);localStorage.setItem('coinClicker4',raw);localStorage.setItem('coinClicker3.7',raw)}catch(e){toast('Не вдалося зберегти. Експортуй резервну копію.')}updateUI()}
+function save(){claimReadyAchievements();s.lastSave=now();try{const raw=JSON.stringify(s);localStorage.setItem(SAVE_KEY,raw)}catch(e){toast('Не вдалося зберегти. Експортуй резервну копію.')}updateUI()}
 const pets=[['none','Без пета','❔',1,0,'coins'],['dog','Собака','🐶',2,500,'coins'],['cat','Кіт','🐱',4,2500,'coins'],['dragon','Дракон','🐉',10,25000,'coins'],['fox','Лисиця','🦊',25,250000,'coins'],['robot','Робот-пес','🤖',50,100,'diamonds'],['phoenix','Золотий фенікс','🦅',100,250,'diamonds'],['cosmic1','Космічний слизень','🪼',150,500,'diamonds'],['cosmic2','Космічний дракон','🐲',250,1000,'diamonds'],['cosmic3','Галактичний фенікс','🌌',500,2500,'diamonds']];
 const skins=[[0,'Класична','🪙',0,'coins'],[1,'Золота','🌟',5000,'coins'],[2,'Рубінова','🔴',20,'diamonds'],[3,'Сапфірова','🔵',35,'diamonds'],[4,'Смарагдова','🟢',50,'diamonds'],[5,'Неонова','💠',75,'diamonds'],[6,'Галактична','🌌',120,'diamonds'],[7,'Квантова','⚛️',200,'diamonds'],[8,'Королівська','👑',350,'diamonds']];
 const worlds=[['earth','Земля','🌍',1,()=>true,'Доступна відразу'],['moon','Місяць','🌕',3,()=>s.rebirths>=10&&s.ultraRebirths>=1,'10 ребіртів і 1 ультра ребірт'],['mars','Марс','🔴',10,()=>s.ultraRebirths>=5,'5 ультра ребіртів']];
 const ups=[['clickPower','Сильний клік','👆','Додає +1 до базової сили кліку',25,1.65],['autoLevel','Автоклікер','⚙️','Заробляє монети щосекунди',100,1.8],['multLevel','Множник монет','🚀','Кожен рівень додає +25% до доходу',500,2.1]];
 const quests=[['clicks100','Перші 100 кліків','Зроби 100 кліків загалом',100,()=>s.totalClicks,()=>{earn(1000);s.diamonds++},'+1 000 монет і +1 💎'],['earn10k','Капітал','Зароби 10 000 монет за весь час',10000,()=>s.totalEarned,()=>earn(5000),'+5 000 монет'],['buyPet','Друг людини','Придбай будь-якого пета',1,()=>s.pets.filter(x=>x!=='none').length,()=>s.diamonds+=5,'+5 💎'],['rebirth1','Нове життя','Зроби 1 звичайний ребірт',1,()=>s.rebirths,()=>s.diamonds+=10,'+10 💎'],['core1','Квантовий стрибок','Покращ квантове ядро до рівня 1',1,()=>s.coreLevel,()=>earn(100000),'+100K монет']];
+
+const clickAchievements=[
+  [1,'1 КЛІК!!','🖱️',10,0],
+  [10,'10 КЛІКІВ!!','👆',25,0],
+  [42,'42 кліка!!','⭐',42,0],
+  [69,'69 кліків!!!','😎',69,0],
+  [100,'100 кліків!!!','🥉',100,0],
+  [1000,'1000 кліків!!','🥈',250,1],
+  [4242,'4242 кліків!!','🔥',500,2],
+  [6969,'6969 кліків!','💎',696,3],
+  [10000,'10000 кліків!!','🏅',1000,5],
+  [42424,'42424 кліків!!','🚀',4242,10],
+  [69696,'69696 кліків!!!','👑',6969,15],
+  [100000,'100000 кліків!!!','🏆',10000,25],
+  [250000,'250000 кліків!!','🌠',25000,50],
+  [500000,'500000 кліків!!','⚡',50000,75],
+  [1000000,'1 000 000 кліків!!!','🌌',100000,100],
+  [2500000,'2 500 000 кліків!!','🪐',250000,150],
+  [5000000,'5 000 000 кліків!!!','☄️',500000,250],
+  [10000000,'10 000 000 кліків!!!','💫',1000000,500],
+  [25000000,'25 000 000 кліків!!','🌀',2500000,750],
+  [50000000,'50 000 000 кліків!!!','🌟',5000000,1000],
+  [100000000,'100 000 000 кліків!!!','🏆',10000000,2500]
+];
+const otherAchievements=[
+  {id:'earn1k',title:'Перший капітал',icon:'💰',desc:'Зароби 1 000 монет загалом',check:()=>s.totalEarned>=1000,coins:250,diamonds:0},
+  {id:'earn1m',title:'Монетний магнат',icon:'🤑',desc:'Зароби 1 000 000 монет загалом',check:()=>s.totalEarned>=1000000,coins:10000,diamonds:5},
+  {id:'diamonds10',title:'Блискучий запас',icon:'💎',desc:'Накопич 10 діамантів одночасно',check:()=>s.diamonds>=10,coins:0,diamonds:2},
+  {id:'petCollector',title:'Початок колекції',icon:'🐾',desc:'Відкрий 4 петів',check:()=>s.pets.filter(x=>x!=='none').length>=4,coins:1000,diamonds:2},
+  {id:'rebirth1',title:'Нове життя',icon:'♻️',desc:'Зроби 1 звичайний ребірт',check:()=>s.rebirths>=1,coins:1000,diamonds:2},
+  {id:'ultra1',title:'На новий рівень',icon:'🌟',desc:'Зроби 1 ультра ребірт',check:()=>s.ultraRebirths>=1,coins:5000,diamonds:5},
+  {id:'super1',title:'Суперсила',icon:'✨',desc:'Зроби 1 супер ребірт',check:()=>s.superRebirths>=1,coins:10000,diamonds:10},
+  {id:'core1',title:'Квантовий стрибок',icon:'⚛️',desc:'Покращ квантове ядро до рівня 1',check:()=>s.coreLevel>=1,coins:100000,diamonds:3},
+  {id:'worldMoon',title:'Маленький крок',icon:'🌕',desc:'Відкрий Місяць',check:()=>s.worlds.includes('moon'),coins:5000,diamonds:3},
+  {id:'worldMars',title:'Червона планета',icon:'🔴',desc:'Відкрий Марс',check:()=>s.worlds.includes('mars'),coins:25000,diamonds:5},
+  {id:'flappy50',title:'Пілот-початківець',icon:'🐦',desc:'Набери 50 очок у Flappy Coin',check:()=>s.flappyScore>=50,coins:1000,diamonds:1},
+  {id:'space10',title:'Космічний турист',icon:'🚀',desc:'Здійсни 10 космічних польотів',check:()=>s.spaceFlights>=10,coins:5000,diamonds:3}
+];
+function allAchievements(){
+  const clicks=clickAchievements.map(a=>({id:'click_'+a[0],title:a[1],icon:a[2],desc:`Зроби ${a[0].toLocaleString('uk-UA')} кліків загалом`,check:()=>s.totalClicks>=a[0],coins:a[3],diamonds:a[4],order:a[0]}));
+  const others=otherAchievements.map(a=>({...a,order:Infinity}));
+  return [...clicks,...others];
+}
+function claimReadyAchievements(){
+  let got=[];
+  for(const a of allAchievements()){
+    if(!s.achievements[a.id] && a.check()){
+      s.achievements[a.id]={claimed:true,at:now()};
+      if(a.coins)earn(a.coins);
+      if(a.diamonds)s.diamonds+=a.diamonds;
+      got.push(a);
+    }
+  }
+  return got;
+}
+
 const pet=()=>pets.find(x=>x[0]===s.pet)||pets[0], world=()=>worlds.find(x=>x[0]===s.world)||worlds[0];
 const coreMult=()=>Math.pow(1.25,s.coreLevel), rebMult=()=>Math.pow(2,s.rebirths)*Math.pow(5,s.ultraRebirths)*Math.pow(10,s.superRebirths);
 const totalMult=()=> (1+s.multLevel*.25)*rebMult()*coreMult()*pet()[3]*world()[3]*(1+s.diamondBoost*.1);
@@ -75,7 +150,7 @@ const earn=n=>{if(!Number.isFinite(n)||n<=0)return;s.coins+=n;s.totalEarned+=n};
 const spend=(currency,cost)=>{if(s[currency]<cost)return false;s[currency]-=cost;return true};
 const esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function buyUpgrade(id){let u=ups.find(x=>x[0]===id),cost=Math.floor(u[4]*Math.pow(u[5],s[id]||0));if(!spend('coins',cost)){toast('Не вистачає монет!');return}s[id]++;save();toast('Покращення придбано!')}
-function doClick(){earn(clickValue());s.totalClicks++;s.sessionClicks++;s.clicksSinceDiamond++;if(s.clicksSinceDiamond>=100){s.clicksSinceDiamond-=100;s.diamonds++;toast('+1 💎 за 100 кліків!')}save()}
+function doClick(){earn(clickValue());s.totalClicks++;s.sessionClicks++;s.clicksSinceDiamond++;if(s.clicksSinceDiamond>=100){s.clicksSinceDiamond-=100;s.diamonds++;toast('+1 💎 за 100 кліків!')}const got=claimReadyAchievements();save();if(got.length){const a=got[0];toast(`🏆 Досягнення: ${a.title}! Нагороду отримано!`)}}
 function daily(){if(now()-s.lastDaily<86400000){toast('Щоденний бонус уже забрано.');return}s.dailyStreak=Math.min(7,(s.dailyStreak||0)+1);s.lastDaily=now();earn(500*s.dailyStreak);if(s.dailyStreak>=3)s.diamonds++;save();toast(`Щодня: +${fmt(500*s.dailyStreak)} монет${s.dailyStreak>=3?' і +1 💎':''}!`)}
 function wheel(){if(now()-s.lastWheel<1200000){toast(`Колесо доступне через ${Math.ceil((1200000-(now()-s.lastWheel))/60000)} хв.`);return}s.lastWheel=now();let prize=[['+500 монет',()=>earn(500)],['+2 000 монет',()=>earn(2000)],['+5 000 монет',()=>earn(5000)],['+1 діамант',()=>s.diamonds++],['+5 діамантів',()=>s.diamonds+=5],['+10 000 монет',()=>earn(10000)]][Math.floor(Math.random()*6)];prize[1]();save();toast('🎡 Випало: '+prize[0]+'!')}
 function buyPet(id){let p=pets.find(x=>x[0]===id);if(s.pets.includes(id)){s.pet=id;save();toast(p[1]+' активний!');return}if(!spend(p[5],p[4])){toast('Не вистачає '+(p[5]==='coins'?'монет':'діамантів')+'!');return}s.pets.push(id);s.pet=id;save();toast('Пета придбано!')}
@@ -88,12 +163,12 @@ $('petsList').innerHTML=pets.map(p=>{let owned=s.pets.includes(p[0]),active=s.pe
 $('skinsList').innerHTML=skins.map(x=>{let owned=s.skins.includes(x[0]),active=s.skin===x[0];return `<div class="item"><h3>${x[2]} ${x[1]}</h3><p>${owned?'Відкрито':`Ціна: ${fmt(x[3])} ${x[4]==='coins'?'🪙':'💎'}`}</p><button data-skin="${x[0]}" ${active?'disabled':''}>${active?'Обрано':owned?'Обрати':'Відкрити'}</button></div>`}).join('');
 $('worldsList').innerHTML=worlds.map(w=>{let unlocked=w[4](),active=s.world===w[0];return `<div class="item"><h3>${w[2]} ${w[1]}</h3><p>Множник доходу: ×${w[3]}</p><p>${unlocked?'Відкрито':w[5]}</p><button data-world="${w[0]}" ${!unlocked||active?'disabled':''}>${active?'Поточний світ':unlocked?'Перейти':'Заблоковано'}</button></div>`}).join('');
 $('questsList').innerHTML=quests.map(q=>{let n=Math.min(q[3],q[4]()),done=!!s.quests[q[0]];return `<div class="item"><div class="spread"><h3>${done?'✅':'📌'} ${q[1]}</h3><b>${n}/${q[3]}</b></div><p>${q[2]}</p><div class="progress"><span style="width:${n/q[3]*100}%"></span></div><div class="spread"><span class="small muted">${q[6]}</span><button data-quest="${q[0]}" ${done||n<q[3]?'disabled':''}>${done?'Отримано':'Забрати'}</button></div></div>`}).join('');
-let ach=[['🖱️ Клікер',s.totalClicks>=100,`${s.totalClicks} кліків`],['💰 Багатій',s.totalEarned>=10000,`${fmt(s.totalEarned)} зароблено`],['🐾 Колекціонер',s.pets.length>=4,`${s.pets.length} петів`],['⚛️ Квантовий',s.coreLevel>=1,`ядро рівня ${s.coreLevel}`]];$('achievements').innerHTML=ach.map(a=>`<div class="item">${a[1]?'🏅':'🔒'} <b>${a[0]}</b><p>${a[2]}</p></div>`).join('');
+const ach=allAchievements();$('achievements').innerHTML=ach.map(a=>{const done=!!s.achievements[a.id],progress=done?100:(a.order!==Infinity?Math.min(100,s.totalClicks/a.order*100):(a.check()?100:0));return `<div class="item"><div class="spread"><h3>${done?'🏅':'🔒'} ${a.icon} ${a.title}</h3><b>${done?'Відкрито':'Заблоковано'}</b></div><p>${a.desc}</p><div class="progress"><span style="width:${progress}%"></span></div><p class="small">🎁 Нагорода: ${a.coins?fmt(a.coins)+' 🪙':''}${a.coins&&a.diamonds?' + ':''}${a.diamonds?a.diamonds+' 💎':''}${!a.coins&&!a.diamonds?'Без нагороди':''}</p></div>`}).join('');
 $('friendsList').innerHTML=s.friends.length?s.friends.map((f,i)=>`<div class="item spread"><span>🤝 ${esc(f)}</span><button class="danger" data-remove="${i}">Видалити</button></div>`).join(''):'<p class="muted">Список друзів порожній.</p>';
 $('reportsList').innerHTML=s.reports.length?s.reports.slice().reverse().map((r,i)=>`<div class="item"><div class="spread"><b>🚨 ${esc(r.target)}</b><small class="muted">${new Date(r.time).toLocaleString('uk-UA')}</small></div><p><b>${esc(r.reason)}</b></p><p>${esc(r.details||'Без додаткових деталей')}</p><button class="danger" data-report-remove="${s.reports.length-1-i}">Видалити запис</button></div>`).join(''):'<p class="muted">Скарг поки немає.</p>';
 $('bansList').innerHTML=s.bans.length?s.bans.map((b,i)=>`<div class="item"><div class="spread"><b>⛔ ${esc(b.target)}</b><button class="danger" data-unban="${i}">Зняти локальний бан</button></div><p>${esc(b.reason||'Причина не вказана')}</p><small class="muted">${new Date(b.time).toLocaleString('uk-UA')}</small></div>`).join(''):'<p class="muted">Локальних банів немає.</p>';
 let records=[];try{records=JSON.parse(localStorage.getItem('cc4Leaderboard')||'[]')}catch(e){}let all=[...records.filter(x=>x.id!==s.playerId),{nickname:s.nickname,score:s.totalEarned,id:s.playerId}].sort((a,b)=>b.score-a.score).slice(0,10);$('leaderboardList').innerHTML=all.map((x,i)=>`<div class="item spread"><span>${['🥇','🥈','🥉'][i]||'#'+(i+1)} <b>${esc(x.nickname||'Player')}</b><br><small class="muted">${esc(x.id||'')}</small></span><b>${fmt(x.score)} 🪙</b></div>`).join('');try{localStorage.setItem('cc4Leaderboard',JSON.stringify(all))}catch(e){}
-let stat=[['🪙 Усього зароблено',fmt(s.totalEarned)],['🖱️ Усього кліків',fmt(s.totalClicks)],['⚙️ Автоклікер',fmt(autoValue())+'/сек'],['♻️ Ребірти',s.rebirths],['🌟 Ультра ребірти',s.ultraRebirths],['✨ Супер ребірти',s.superRebirths],['⚛️ Рівень ядра',s.coreLevel],['🐾 Петів відкрито',s.pets.length],['🌍 Поточний світ',world()[1]],['⏱️ Ця сесія',Math.floor((now()-s.sessionStarted)/60000)+' хв']];$('statsList').innerHTML=stat.map(x=>`<div class="item"><p>${x[0]}</p><h3>${x[1]}</h3></div>`).join('');
+let stat=[['🪙 Усього зароблено',fmt(s.totalEarned)],['🖱️ Усього кліків',fmt(s.totalClicks)],['🏆 Досягнення відкрито',Object.keys(s.achievements).length+'/'+allAchievements().length],['⚙️ Автоклікер',fmt(autoValue())+'/сек'],['♻️ Ребірти',s.rebirths],['🌟 Ультра ребірти',s.ultraRebirths],['✨ Супер ребірти',s.superRebirths],['⚛️ Рівень ядра',s.coreLevel],['🐾 Петів відкрито',s.pets.length],['🌍 Поточний світ',world()[1]],['⏱️ Ця сесія',Math.floor((now()-s.sessionStarted)/60000)+' хв']];$('statsList').innerHTML=stat.map(x=>`<div class="item"><p>${x[0]}</p><h3>${x[1]}</h3></div>`).join('');
 }
 function updateUI(){$('coins').textContent=fmt(s.coins);$('diamonds').textContent=fmt(s.diamonds);$('perClick').textContent=fmt(clickValue());$('perSec').textContent=fmt(autoValue());$('clickCoin').textContent=(skins.find(x=>x[0]===s.skin)||skins[0])[2];$('diamondBoostInfo').textContent='+'+(s.diamondBoost*10)+'%';$('buyDiamondBoost').textContent='Купити за '+(10+s.diamondBoost*5)+' 💎';$('diamondProgress').textContent=`Прогрес: ${s.clicksSinceDiamond}/100 кліків`;$('coreLevel').textContent='Рівень '+s.coreLevel;$('coreBonus').textContent='Бонус: +'+Math.round((coreMult()-1)*100)+'%';let coreCost=1e6*Math.pow(2,s.coreLevel);$('coreCost').textContent='Ціна: '+fmt(coreCost);$('coreBuy').disabled=s.coins<coreCost;$('coreProgress').style.width=Math.min(100,s.coins/coreCost*100)+'%';$('rebirthInfo').textContent=`Ціна ${fmt(1e6*Math.pow(5,s.rebirths))} монет • рівень ${s.rebirths} • ×${fmt(Math.pow(2,s.rebirths))}`;$('ultraInfo').textContent=`10 💎 • рівень ${s.ultraRebirths} • ×${fmt(Math.pow(5,s.ultraRebirths))}`;$('superInfo').textContent=`5 💎 • рівень ${s.superRebirths} • ×${fmt(Math.pow(10,s.superRebirths))}`;$('playerId').textContent=s.playerId;$('nicknameInput').value=s.nickname;$('profileSummary').textContent=`${s.nickname} • ${fmt(s.totalEarned)} монет зароблено • ${s.totalClicks} кліків • ${s.rebirths} ребіртів`;$('dailyText').textContent=now()-s.lastDaily>=86400000?'Щоденний бонус готовий!':'Щоденний бонус уже забрано сьогодні.';$('flappyScore').textContent=s.flappyScore;render()}
 $('tabs').onclick=e=>{let b=e.target.closest('[data-page]');if(!b)return;document.querySelectorAll('.tab[data-page]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id==='page-'+b.dataset.page))};
@@ -111,9 +186,9 @@ $('spaceFlight').onclick=()=>{if(!spend('coins',1000)){toast('Потрібно 1
 document.addEventListener('click',e=>{let rr=e.target.closest('[data-report-remove]');if(rr){s.reports.splice(+rr.dataset.reportRemove,1);save();toast('Запис скарги видалено.')}let ub=e.target.closest('[data-unban]');if(ub){s.bans.splice(+ub.dataset.unban,1);save();toast('Локальний бан знято.')}let b=e.target.closest('[data-up]');if(b)buyUpgrade(b.dataset.up);let p=e.target.closest('[data-pet]');if(p)buyPet(p.dataset.pet);let sk=e.target.closest('[data-skin]');if(sk)buySkin(+sk.dataset.skin);let w=e.target.closest('[data-world]');if(w)changeWorld(w.dataset.world);let q=e.target.closest('[data-quest]');if(q){let item=quests.find(x=>x[0]===q.dataset.quest);if(!s.quests[item[0]]&&item[4]()>=item[3]){item[5]();s.quests[item[0]]=true;save();toast('Завдання виконано!')}}let r=e.target.closest('[data-remove]');if(r){s.friends.splice(+r.dataset.remove,1);save()}});
 $('submitReport').onclick=()=>{let target=$('reportTarget').value.trim(),reason=$('reportReason').value,details=$('reportDetails').value.trim();if(!target){toast('Вкажи ID або нік гравця.');return}if(target.toLowerCase()===s.nickname.toLowerCase()||target===s.playerId){toast('Не можна поскаржитися на себе.');return}if(s.reports.length>=100){toast('Ліміт локальних скарг — 100. Видали старі записи.');return}s.reports.push({target,reason,details,time:now(),by:s.playerId});$('reportTarget').value='';$('reportDetails').value='';save();toast('Скаргу збережено локально.');};
 $('banBtn').onclick=()=>{let target=$('banTarget').value.trim(),reason=$('banReason').value.trim();if(!target){toast('Вкажи ID або нік гравця.');return}if(target.toLowerCase()===s.nickname.toLowerCase()||target===s.playerId){toast('Не можна забанити себе.');return}if(s.bans.some(b=>b.target.toLowerCase()===target.toLowerCase())){toast('Цей гравець уже є в локальному бан-листі.');return}if(s.bans.length>=100){toast('Ліміт локальних банів — 100.');return}s.bans.push({target,reason,time:now(),by:s.playerId});$('banTarget').value='';$('banReason').value='';save();toast('Гравця додано до локального бан-листа.');};
-$('exportSave').onclick=()=>{let blob=new Blob([JSON.stringify(s,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='coin-clicker-4.0-save.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Резервну копію експортовано!')};
+$('exportSave').onclick=()=>{let blob=new Blob([JSON.stringify(s,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='coin-clicker-0.1-save.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Резервну копію експортовано!')};
 $('importFile').onchange=async e=>{let file=e.target.files[0];if(!file)return;try{let d=JSON.parse(await file.text());if(!d||typeof d!=='object'||!('coins'in d))throw Error();if(!confirm('Імпортувати збереження? Поточний прогрес буде замінено.'))return;normalizeState(d);save();toast('Збереження імпортовано!')}catch(err){toast('Некоректний файл збереження.')}e.target.value=''};
-$('resetSave').onclick=()=>{if(!confirm('Скинути весь прогрес? Спершу експортуй резервну копію, якщо вона потрібна.'))return;localStorage.removeItem(SAVE_KEY);localStorage.removeItem('coinClicker4');s=fresh();save();toast('Прогрес скинуто.')};
+$('resetSave').onclick=()=>{if(!confirm('Скинути весь прогрес? Спершу експортуй резервну копію, якщо вона потрібна.'))return;localStorage.removeItem(SAVE_KEY);s=fresh();save();toast('Прогрес скинуто.')};
 load();
 const elapsed=Math.max(0,Math.min(8*3600,(now()-(s.lastSave||now()))/1000));if(elapsed>60){let offline=Math.floor(autoValue()*elapsed);if(offline>0){earn(offline);$('offlineNotice').hidden=false;$('offlineNotice').textContent=`🌙 Поки тебе не було (${Math.floor(elapsed/60)} хв), автоклікер заробив ${fmt(offline)} монет!`}}
 s.lastSave=now();updateUI();setInterval(()=>{let n=autoValue();if(n>0)earn(n);updateUI();},1000);setInterval(save,10000);
